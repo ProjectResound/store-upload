@@ -1,12 +1,27 @@
 module.exports = {
-  entry: './src/scripts/app.js',
+  entry: './src/scripts/app.jsx',
   output: {
     filename: './dist/scripts/bundle.js'
   },
   module: {
     loaders: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'jsx-loader' },
-      { test: /\.scss$/, loader: "style!css!sass" }
+      {
+        enforce: 'pre',
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+      },
+      { test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['react', 'es2015']
+        }
+      },
+      { test: /\.scss$/, loader: "style-loader!css-loader!sass-loader" }
     ]
+  },
+  resolve: {
+    extensions: ['.jsx', '.js']
   }
-}
+};
