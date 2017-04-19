@@ -107,23 +107,3 @@ DropstripStore.flow.on('fileError', (flowFile) => {
 });
 
 module.exports = DropstripStore;
-//
-// _addToDropzoneQueue: (file) => {
-//   this.dropzoneQueue[file.name] = {};
-//   this.dropzoneQueue[file.name].name = file.name;
-//   this.dropzoneQueue[file.name].fileObject = file;
-//   this.dropzoneQueue[file.name].size = Math.round(file.size / 10000) / 100;
-//   this.dropzoneQueue[file.name].status = {};
-//   this._populateFileDuration(file);
-// },
-//
-//   _populateFileDuration(file) {
-//   const reader = new FileReader();
-//   reader.addEventListener('loadend', () => {
-//     this.audioContext.decodeAudioData(reader.result, (decoded) => {
-//       this.dropzoneQueue[file.name].duration = decoded.duration;
-//       reader.removeEventListener('loadend');
-//     });
-//   });
-//   reader.readAsArrayBuffer(file);
-// },

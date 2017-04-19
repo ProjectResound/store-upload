@@ -37,7 +37,8 @@
   },
   "scripts": {
     "start": "npm run webpack & npm run serve",
-    "webpack": "webpack -w",
-    "serve": "cd dist && python -m SimpleHTTPServer"
+    "webpack": "webpack -w --config webpack.config.dev.js",
+    "serve": "cd dist && python -m SimpleHTTPServer",
+    "build": "webpack --config webpack.config.prod.js"
   }
 }
