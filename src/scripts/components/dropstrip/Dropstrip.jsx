@@ -6,7 +6,7 @@ const DropstripStore = require('./dropstrip-store');
 const QueuedItem = require('./QueuedItem.jsx');
 const ActionCable = require('actioncable');
 
-const cable = ActionCable.createConsumer('ws://localhost:3000/cablee');
+const cable = ActionCable.createConsumer('ws://localhost:3000/cable');
 const getStateFromStore = () => DropstripStore.getQueue();
 
 class Dropstrip extends React.Component {

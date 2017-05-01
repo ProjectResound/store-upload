@@ -15,7 +15,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['react', 'es2015']
+          presets: ['react', 'es2015', 'stage-0']
         }
       },
       { test: /\.scss$/, loader: "style-loader!css-loader!sass-loader" }
@@ -23,5 +23,16 @@ module.exports = {
   },
   resolve: {
     extensions: ['.jsx', '.js']
+  },
+  devServer: {
+    hto: true,
+    inline: true,
+    port: 7700,
+    historyApiFallback: true
+  },
+  externals: {
+    'cheerio': 'window',
+    'react/lib/ExecutionEnvironment': true,
+    'react/lib/ReactContext': true
   }
 };

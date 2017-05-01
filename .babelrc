@@ -1,7 +1,6 @@
 {
   "plugins": [
   ],
-  "presets": [
+  "presets":
     ["es2015", "react"]
-  ]
 }
