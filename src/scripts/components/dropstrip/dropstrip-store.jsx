@@ -34,6 +34,8 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
 
   upload(args) {
     const file = args.file;
+    dropzoneQueue[args.file.name].title = args.title;
+    dropzoneQueue[args.file.name].contributor = args.contributor;
     this.flow.addFile(file);
     this.flow.upload();
   },
@@ -85,6 +87,7 @@ DropstripStore.flow = new Flow({
   chunkSize: 1024 * 1024,
   forceChunkSize: true,
   allowDuplicateUploads: true,
+  testChunks: false,
   query: flowFile => ({
     title: dropzoneQueue[flowFile.name].title,
     contributor: dropzoneQueue[flowFile.name].contributor
