@@ -7,7 +7,7 @@ require('../styles/main.scss');
 
 const Header = require('./components/Header.jsx');
 const Dropstrip = require('./components/dropstrip/Dropstrip.jsx');
-const Explorer = require('./components/Explorer.jsx');
+const Explorer = require('./components/explorer/Explorer.jsx');
 
 render(<Header />, document.getElementById('header'));
 render(<Dropstrip />, document.getElementById('dropzone'));

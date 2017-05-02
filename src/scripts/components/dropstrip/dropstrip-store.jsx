@@ -1,4 +1,5 @@
 const AppDispatcher = require('../../dispatcher/app-dispatcher');
+const resoundAPI = require('./../../utils/resound-api');
 const EventEmitter = require('events').EventEmitter;
 const assign = require('object-assign');
 const Flow = require('@flowjs/flow.js');
@@ -34,6 +35,8 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
 
   upload(args) {
     const file = args.file;
+    dropzoneQueue[args.file.name].title = args.title;
+    dropzoneQueue[args.file.name].contributor = args.contributor;
     this.flow.addFile(file);
     this.flow.upload();
   },
@@ -48,6 +51,7 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
 
   success(filename) {
     dropzoneQueue[filename].completed = true;
+    resoundAPI.get();
   }
 });
 
@@ -85,6 +89,7 @@ DropstripStore.flow = new Flow({
   chunkSize: 1024 * 1024,
   forceChunkSize: true,
   allowDuplicateUploads: true,
+  testChunks: false,
   query: flowFile => ({
     title: dropzoneQueue[flowFile.name].title,
     contributor: dropzoneQueue[flowFile.name].contributor

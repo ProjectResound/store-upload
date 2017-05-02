@@ -1,0 +1,24 @@
+.explorer {
+  .explorer__table {
+    text-align: left;
+    border-collapse: collapse;
+    font-weight: 300;
+    color: $gray-color;
+    .explorer__table-header__title {
+      width: 40%;
+    }
+
+    td {
+      padding: 2em 2.8em;
+      border-bottom: 2px solid $table-border-color;
+    }
+
+    th {
+      color: $primary-color-light;
+      font-weight: 400;
+      font-size: 0.9em;
+      padding: 1em 3em;
+      border-bottom: 2px solid $table-border-color;
+    }
+  }
+}
