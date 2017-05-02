@@ -1,6 +1,6 @@
 import React from 'react';
 
-const resoundAPI = require('./resound-api');
+const resoundAPI = require('./../../utils/resound-api');
 const ExplorerStore = require('./explorer-store');
 const AudioItem = require('./AudioItem.jsx');
 
@@ -36,11 +36,22 @@ class Explorer extends React.Component {
     }
 
     return (
-      <div>
-        <h1>Explorer</h1>
-        {this.state.audioList.map(audioItem => (
-          <AudioItem key={audioItem.filename} audioItem={audioItem} />
-        ))}
+      <div className="explorer col s9">
+        <table className="explorer__table col s12" cellSpacing="0">
+          <thead>
+            <tr>
+              <th className="explorer__table-header__title">Title</th>
+              <th>File Name</th>
+              <th>Date</th>
+              <th>File Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.audioList.map(audioItem => (
+              <AudioItem key={audioItem.filename} audioItem={audioItem} />
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }

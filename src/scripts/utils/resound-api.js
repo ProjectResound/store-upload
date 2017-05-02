@@ -1,4 +1,4 @@
-const ExplorerActions = require('./explorer-actions');
+const ExplorerActions = require('./../components/explorer/explorer-actions');
 
 module.exports = {
   get: () => {

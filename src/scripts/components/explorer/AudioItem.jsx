@@ -1,12 +1,16 @@
 import React from 'react';
 
-const AudioItem = ({ audioItem }) => (
-  <section>
-    <h3>{audioItem.title}</h3>
-    <p>{audioItem.filename}</p>
-    <p>{audioItem.created_at}</p>
-    <p>{audioItem.updated_at}</p>
-  </section>
-);
+const AudioItem = ({ audioItem }) => {
+  const date = new Date(audioItem.created_at).toLocaleDateString();
+  const fileData = JSON.parse(audioItem.file_data);
+  return (
+    <tr>
+      <td className="explorer__table-body__title">{audioItem.title}</td>
+      <td>{audioItem.filename}</td>
+      <td>{date}</td>
+      <td>{fileData.metadata.size}</td>
+    </tr>
+  );
+};
 
 module.exports = AudioItem;

@@ -1,4 +1,5 @@
 const AppDispatcher = require('../../dispatcher/app-dispatcher');
+const resoundAPI = require('./../../utils/resound-api');
 const EventEmitter = require('events').EventEmitter;
 const assign = require('object-assign');
 const Flow = require('@flowjs/flow.js');
@@ -50,6 +51,7 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
 
   success(filename) {
     dropzoneQueue[filename].completed = true;
+    resoundAPI.get();
   }
 });
 
