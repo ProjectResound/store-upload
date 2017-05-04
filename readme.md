@@ -1,5 +1,5 @@
-[![CircleCI](https://circleci.com/gh/ProjectResound/store-upload.svg?style=svg)](https://circleci.com/gh/ProjectResound/store-upload)
-# Resound: Store
+
+# Resound: Store [![CircleCI](https://circleci.com/gh/ProjectResound/store-upload.svg?style=svg)](https://circleci.com/gh/ProjectResound/store-upload)
 
 The client-facing part of audio uploading.  The app makes use of gulp for development and testing.
 For production, see [Docker](#docker) instructions. 
