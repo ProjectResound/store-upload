@@ -8,7 +8,6 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-dom/test-utils'
 import Dropstrip from '../src/scripts/components/dropstrip/Dropstrip';
 
-const sinon = require('sinon');
 const _ = require('underscore');
 const Dropzone = require('react-dropzone');
 const expect = require('chai').expect;
