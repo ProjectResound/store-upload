@@ -12,6 +12,7 @@ and resumed.
 Development requirements:
 
 * npm
+* [yarn](https://yarnpkg.com/en/docs/install)
 
 Production requirements:
 
@@ -20,9 +21,9 @@ Production requirements:
 
 ## Development
 
-1. Run `npm start`
-2. Visit localhost
-
+1. `yarn install`
+1. `yarn start`
+1. visit localhost:8000
 
 ## Docker Deployment
 
