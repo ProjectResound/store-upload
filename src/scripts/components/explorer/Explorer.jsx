@@ -2,6 +2,8 @@ import React from 'react';
 
 const resoundAPI = require('./../../utils/resound-api');
 const ExplorerStore = require('./explorer-store');
+const ExplorerActions = require('./explorer-actions');
+
 const AudioItem = require('./AudioItem.jsx');
 
 const getStateFromStore = () => ExplorerStore.getAudioList();
@@ -17,7 +19,8 @@ class Explorer extends React.Component {
 
   componentDidMount() {
     ExplorerStore.addChangeListener(this.onChange);
-    resoundAPI.get();
+    resoundAPI.get()
+      .then(audioList => ExplorerActions.receiveAudioList(audioList));
   }
 
   componentWillUnmount() {

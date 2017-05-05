@@ -100,6 +100,14 @@ class QueuedItem extends React.Component {
     }
   }
 
+  onOverwrite(yesNo) {
+    if (yesNo) {
+      DropstripActions.overwriteFile(this.props.file.name);
+    } else {
+      this.onCancelConfirmed(true);
+    }
+  }
+
   onUpload(e) {
     e.preventDefault();
     DropstripActions.uploadFile({
@@ -135,10 +143,10 @@ class QueuedItem extends React.Component {
     const failed = this.state.queue[file.name].failed;
     return (
       <div className="queued-item" onClick={e => e.stopPropagation()}>
-        <button className={this.state.progress === 'canceling' ? 'hidden' : 'cancel'} onClick={this.onCancel}>
+        <button className={this.state.progress === 'canceling' || fileStatus.exists ? 'hidden' : 'cancel'} onClick={this.onCancel}>
           <img src="/assets/images/button-remove.png" />
         </button>
-        <form onSubmit={this.onUpload} className={this.state.progress ? 'hidden' : ''}>
+        <form onSubmit={this.onUpload} className={this.state.progress || fileStatus.exists ? 'hidden' : ''}>
           <div className="dz-details">
             <div className="dz-filename">{file.name}</div>
             <div className="row">
@@ -199,7 +207,7 @@ class QueuedItem extends React.Component {
             </div>
           </div>
         </div>
-        <div className={this.state.progress === 'canceling' ? 'cancel-container' : 'hidden'}>
+        <div className={this.state.progress === 'canceling' ? 'queued-item__prompt__centered' : 'hidden'}>
           <div className="prompt">
             Are you sure you want to remove this file?
           </div>
@@ -236,6 +244,15 @@ class QueuedItem extends React.Component {
               Try again
           </div>
           </div>
+        </div>
+        <div className={fileStatus.exists ? 'queued-item__prompt__centered' : 'hidden'}>
+          <div className="prompt">
+            A file already exists by that name. Do you want to overwrite it?
+          </div>
+          <br />
+          <div className="file-title">{file.name}</div>
+          <a className="btn yes" onClick={() => this.onOverwrite(true)}>Yes</a>
+          <a className="btn no" onClick={() => this.onOverwrite(false)}>No</a>
         </div>
       </div>
     );

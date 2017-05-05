@@ -1,5 +1,6 @@
 const AppDispatcher = require('../../dispatcher/app-dispatcher');
 const resoundAPI = require('./../../utils/resound-api');
+const ExplorerActions = require('../explorer/explorer-actions');
 const EventEmitter = require('events').EventEmitter;
 const assign = require('object-assign');
 const Flow = require('@flowjs/flow.js');
@@ -22,6 +23,15 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
   getQueue: () => dropzoneQueue,
 
   addToQueue: (file) => {
+    resoundAPI.get(file.name).then((resp) => {
+      const existingFile = resp[0];
+      if (existingFile) {
+        dropzoneQueue[file.name].status.exists = true;
+        DropstripStore.emitChange();
+      }
+    }).catch((err) => {
+    //  TODO: handle this error;
+    });
     dropzoneQueue[file.name] = {};
     dropzoneQueue[file.name].name = file.name;
     dropzoneQueue[file.name].fileObject = file;
@@ -50,8 +60,14 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
   },
 
   success(filename) {
+    console.log('success', filename);
     dropzoneQueue[filename].completed = true;
-    resoundAPI.get();
+    resoundAPI.get(filename)
+      .then(audioList => ExplorerActions.receiveAudioList(audioList));
+  },
+
+  overwrite(filename) {
+    dropzoneQueue[filename].status.exists = false;
   }
 });
 
@@ -76,6 +92,9 @@ AppDispatcher.register((action) => {
     case 'UPLOAD_SUCCESS':
       DropstripStore.success(action.filename);
       successFlag = 'success';
+      break;
+    case 'OVERWRITE':
+      DropstripStore.overwrite(action.filename);
       break;
     default:
   }

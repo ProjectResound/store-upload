@@ -56,17 +56,10 @@ class Dropstrip extends React.Component {
     );
   }
 
-  updateView() {
-    this.setState(
-      {
-        queue: getStateFromStore()
-      }
-    );
-  }
-
   _initCable() {
     cable.subscriptions.create('FilesChannel', {
       received: (msg) => {
+        console.log(msg);
         if (msg.filename && msg.status === 'success') {
           DropstripActions.uploadSuccess(msg.filename);
         }

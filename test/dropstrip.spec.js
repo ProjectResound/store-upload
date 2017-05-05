@@ -8,9 +8,14 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-dom/test-utils'
 import Dropstrip from '../src/scripts/components/dropstrip/Dropstrip';
 
+require('isomorphic-fetch');
+
 const _ = require('underscore');
-const Dropzone = require('react-dropzone');
 const expect = require('chai').expect;
+const sinon = require('sinon');
+const Promise = require('es6-promise').Promise;
+const Dropzone = require('react-dropzone');
+const resoundAPI = require('../src/scripts/utils/resound-api');
 
 describe('<Dropstrip />', function() {
   beforeEach(() => {
@@ -62,17 +67,17 @@ describe('<Dropstrip />', function() {
   it('shows cancellation message when user clicks cancel on a queuedItem', () => {
     _dropInMockFiles();
     const cancelButton = TestUtils.findRenderedDOMComponentWithClass(this.component, 'cancel');
-    expect(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'cancel-container').length).to.equal(0);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'queued-item__prompt__centered').length).to.equal(0);
 
     TestUtils.Simulate.click(cancelButton);
 
-    expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'cancel-container')).to.exist;
+    expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'queued-item__prompt__centered')).to.exist;
   });
 
   it('removes the queuedItem when user confirms cancel click', () => {
     _dropInMockFiles();
     TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(this.component, 'cancel'));
-    const yesCancel = TestUtils.findRenderedDOMComponentWithClass(this.component, 'btn yes');
+    const yesCancel = TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'btn yes')[0];
 
     TestUtils.Simulate.click(yesCancel);
 
@@ -90,6 +95,16 @@ describe('<Dropstrip />', function() {
     TestUtils.Simulate.change(contributorInput, {target: {value: 'Contributor McPants', name: 'contributor'}});
 
     expect(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'upload-button')[0].disabled).to.be.false;
+  });
+
+  it('queries the server on fileDrop to check for existing file', () => {
+    const promise = new Promise((resolve) => {});
+    const stub = sinon.stub(global, 'fetch').returns(promise);
+
+    _dropInMockFiles();
+
+    expect(stub.calledWith('http://localhost:3000/api/v1/audios?filename=fakeFile_0.wav')).to.be.true;
+    global.fetch.restore();
   });
 });
 

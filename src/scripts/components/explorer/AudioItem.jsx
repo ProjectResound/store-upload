@@ -8,7 +8,7 @@ const AudioItem = ({ audioItem }) => {
       <td className="explorer__table-body__title">{audioItem.title}</td>
       <td>{audioItem.filename}</td>
       <td>{date}</td>
-      <td>{fileData.metadata.size}</td>
+      <td>{fileData ? fileData.metadata.size : 'N/A'}</td>
     </tr>
   );
 };

@@ -224,17 +224,17 @@
     color: $secondary-color;
   }
 
-  .cancel-container {
+  .queued-item__prompt__centered {
     text-align: center;
     font-size: 0.95rem;
     padding: 2em 1em;
   }
 
-  .cancel-container .prompt {
+  .queued-item__prompt__centered .prompt {
     font-weight: lighter;
   }
 
-  .cancel-container .btn {
+  .queued-item__prompt__centered .btn {
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     width: 60px;

@@ -38,5 +38,11 @@ module.exports = {
       actionType: 'UPLOAD_SUCCESS',
       filename
     });
+  },
+  overwriteFile: (filename) => {
+    AppDispatcher.dispatch({
+      actionType: 'OVERWRITE',
+      filename
+    });
   }
 };
