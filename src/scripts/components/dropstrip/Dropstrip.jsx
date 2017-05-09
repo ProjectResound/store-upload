@@ -68,7 +68,7 @@ class Dropstrip extends React.Component {
   }
 
   render() {
-    const dragActiveClass = this.state.isDragActive ? 'dz-drag-hover' : '';
+    const dragActiveClass = this.state.isDragActive ? 'upload__border--hover' : '';
     const queueHasItems = Object.keys(this.state.queue).length > 0;
     const files = Object.keys(this.state.queue).map(
       queuedItem =>
@@ -81,29 +81,29 @@ class Dropstrip extends React.Component {
     return (
       <Dropzone
         accept="audio/wav"
-        className={`dropzone col s3 ${dragActiveClass}`}
+        className={`upload__dz col s3 ${dragActiveClass}`}
         onDragEnter={e => this.onDragEnter(e)}
         onDragLeave={e => this.onDragLeave(e)}
         onDrop={e => this.onDrop(e)}
       >
-        <div className="queue">
-          <div className={queueHasItems ? 'header' : 'hidden'}>
+        <div className="upload__queue">
+          <div className={queueHasItems ? 'queue__header' : 'hidden'}>
             Files You’re Uploading {this.state.isDragActive}
           </div>
           <div className="queueItems">
             {files}
           </div>
-          <div className="valign-wrapper">
+          <div className="queue__valigner">
             <div className={queueHasItems ? 'hidden' : 'valign'} >
-              <div className="text">
+              <div className="queue__text">
                 Drag & drop your files here
               </div>
-              <div className="btn">
+              <div className="upload__btn">
                 Or, browse for files
               </div>
             </div>
           </div>
-          <div className={queueHasItems ? 'footer' : 'hidden'}>
+          <div className={queueHasItems ? 'queue__footer' : 'hidden'}>
             Drag & drop more files to add them to your queue
           </div>
         </div>

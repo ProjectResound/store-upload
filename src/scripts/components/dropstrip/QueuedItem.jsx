@@ -143,12 +143,12 @@ class QueuedItem extends React.Component {
     const failed = this.state.queue[file.name].failed;
     return (
       <div className="queued-item" onClick={e => e.stopPropagation()}>
-        <button className={this.state.progress === 'canceling' || fileStatus.exists ? 'hidden' : 'cancel'} onClick={this.onCancel}>
+        <button className={this.state.progress === 'canceling' || fileStatus.exists ? 'hidden' : 'queued-item__button--grey'} onClick={this.onCancel}>
           <img src="/assets/images/button-remove.png" />
         </button>
         <form onSubmit={this.onUpload} className={this.state.progress || fileStatus.exists ? 'hidden' : ''}>
           <div className="dz-details">
-            <div className="dz-filename">{file.name}</div>
+            <div className="queued-item__filename">{file.name}</div>
             <div className="row">
               <label htmlFor="title">Title</label>
               <input
@@ -159,7 +159,7 @@ class QueuedItem extends React.Component {
                 value={form.title}
                 onChange={this.onChange}
               />
-              <div className={`alert ${hideTitleAlert}`}>
+              <div className={`queued-item__alert ${hideTitleAlert}`}>
                 You must provide a title (min {this.MAX_CHAR_LENGTH} chars).
               </div>
             </div>
@@ -172,12 +172,12 @@ class QueuedItem extends React.Component {
                 placeholder="Who made this? (Separate 2+ names with commas)"
                 onChange={this.onChange}
               />
-              <div className={`alert ${hideContributorAlert}`}>
+              <div className={`queued-item__alert ${hideContributorAlert}`}>
                 You must provide a contributor name (min {this.MAX_CHAR_LENGTH} chars).
               </div>
             </div>
-            <div className="children-right">
-              <button type="submit" className="action-btn btn upload-button" disabled={hasErrors}>
+            <div className="upload__text--right">
+              <button type="submit" className="queued-item__button upload-button" disabled={hasErrors}>
                 Upload this file
               </button>
             </div>
@@ -187,72 +187,72 @@ class QueuedItem extends React.Component {
           className={this.state.progress === 'uploading' && !completed && !failed ? 'uploading-container' : 'hidden'}
         >
           <div className="file-title">{form.title}</div>
-          <div className="progress-wrapper">
-            <button className="upload-pause" onClick={this.onPause}>
-              <img src="/assets/images/button-pause_upload.png" alt="Pause Upload" />
+          <div className="progress-container">
+            <button className="progress-container__button--pause" onClick={this.onPause}>
+              <img src="/assets/images/button-pause_upload.png" className="progress-container__image" alt="Pause Upload" />
             </button>
-            <div className="progress" style={progressBarStyle}>
+            <div className="progress-container__bar" style={progressBarStyle}>
               Loading ({fileStatus.progress}%)
             </div>
           </div>
         </div>
         <div className={this.state.progress === 'paused' ? 'paused-container' : 'hidden'}>
           <div className="file-title">{form.title}</div>
-          <div className="progress-wrapper paused">
-            <button className="upload-pause resume" onClick={this.onResume}>
-              <img src="/assets/images/button-resume_upload.png" alt="Resume Upload" />
+          <div className="progress-container paused">
+            <button className="progress-container__button--resume" onClick={this.onResume}>
+              <img src="/assets/images/button-resume_upload.png" alt="Resume Upload" className="progress-container__image" />
             </button>
-            <div className="progress" style={progressBarStyle}>
-              Paused at {fileStatus.progress}%
+            <div className="progress-container__bar--paused" style={progressBarStyle}>
+              Paused at at {fileStatus.progress}%
             </div>
           </div>
         </div>
         <div className={this.state.progress === 'canceling' ? 'queued-item__prompt__centered' : 'hidden'}>
-          <div className="prompt">
+          <div className="prompt__text">
             Are you sure you want to remove this file?
           </div>
           <div className="file-title">{file.name}</div>
-          <a className="btn yes" onClick={() => this.onCancelConfirmed(true)}>Yes</a>
-          <a className="btn no" onClick={() => this.onCancelConfirmed(false)}>No</a>
+          <a className="queued-item__button--yes" onClick={() => this.onCancelConfirmed(true)}>Yes</a>
+          <a className="queued-item__button--no" onClick={() => this.onCancelConfirmed(false)}>No</a>
         </div>
         <div
           className={completed && this.state.progress !== 'canceling' ? 'completed-container success-container' : 'hidden'}
         >
-          <div className="file-title">
-            <img src="/assets/images/indicator-success.png" className="indicator" />
+          <div className="queued-item__file-title">
+            <img src="/assets/images/indicator-success.png" className="file-title__img" />
             {form.title}
           </div>
           <div className="row">
-            <div className="col s6 details">{file.duration} | {fileSize}MB</div>
-            <div className="col s6 edit">
+            <div className="col s6 completed__metadata">{file.duration} | {fileSize}MB</div>
+            <div className="col s6 completed__edit">
               <a>Edit this file</a>
             </div>
           </div>
         </div>
         <div
-          className={failed && this.state.progress !== 'canceling' ? 'completed-container failed-container' : 'hidden'}
+          className={failed && this.state.progress !== 'canceling' ? 'completed-container queued-item__failed' : 'hidden'}
         >
           <div className="file-title">
             <img src="/assets/images/indicator-failure.png" className="indicator" />
             {form.title}
           </div>
-          <div className="upload-failed">
-            <div className="msg">upload failed</div>
+          <div className="queued-item__failed-msg">
+            upload failed
           </div>
-          <div className="children-right">
-            <div className="action-btn btn" onClick={this.onResume}>
+          <div className="upload__text--right">
+            <div className="queued-item__button" onClick={this.onResume}>
               Try again
           </div>
           </div>
         </div>
         <div className={fileStatus.exists ? 'queued-item__prompt__centered' : 'hidden'}>
-          <div className="prompt">
+          <div className="prompt__text">
             A file already exists by that name. Do you want to overwrite it?
           </div>
           <br />
           <div className="file-title">{file.name}</div>
-          <a className="btn yes" onClick={() => this.onOverwrite(true)}>Yes</a>
-          <a className="btn no" onClick={() => this.onOverwrite(false)}>No</a>
+          <a className="queued-item__button--yes" onClick={() => this.onOverwrite(true)}>Yes</a>
+          <a className="queued-item__button--no" onClick={() => this.onOverwrite(false)}>No</a>
         </div>
       </div>
     );

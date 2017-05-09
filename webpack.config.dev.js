@@ -1,3 +1,4 @@
+const path = require('path');
 module.exports = {
   entry: './src/scripts/app.jsx',
   output: {
@@ -18,7 +19,10 @@ module.exports = {
           presets: ['react', 'es2015', 'stage-0']
         }
       },
-      { test: /\.scss$/, loader: "style-loader!css-loader!sass-loader" }
+      {
+        test: /\.s[c|a]ss$/,
+        loader: "style-loader!css-loader!sass-loader"
+      }
     ]
   },
   resolve: {

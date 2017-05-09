@@ -3,7 +3,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-require('../styles/main.scss');
+require('../styles/main.sass');
 
 const Header = require('./components/Header.jsx');
 const Dropstrip = require('./components/dropstrip/Dropstrip.jsx');

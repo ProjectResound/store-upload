@@ -55,6 +55,7 @@ class Explorer extends React.Component {
             ))}
           </tbody>
         </table>
+        <img src="/assets/images/mascot.png" width="100%" className="explorer__mascot" />
       </div>
     );
   }

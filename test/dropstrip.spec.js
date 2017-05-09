@@ -50,13 +50,13 @@ describe('<Dropstrip />', function() {
 
   it('shows dotted border when something dragged onto Dropstrip', () => {
     TestUtils.Simulate.dragEnter(this.stripDOM);
-    expect(this.stripDOM.className).to.contain('dz-drag-hover');
+    expect(this.stripDOM.className).to.contain('upload__border--hover');
   });
 
   it('removes dotted border when thing is dragged off Dropstrip', () => {
     TestUtils.Simulate.dragEnter(this.stripDOM);
     TestUtils.Simulate.dragLeave(this.stripDOM);
-    expect(this.stripDOM.className).not.to.contain('dz-drag-hover');
+    expect(this.stripDOM.className).not.to.contain('upload__border--hover');
   });
 
   it('renders QueuedItems when an files dropped into Dropstrip', () => {
@@ -66,7 +66,7 @@ describe('<Dropstrip />', function() {
 
   it('shows cancellation message when user clicks cancel on a queuedItem', () => {
     _dropInMockFiles();
-    const cancelButton = TestUtils.findRenderedDOMComponentWithClass(this.component, 'cancel');
+    const cancelButton = TestUtils.findRenderedDOMComponentWithClass(this.component, 'queued-item__button--grey');
     expect(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'queued-item__prompt__centered').length).to.equal(0);
 
     TestUtils.Simulate.click(cancelButton);
@@ -76,8 +76,8 @@ describe('<Dropstrip />', function() {
 
   it('removes the queuedItem when user confirms cancel click', () => {
     _dropInMockFiles();
-    TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(this.component, 'cancel'));
-    const yesCancel = TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'btn yes')[0];
+    TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(this.component, 'queued-item__button--grey'));
+    const yesCancel = TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'queued-item__button--yes')[0];
 
     TestUtils.Simulate.click(yesCancel);
 

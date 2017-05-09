@@ -1,0 +1,208 @@
+// Dropzone
+=dropzone__button
+  background-color: $primary-color
+  color: white
+  padding: 0.75em
+  margin-top: 1em
+  cursor: pointer
+  display: inline-block
+
+.upload
+  $progressbar-height: 30px
+  $action-button-width: 30px
+  margin-bottom: 0px
+
+  input[type=file]
+    display: none
+
+  input[type=text]
+    min-width: 100%
+
+  label
+    color: $gray-color
+    display: block
+    font-size: 0.75em
+    font-weight: 600
+
+  .upload__text--right
+    width: 100%
+    text-align: right
+
+  .upload__dz
+    background-color: $secondary-background-color
+    min-height: 100vh
+    padding: 0 0
+
+    // The following classes are added by a dropzone library, so we have no control
+    // of what the classnames are.
+    .dz-started
+      .dz-message
+        display: none
+
+  .upload__btn
+    +dropzone__button
+
+  .upload__border--hover
+    border: 2px $primary-color dashed
+    .dz-message
+      opacity: 0.5
+
+  .upload__dz.dz-wrapper .dz-message
+    background-color: $secondary-background-color
+    border: none
+
+  .upload__queue
+    min-height: 100vh
+
+  .queue__header
+    padding: 1em
+    color: $secondary-color
+    font-size: 1.2em
+
+  .queue__footer
+    padding: 1rem
+    font-size: .9rem
+    color: $secondary-color
+    font-style: italic
+    font-weight: normal
+
+  .queue__valigner
+    display: flex
+    text-align: center
+    justify-content: center
+    align-items: center
+    min-height: 100vh
+
+  .queue__text
+    color: $secondary-color
+    font-size: 1.5rem
+    font-weight: lighter
+
+  .queued-item
+    margin: 1px 2px
+    background: white
+    padding: 1em 1.5em
+    position: relative
+
+  .queued-item__button
+    +dropzone__button
+    padding: 0.75em 1.5em
+
+  =button--yesno
+    +dropzone__button
+    width: 68px
+
+  .queued-item__button--yes
+    +button--yesno
+
+  .queued-item__button--no
+    +button--yesno
+    background-color: lighten($primary-color, 20%)
+
+  .queued-item__button:disabled
+    opacity: 0.5
+
+  .queued-item__filename
+    margin-bottom: 1em
+
+  .queued-item__button--grey
+    color: $gray-color
+    cursor: pointer
+    position: absolute
+    top: 0.5em
+    right: 0.5em
+
+  .queued-item__alert
+    font-size: 0.7rem
+    color: $error-color
+
+  .queued-item__failed-msg
+    display: block
+    height: $progressbar-height
+    width: 100%
+    border: 1px solid $error-color
+    color: $error-color
+    text-transform: uppercase
+    padding-left: 10px
+    padding-top: 7px
+    font-size: 0.8rem
+
+  .progress-container
+    position: relative
+    height: $progressbar-height
+    display: block
+    width: 100%
+    background-color: lighten($secondary-color, 40%)
+    border-radius: 2px
+    margin: 0
+    overflow: hidden
+
+    &.paused
+      background-color: lighten($error-color, 20%)
+
+  =bar-background
+    color: white
+    position: absolute
+    top: 0
+    left: $action-button-width
+    bottom: 0
+    transition: width .3s linear
+    font-size: 0.75rem
+    padding-top: 7px
+    padding-left: 7px
+    white-space: nowrap
+
+  .progress-container__bar
+    +bar-background
+    background-color: $secondary-color
+
+
+  .progress-container__bar--paused
+    +bar-background
+    background-color: lighten($error-color, 10%)
+
+  .progress-container__button--pause
+    padding: 0
+    width: $action-button-width
+    height: $progressbar-height
+
+  .progress-container__button--resume
+    padding: 0
+    width: $action-button-width
+    height: $progressbar-height
+
+  .progress-container__image
+    height: 100%
+
+  .queued-item__file-title
+    position: relative
+
+
+  .file-title__img
+    position: absolute
+    top: 3px
+    left: -20px
+
+  .completed__metadata
+    font-size: 0.75rem
+    color: $gray-color
+    padding: 0
+
+  .completed__edit
+    text-align: right
+    padding: 0
+
+  .completed-container .row
+    margin: 1em 0 0 0
+
+  .completed-container a
+    font-size: 0.75rem
+    color: $secondary-color
+
+  .queued-item__prompt__centered
+    text-align: center
+    font-size: 0.95rem
+    padding: 2em 1em
+
+  .prompt__text
+    font-weight: lighter
