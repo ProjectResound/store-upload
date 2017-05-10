@@ -223,7 +223,7 @@ class QueuedItem extends React.Component {
             {form.title}
           </div>
           <div className="row">
-            <div className="col s6 completed__metadata">{file.duration} | {fileSize}MB</div>
+            <div className="col s6 completed__metadata">{fileSize}MB</div>
             <div className="col s6 completed__edit">
               <a>Edit this file</a>
             </div>

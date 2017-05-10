@@ -6,7 +6,5 @@ module.exports = {
     }
     return fetch(uri)
       .then(response => response.json());
-      // TODO: move following line to to another file so this is api is more general
-      // .then(audioList => ExplorerActions.receiveAudioList(audioList));
   }
 };
