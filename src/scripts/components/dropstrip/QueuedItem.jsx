@@ -79,6 +79,13 @@ class QueuedItem extends React.Component {
     });
   }
 
+  onRetry() {
+    DropstripActions.retryUpload(this.props.file.name);
+    this.setState({
+      progress: 'uploading'
+    });
+  }
+
   onCancel(e) {
     e.stopPropagation();
     if (this.state.progress === 'uploading' || this.state.progress === 'paused') {
@@ -240,7 +247,7 @@ class QueuedItem extends React.Component {
             upload failed
           </div>
           <div className="upload__text--right">
-            <div className="queued-item__button" onClick={this.onResume}>
+            <div className="queued-item__button" onClick={() => this.onRetry()}>
               Try again
           </div>
           </div>

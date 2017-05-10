@@ -59,6 +59,11 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
     dropzoneQueue[filename].flowFile.resume();
   },
 
+  retry(filename) {
+    delete dropzoneQueue[filename].failed;
+    dropzoneQueue[filename].flowFile.retry();
+  },
+
   success(filename) {
     dropzoneQueue[filename].completed = true;
     resoundAPI.get(filename)
@@ -67,6 +72,11 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
 
   overwrite(filename) {
     dropzoneQueue[filename].status.exists = false;
+  },
+
+  failed(filename) {
+    dropzoneQueue[filename].failed = true;
+    this.emitChange('failed');
   }
 });
 
@@ -94,6 +104,12 @@ AppDispatcher.register((action) => {
       break;
     case 'OVERWRITE':
       DropstripStore.overwrite(action.filename);
+      break;
+    case 'UPLOAD_FAILED':
+      DropstripStore.failed(action.filename);
+      break;
+    case 'RETRY_UPLOAD':
+      DropstripStore.retry(action.filename);
       break;
     default:
   }
@@ -125,8 +141,7 @@ DropstripStore.flow.on('fileAdded', (flowFile) => {
 });
 
 DropstripStore.flow.on('fileError', (flowFile) => {
-  dropzoneQueue[flowFile.name].failed = true;
-  DropstripStore.emitChange('failed');
+  DropstripStore.failed(flowFile.name);
 });
 
 module.exports = DropstripStore;

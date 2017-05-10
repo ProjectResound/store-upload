@@ -33,6 +33,12 @@ module.exports = {
       filename
     });
   },
+  retryUpload: (filename) => {
+    AppDispatcher.dispatch({
+      actionType: 'RETRY_UPLOAD',
+      filename
+    });
+  },
   uploadSuccess: (filename) => {
     AppDispatcher.dispatch({
       actionType: 'UPLOAD_SUCCESS',
@@ -42,6 +48,12 @@ module.exports = {
   overwriteFile: (filename) => {
     AppDispatcher.dispatch({
       actionType: 'OVERWRITE',
+      filename
+    });
+  },
+  uploadFailed: (filename) => {
+    AppDispatcher.dispatch({
+      actionType: 'UPLOAD_FAILED',
       filename
     });
   }

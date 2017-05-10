@@ -61,6 +61,8 @@ class Dropstrip extends React.Component {
       received: (msg) => {
         if (msg.filename && msg.status === 'success') {
           DropstripActions.uploadSuccess(msg.filename);
+        } else if (msg.status === 'failed') {
+          DropstripActions.uploadFailed(msg.filename);
         }
       }
     });
