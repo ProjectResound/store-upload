@@ -12,10 +12,14 @@ require('isomorphic-fetch');
 
 const _ = require('underscore');
 const expect = require('chai').expect;
+const assert = require('chai').assert;
 const sinon = require('sinon');
 const Promise = require('es6-promise').Promise;
 const Dropzone = require('react-dropzone');
-const resoundAPI = require('../src/scripts/utils/resound-api');
+const DropstripActions = require('../src/scripts/components/dropstrip/dropstrip-actions');
+const Flow = require('@flowjs/flow.js');
+const FlowFile = Flow.FlowFile;
+
 
 describe('<Dropstrip />', function() {
   beforeEach(() => {
@@ -104,7 +108,66 @@ describe('<Dropstrip />', function() {
     _dropInMockFiles();
 
     expect(stub.calledWith('http://localhost:3000/api/v1/audios?filename=fakeFile_0.wav')).to.be.true;
-    global.fetch.restore();
+    stub.restore();
+  });
+
+  describe('on clicking upload', () => {
+    beforeEach(() => {
+      this.flowUploadStub = sinon.stub(Flow.prototype, 'upload');
+      _dropInMockFiles();
+      const titleInput = TestUtils.findRenderedDOMComponentWithClass(this.component, 'title');
+      const contributorInput = TestUtils.findRenderedDOMComponentWithClass(this.component, 'contributor');
+
+      TestUtils.Simulate.change(titleInput, {target: {value: 'here is a title', name: 'title'}});
+      TestUtils.Simulate.change(contributorInput, {target: {value: 'Contributor McPants', name: 'contributor'}});
+      TestUtils.Simulate.submit(TestUtils.findRenderedDOMComponentWithClass(this.component, 'form__queuedItem'));
+    });
+
+    afterEach(() => {
+      this.flowUploadStub.restore();
+    });
+
+    it('shows a progress bar and pause button', () => {
+      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'progress-container__bar')).to.exist;
+      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'progress-container__button--pause'))
+    });
+
+    it('can pause and resume', () => {
+      this.flowPauseStub = sinon.stub(FlowFile.prototype, 'pause');
+      this.flowResumeStub = sinon.stub(FlowFile.prototype, 'resume');
+
+      const pauseButton = TestUtils.findRenderedDOMComponentWithClass(this.component,
+        'progress-container__button--pause');
+      TestUtils.Simulate.click(pauseButton);
+
+      assert(this.flowPauseStub.called, 'FlowFile.pause() was called');
+      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'paused-container')).to.exist;
+
+      const resumeButton = TestUtils.findRenderedDOMComponentWithClass(this.component,
+        'progress-container__button--resume');
+      TestUtils.Simulate.click(resumeButton);
+
+      assert(this.flowResumeStub.called, 'FlowFile.resume() was called');
+      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'uploading-container')).to.exist;
+
+      this.flowPauseStub.restore();
+      this.flowResumeStub.restore();
+    });
+
+    it('shows success', () => {
+      const promise = new Promise((resolve) => {});
+      const stub = sinon.stub(global, 'fetch').returns(promise);
+
+      DropstripActions.uploadSuccess('fakeFile_0.wav');
+      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'success-container')).to.exist;
+      stub.restore();
+    });
+
+    it('cancels upload', () => {
+      const cancelButton = TestUtils.findRenderedDOMComponentWithClass(this.component, 'queued-item__button--grey');
+      TestUtils.Simulate.click(cancelButton);
+      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'queued-item__prompt__centered')).to.exist;
+    });
   });
 });
 
