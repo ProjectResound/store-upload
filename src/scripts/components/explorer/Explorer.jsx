@@ -44,9 +44,9 @@ class Explorer extends React.Component {
           <thead>
             <tr>
               <th className="explorer__table-header__title">Title</th>
-              <th>File Name</th>
+              <th>Title</th>
               <th>Date</th>
-              <th>File Size</th>
+              <th>Length</th>
             </tr>
           </thead>
           <tbody>
