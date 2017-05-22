@@ -29,7 +29,7 @@ Production requirements:
 
 ### The simplest way to get a demo of this product with the default settings:
 
-1. Download [docker-compose.yml](prod/docker-compose.yml)
+1. Download [docker-compose.yml](/docker/docker-compose.yml)
 2. Determine what URL your API is at. For newer versions of Docker for Mac, this will just be localhost. For containers
 hosted on docker-machine, the ip would be what `docker-machine ip` prints out. For this example, I just used the ip of my 
 docker-machine (192.168.99.100).
