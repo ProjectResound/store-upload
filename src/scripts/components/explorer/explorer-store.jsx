@@ -18,7 +18,14 @@ const ExplorerStore = assign({}, EventEmitter.prototype, {
   },
 
   getAudioList: (action) => {
-    if (action) audioList = action.response;
+    if (action && action.response) {
+      audioList = action.response.concat(audioList);
+    }
+    audioList.sort((a, b) => {
+      const aDate = new Date(a.updated_at);
+      const bDate = new Date(b.updated_at);
+      return bDate - aDate;
+    });
     return audioList;
   },
 });

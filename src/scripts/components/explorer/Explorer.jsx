@@ -50,8 +50,8 @@ class Explorer extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.audioList.map(audioItem => (
-              <AudioItem key={audioItem.filename} audioItem={audioItem} />
+            {this.state.audioList.map((audioItem, index) => (
+              <AudioItem key={index} audioItem={audioItem} />
             ))}
           </tbody>
         </table>
