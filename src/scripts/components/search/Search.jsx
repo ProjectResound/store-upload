@@ -35,6 +35,7 @@ class Search extends React.Component {
         <form onSubmit={this.onSubmit} className="search__form">
           <input
             type="text"
+            className="search__query"
             placeholder="Search for a file"
             name="query"
             value={this.state.query}

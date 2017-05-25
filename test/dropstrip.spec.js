@@ -12,12 +12,12 @@ import Dropzone from 'react-dropzone';
 import _ from 'underscore';
 import {expect, assert} from 'chai';
 import sinon from 'sinon';
-import Promise from 'es6-promise';
+import sinonStubPromise from 'sinon-stub-promise';
 import 'isomorphic-fetch';
+import Flow from '@flowjs/flow.js';
 
-const Flow = require('@flowjs/flow.js');
+sinonStubPromise(sinon);
 const FlowFile = Flow.FlowFile;
-
 
 describe('<Dropstrip />', function() {
   beforeEach(() => {
@@ -100,8 +100,7 @@ describe('<Dropstrip />', function() {
   });
 
   it('queries the server on fileDrop to check for existing file', () => {
-    const promise = new Promise((resolve) => {});
-    const stub = sinon.stub(global, 'fetch').returns(promise);
+    const stub = sinon.stub(global, 'fetch').returnsPromise().resolves();
 
     _dropInMockFiles();
 
@@ -153,8 +152,7 @@ describe('<Dropstrip />', function() {
     });
 
     it('shows success', () => {
-      const promise = new Promise((resolve) => {});
-      const stub = sinon.stub(global, 'fetch').returns(promise);
+      const stub = sinon.stub(global, 'fetch').returnsPromise().resolves();
 
       DropstripActions.uploadSuccess('fakeFile_0.wav');
       expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'success-container')).to.exist;
