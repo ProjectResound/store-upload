@@ -7,16 +7,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-dom/test-utils'
 import Dropstrip from '../src/scripts/components/dropstrip/Dropstrip';
+import DropstripActions from '../src/scripts/components/dropstrip/dropstrip-actions';
+import Dropzone from 'react-dropzone';
+import _ from 'underscore';
+import {expect, assert} from 'chai';
+import sinon from 'sinon';
+import Promise from 'es6-promise';
+import 'isomorphic-fetch';
 
-require('isomorphic-fetch');
-
-const _ = require('underscore');
-const expect = require('chai').expect;
-const assert = require('chai').assert;
-const sinon = require('sinon');
-const Promise = require('es6-promise').Promise;
-const Dropzone = require('react-dropzone');
-const DropstripActions = require('../src/scripts/components/dropstrip/dropstrip-actions');
 const Flow = require('@flowjs/flow.js');
 const FlowFile = Flow.FlowFile;
 
