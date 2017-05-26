@@ -34,6 +34,11 @@ module.exports = {
     "react/jsx-no-bind": 0
   },
   globals: {
-    "fetch": true
+    "fetch": true,
+    "window": true,
+    "describe": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "it": true,
   }
 };

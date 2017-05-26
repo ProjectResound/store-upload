@@ -1,34 +1,28 @@
-global.WebSocket = require('ws');
-window.URL.createObjectURL = () => {
-  'http://fakeurl.wav'
-};
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TestUtils from 'react-dom/test-utils'
+import TestUtils from 'react-dom/test-utils';
 import Explorer from '../src/scripts/components/explorer/Explorer';
-import AudioItem from '../src/scripts/components/explorer/AudioItem';
 
-require('isomorphic-fetch');
-
+const moment = require('moment');
 const _ = require('underscore');
 const expect = require('chai').expect;
 const sinon = require('sinon');
 const Promise = require('es6-promise').Promise;
 const ExplorerActions = require('../src/scripts/components/explorer/explorer-actions');
-const ExplorerStore = require('../src/scripts/components/explorer/explorer-store');
 const DropstripActions = require('../src/scripts/components/dropstrip/dropstrip-actions');
+require('isomorphic-fetch');
 
-describe('<Explorer />', function() {
+describe('<Explorer />', function () {
   beforeEach(() => {
-    global.audioList = [];
+    const promise = new Promise(() => {});
+    this.stub = sinon.stub(global, 'fetch').returns(promise);
     this.component = TestUtils.renderIntoDocument(<Explorer />);
     this.stripDOM = ReactDOM.findDOMNode(this.component);
   });
 
   afterEach(() => {
     ReactDOM.unmountComponentAtNode(this.stripDOM.parentNode);
-    global.audioList = [];
+    this.stub.restore();
   });
 
   const _respondWithFiles = (filesToMock = 1) => {
@@ -51,9 +45,14 @@ describe('<Explorer />', function() {
     return files;
   };
 
+  it('requests a list from the api on mounting', () => {
+    expect(this.stub.calledWith('http://localhost:3000/api/v1/audios')).to.be.true;
+  });
+
   it('renders a list of files', () => {
     ExplorerActions.receiveAudioList(_respondWithFiles(5));
     const fileList = this.stripDOM.getElementsByClassName('explorer__table__audio-item');
+
     expect(fileList).to.have.length(5);
   });
 
@@ -67,15 +66,23 @@ describe('<Explorer />', function() {
     });
 
     expect(properties).to.have.length(4)
-    expect(eachColumnIsRendered).to.equal(true);
+    expect(eachColumnIsRendered).to.be.true;
+  });
+
+  it('adds a single file after a successful upload', () => {
+    DropstripActions.uploadSuccess('fakeFile_0.wav');
+    const fileList = this.stripDOM.getElementsByClassName('explorer__table__audio-item');
+
+    expect(fileList).to.have.length(1);
   });
 
   it('sorts the files by updated_at', () => {
     const unsortedAudioList = _respondWithFiles(5).reverse();
     ExplorerActions.receiveAudioList(unsortedAudioList);
-    const newlySortedAudioList = ExplorerStore.getAudioList();
+
+    const newlySortedAudioList = this.component.state.audioList;
     let isSorted = true;
-    for (let i = 0; i < newlySortedAudioList.length - 1; i++) {
+    for (let i = 0; i < newlySortedAudioList.length - 1; i += 1) {
       const currentUpdatedDate = new Date(newlySortedAudioList[i].updated_at);
       const nextUpdatedDate = new Date(newlySortedAudioList[i + 1].updated_at);
       if (currentUpdatedDate < nextUpdatedDate) {
@@ -86,13 +93,25 @@ describe('<Explorer />', function() {
     expect(isSorted).to.equal(true);
   });
 
-  it('adds a single file after a successful upload', () => {
-    const newList = ExplorerStore.getAudioList();
-    expect(newList).to.have.length(0);
-    DropstripActions.uploadSuccess('fakeFile_0.wav');
-    const audioItem = this.stripDOM.getElementsByClassName('explorer__table__audio-item');
-    console.log(audioItem);
-    expect(audioItem).to.exist;
+  it('renders dates in the correct format', () => {
+    ExplorerActions.receiveAudioList(_respondWithFiles());
+    const dateFromDOM = this.stripDOM.getElementsByClassName('explorer__table__audio-item-date')[0];
+    const date = new Date(dateFromDOM.innerHTML);
+
+    let isDate = false;
+    if (date !== 'Invalid Date' && !isNaN(date)) {
+      isDate = true;
+    }
+
+    expect(isDate).to.be.true;
+  });
+
+  it('renders durations in the correct format', () => {
+    ExplorerActions.receiveAudioList(_respondWithFiles());
+    const durationFromDOM = this.stripDOM.getElementsByClassName('explorer__table__audio-item-duration')[0].innerHTML;
+    const duration = moment(durationFromDOM, 'HH:mm:ss');
+
+    expect(duration.isValid()).to.be.true;
   });
 });
 
