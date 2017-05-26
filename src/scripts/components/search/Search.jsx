@@ -1,7 +1,6 @@
 import React from 'react';
-
-const SearchActions = require('./search-actions');
-const SearchStore = require('./search-store');
+import SearchActions from './search-actions';
+import SearchStore from './search-store';
 
 class Search extends React.Component {
   constructor(props) {
@@ -9,12 +8,15 @@ class Search extends React.Component {
     this.state = { query: '' };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this._searchReturned = this._searchReturned.bind(this);
   }
 
   componentDidMount() {
+    SearchStore.addChangeListener(this._searchReturned);
   }
 
   componentWillUnmount() {
+    SearchStore.removeChangeListener(this._searchReturned);
   }
 
   onChange(event) {
@@ -23,9 +25,20 @@ class Search extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
+    this.setState({
+      searching: true
+    });
     const query = this.state.query;
     if (query) {
       SearchActions.search(query);
+    }
+  }
+
+  _searchReturned(success) {
+    if (success) {
+      this.setState({
+        searching: false
+      });
     }
   }
 
@@ -41,7 +54,12 @@ class Search extends React.Component {
             value={this.state.query}
             onChange={this.onChange}
           />
-          <input type="submit" value="Search" />
+          <input
+            type="image"
+            value="Search"
+            className="search__submit"
+            src={this.state.searching ? '/assets/images/loading.gif' : '/assets/images/icon-search.png'}
+          />
         </form>
       </div>
     );

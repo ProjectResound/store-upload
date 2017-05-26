@@ -159,7 +159,7 @@ class QueuedItem extends React.Component {
             <div className="row">
               <label htmlFor="title">Title</label>
               <input
-                className="title"
+                className="title queued-item__input-text"
                 type="text"
                 name="title"
                 placeholder="What is this file about?"
@@ -174,7 +174,7 @@ class QueuedItem extends React.Component {
               <label htmlFor="contributor">Contributor</label>
               <input
                 type="text"
-                className="contributor"
+                className="contributor queued-item__input-text"
                 name="contributor"
                 placeholder="Who made this? (Separate 2+ names with commas)"
                 onChange={this.onChange}

@@ -6,8 +6,8 @@ const ExplorerActions = require('../explorer/explorer-actions');
 
 
 const SearchStore = assign({}, EventEmitter.prototype, {
-  emitChange() {
-    this.emit('change');
+  emitChange(success) {
+    this.emit('change', success);
   },
 
   addChangeListener(cb) {
@@ -22,6 +22,7 @@ const SearchStore = assign({}, EventEmitter.prototype, {
     resoundAPI.search(query)
       .then((results) => {
         ExplorerActions.receiveAudioList(results);
+        SearchStore.emitChange(true);
       });
   },
 });
