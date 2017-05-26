@@ -1,10 +1,9 @@
 import React from 'react';
-
-const Dropzone = require('react-dropzone');
-const DropstripActions = require('./dropstrip-actions');
-const DropstripStore = require('./dropstrip-store');
-const QueuedItem = require('./QueuedItem.jsx');
-const ActionCable = require('actioncable');
+import Dropzone from 'react-dropzone';
+import ActionCable from 'actioncable';
+import DropstripActions from './dropstrip-actions';
+import DropstripStore from './dropstrip-store';
+import QueuedItem from './QueuedItem';
 
 const cable = ActionCable.createConsumer('ws://localhost:3000/cable');
 const getStateFromStore = () => DropstripStore.getQueue();

@@ -1,6 +1,6 @@
-const AppDispatcher = require('../../dispatcher/app-dispatcher');
-const EventEmitter = require('events').EventEmitter;
-const assign = require('object-assign');
+import { EventEmitter } from 'events';
+import assign from 'object-assign';
+import AppDispatcher from '../../dispatcher/app-dispatcher';
 
 let audioList = [];
 
@@ -19,7 +19,7 @@ const ExplorerStore = assign({}, EventEmitter.prototype, {
 
   getAudioList: (action) => {
     if (action && action.response) {
-      audioList = action.response.concat(audioList);
+      audioList = action.response;
     }
     audioList.sort((a, b) => {
       const aDate = new Date(a.updated_at);
