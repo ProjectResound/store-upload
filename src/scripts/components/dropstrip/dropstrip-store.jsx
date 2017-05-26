@@ -66,7 +66,7 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
 
   success(filename) {
     dropzoneQueue[filename].completed = true;
-    resoundAPI.get(filename)
+    resoundAPI.get()
       .then(audioList => ExplorerActions.receiveAudioList(audioList));
   },
 
