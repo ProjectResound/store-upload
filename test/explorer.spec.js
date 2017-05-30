@@ -73,7 +73,14 @@ describe('<Explorer />', function () {
 
   it('adds a single file after a successful upload', () => {
     const listBeforeUpload = ExplorerStore.getAudioList();
-    const actionStub = { response: _respondWithFiles() };
+    const actionStub = { response: [{
+      id: 77,
+      filename: `fakeFile_77.wav`,
+      created_at: new Date(),
+      updated_at: new Date(),
+      duration: 13,
+      title: `fakeTitle_77`,
+    }]};
     const listAfterUpload = ExplorerStore.appendAudioList(actionStub);
 
     expect(listAfterUpload.length).to.equal(listBeforeUpload.length + 1)

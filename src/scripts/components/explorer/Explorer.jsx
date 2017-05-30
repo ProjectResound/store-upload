@@ -49,7 +49,12 @@ class Explorer extends React.Component {
             <div className="explorer__table-header col s3">Length</div>
           </div>
           {this.state.audioList.map((audioItem, index) => (
-            <AudioItem index={index} isAppending={this.state.isAppending} key={audioItem.filename + audioItem.updated_at} audioItem={audioItem} />
+            <AudioItem
+              index={index}
+              isAppending={this.state.isAppending}
+              key={audioItem.filename + audioItem.updated_at}
+              audioItem={audioItem}
+            />
           ))}
         </div>
         <img src="/assets/images/mascot.png" width="100%" className="explorer__mascot" />
