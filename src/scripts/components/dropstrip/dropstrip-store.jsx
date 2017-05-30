@@ -1,9 +1,9 @@
-const AppDispatcher = require('../../dispatcher/app-dispatcher');
-const resoundAPI = require('./../../utils/resound-api');
-const ExplorerActions = require('../explorer/explorer-actions');
-const EventEmitter = require('events').EventEmitter;
-const assign = require('object-assign');
-const Flow = require('@flowjs/flow.js');
+import { EventEmitter } from 'events';
+import assign from 'object-assign';
+import Flow from '@flowjs/flow.js';
+import AppDispatcher from '../../dispatcher/app-dispatcher';
+import resoundAPI from './../../utils/resound-api';
+import ExplorerActions from '../explorer/explorer-actions';
 
 const dropzoneQueue = {};
 

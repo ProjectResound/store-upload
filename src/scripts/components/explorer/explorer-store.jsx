@@ -1,6 +1,6 @@
-const AppDispatcher = require('../../dispatcher/app-dispatcher');
-const EventEmitter = require('events').EventEmitter;
-const assign = require('object-assign');
+import { EventEmitter } from 'events';
+import assign from 'object-assign';
+import AppDispatcher from '../../dispatcher/app-dispatcher';
 
 let audioList = [];
 let isAppending = false;

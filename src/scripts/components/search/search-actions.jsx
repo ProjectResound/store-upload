@@ -1,4 +1,4 @@
-const AppDispatcher = require('../../dispatcher/app-dispatcher');
+import AppDispatcher from '../../dispatcher/app-dispatcher';
 
 module.exports = {
   search: (query) => {

@@ -1,10 +1,8 @@
 import React from 'react';
-
-const resoundAPI = require('./../../utils/resound-api');
-const ExplorerStore = require('./explorer-store');
-const ExplorerActions = require('./explorer-actions');
-
-const AudioItem = require('./AudioItem.jsx');
+import resoundAPI from './../../utils/resound-api';
+import ExplorerStore from './explorer-store';
+import ExplorerActions from './explorer-actions';
+import AudioItem from './AudioItem';
 
 const getStateFromStore = () => ExplorerStore.getAudioList();
 const getTransitionStateFromStore = () => ExplorerStore.getTransitionState();
