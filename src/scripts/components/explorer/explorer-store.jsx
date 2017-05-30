@@ -34,6 +34,7 @@ const ExplorerStore = assign({}, EventEmitter.prototype, {
   appendAudioList: (action) => {
     if (action && action.response) {
       isAppending = true;
+      audioList = audioList.filter(audio => audio.filename !== action.response[0].filename);
       audioList = action.response.concat(audioList);
     }
     audioList.sort((a, b) => {
