@@ -3,6 +3,7 @@ const EventEmitter = require('events').EventEmitter;
 const assign = require('object-assign');
 
 let audioList = [];
+let isAppending = false;
 
 const ExplorerStore = assign({}, EventEmitter.prototype, {
   emitChange() {
@@ -19,6 +20,20 @@ const ExplorerStore = assign({}, EventEmitter.prototype, {
 
   getAudioList: (action) => {
     if (action && action.response) {
+      isAppending = false;
+      audioList = action.response;
+    }
+    audioList.sort((a, b) => {
+      const aDate = new Date(a.updated_at);
+      const bDate = new Date(b.updated_at);
+      return bDate - aDate;
+    });
+    return audioList;
+  },
+
+  appendAudioList: (action) => {
+    if (action && action.response) {
+      isAppending = true;
       audioList = action.response.concat(audioList);
     }
     audioList.sort((a, b) => {
@@ -28,12 +43,17 @@ const ExplorerStore = assign({}, EventEmitter.prototype, {
     });
     return audioList;
   },
+
+  getTransitionState: () => isAppending,
 });
 
 AppDispatcher.register((action) => {
   switch (action.actionType) {
     case 'GET_AUDIO_LIST':
       ExplorerStore.getAudioList(action);
+      break;
+    case 'APPEND_AUDIO_LIST':
+      ExplorerStore.appendAudioList(action);
       break;
     default:
   }

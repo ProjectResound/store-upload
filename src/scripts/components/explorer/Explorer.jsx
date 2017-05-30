@@ -7,12 +7,14 @@ const ExplorerActions = require('./explorer-actions');
 const AudioItem = require('./AudioItem.jsx');
 
 const getStateFromStore = () => ExplorerStore.getAudioList();
+const getTransitionStateFromStore = () => ExplorerStore.getTransitionState();
 
 class Explorer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      audioList: []
+      audioList: [],
+      isAppending: false,
     };
     this.onChange = this.onChange.bind(this);
   }
@@ -29,7 +31,8 @@ class Explorer extends React.Component {
 
   onChange() {
     this.setState({
-      audioList: getStateFromStore()
+      audioList: getStateFromStore(),
+      isAppending: getTransitionStateFromStore(),
     });
   }
 
@@ -40,21 +43,17 @@ class Explorer extends React.Component {
 
     return (
       <div className="explorer col s9">
-        <table className="explorer__table col s12" cellSpacing="0">
-          <thead>
-            <tr>
-              <th className="explorer__table-header__title">Title</th>
-              <th>File Name</th>
-              <th>Date</th>
-              <th>Length</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.audioList.map((audioItem, index) => (
-              <AudioItem key={index} audioItem={audioItem} />
-            ))}
-          </tbody>
-        </table>
+        <div className="explorer__table col s12">
+          <div className="row">
+            <div className="explorer__table-header col s3">Title</div>
+            <div className="explorer__table-header col s3">File Name</div>
+            <div className="explorer__table-header col s3">Date</div>
+            <div className="explorer__table-header col s3">Length</div>
+          </div>
+          {this.state.audioList.map((audioItem, index) => (
+            <AudioItem index={index} isAppending={this.state.isAppending} key={audioItem.filename + audioItem.updated_at} audioItem={audioItem} />
+          ))}
+        </div>
         <img src="/assets/images/mascot.png" width="100%" className="explorer__mascot" />
       </div>
     );

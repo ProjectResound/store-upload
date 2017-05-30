@@ -10,20 +10,30 @@
 
   .explorer__table
     text-align: left
-    border-collapse: collapse
     font-weight: 300
     color: $gray-color
 
-  .explorer__table-header__title
-    width: 40%
-
-  td
-    padding: 2em 2.8em
+  .explorer__table__audio-item
+    transition-property: max-height, height
+    overflow: hidden
     border-bottom: 2px solid $table-border-color
 
-  th
+  .explorer__table__audio-item--blind-down
+    animation: blind-in 1s forwards
+
+  .explorer__table__audio-item__property
+    padding: 2em 2.8em
+
+  .explorer__table-header
     color: $primary-color-light
     font-weight: 400
     font-size: 0.9em
     padding: 1em 3em
     border-bottom: 2px solid $table-border-color
+
+@keyframes blind-in
+  0%
+    max-height: 0
+    border-bottom: 100% solid $table-border-color
+  100%
+    max-height: 100px

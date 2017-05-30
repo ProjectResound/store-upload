@@ -7,4 +7,10 @@ module.exports = {
       response,
     });
   },
+  appendAudioList: (response) => {
+    AppDispatcher.dispatch({
+      actionType: 'APPEND_AUDIO_LIST',
+      response,
+    });
+  },
 };
