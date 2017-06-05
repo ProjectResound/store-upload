@@ -4,6 +4,7 @@ import Flow from '@flowjs/flow.js';
 import AppDispatcher from '../../dispatcher/app-dispatcher';
 import resoundAPI from './../../utils/resound-api';
 import ExplorerActions from '../explorer/explorer-actions';
+import ErrorsActions from '../errors/errors-actions';
 
 const dropzoneQueue = {};
 
@@ -30,7 +31,7 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
         DropstripStore.emitChange();
       }
     }).catch((err) => {
-    //  TODO: handle this error;
+      ErrorsActions.error(err);
     });
     dropzoneQueue[file.name] = {};
     dropzoneQueue[file.name].name = file.name;

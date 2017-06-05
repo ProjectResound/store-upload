@@ -3,6 +3,7 @@ import resoundAPI from './../../utils/resound-api';
 import ExplorerStore from './explorer-store';
 import ExplorerActions from './explorer-actions';
 import AudioItem from './AudioItem';
+import ErrorsActions from '../errors/errors-actions';
 
 const getStateFromStore = () => ExplorerStore.getAudioList();
 const getTransitionStateFromStore = () => ExplorerStore.getTransitionState();
@@ -20,7 +21,10 @@ class Explorer extends React.Component {
   componentDidMount() {
     ExplorerStore.addChangeListener(this.onChange);
     resoundAPI.get()
-      .then(audioList => ExplorerActions.receiveAudioList(audioList));
+      .then(audioList => ExplorerActions.receiveAudioList(audioList))
+      .catch((err) => {
+        ErrorsActions.error(err);
+      });
   }
 
   componentWillUnmount() {
