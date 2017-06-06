@@ -1,5 +1,5 @@
 import React from 'react';
-import resoundAPI from './../../utils/resound-api';
+import resoundAPI from '../../services/resound-api';
 import ExplorerStore from './explorer-store';
 import ExplorerActions from './explorer-actions';
 import AudioItem from './AudioItem';
@@ -8,7 +8,7 @@ import ErrorsActions from '../errors/errors-actions';
 const getStateFromStore = () => ExplorerStore.getAudioList();
 const getTransitionStateFromStore = () => ExplorerStore.getTransitionState();
 
-class Explorer extends React.Component {
+export default class Explorer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -67,4 +67,3 @@ class Explorer extends React.Component {
   }
 }
 
-module.exports = Explorer;

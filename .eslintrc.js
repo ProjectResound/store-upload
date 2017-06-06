@@ -40,5 +40,6 @@ module.exports = {
     "beforeEach": true,
     "afterEach": true,
     "it": true,
+    "localStorage": true
   }
 };

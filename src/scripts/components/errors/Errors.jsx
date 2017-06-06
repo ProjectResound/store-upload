@@ -1,7 +1,7 @@
 import React from 'react';
 import ErrorsStore from './errors-store';
 
-class Errors extends React.Component {
+export default class Errors extends React.Component {
   constructor(props) {
     super(props);
     this.state = { msg: undefined };
@@ -41,4 +41,4 @@ class Errors extends React.Component {
     );
   }
 }
-module.exports = Errors;
+

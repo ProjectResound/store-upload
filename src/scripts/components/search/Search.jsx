@@ -2,7 +2,7 @@ import React from 'react';
 import SearchActions from './search-actions';
 import SearchStore from './search-store';
 
-class Search extends React.Component {
+export default class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = { query: '' };
@@ -65,5 +65,3 @@ class Search extends React.Component {
     );
   }
 }
-
-module.exports = Search;

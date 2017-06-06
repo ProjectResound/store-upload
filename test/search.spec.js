@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import sinonStubPromise from 'sinon-stub-promise';
 import Search from '../src/scripts/components/search/Search';
 import ExplorerActions from '../src/scripts/components/explorer/explorer-actions';
-import resoundAPI from '../src/scripts/utils/resound-api';
+import resoundAPI from '../src/scripts/services/resound-api';
 
 sinonStubPromise(sinon);
 

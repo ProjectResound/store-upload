@@ -2,7 +2,7 @@ import { EventEmitter } from 'events';
 import assign from 'object-assign';
 import Flow from '@flowjs/flow.js';
 import AppDispatcher from '../../dispatcher/app-dispatcher';
-import resoundAPI from './../../utils/resound-api';
+import resoundAPI from '../../services/resound-api';
 import ExplorerActions from '../explorer/explorer-actions';
 import ErrorsActions from '../errors/errors-actions';
 

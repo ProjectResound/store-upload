@@ -2,16 +2,41 @@
 
 import React from 'react';
 import { render } from 'react-dom';
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom';
+
+import Auth from './services/auth';
 import Header from './components/Header';
-import Dropstrip from './components/dropstrip/Dropstrip';
-import Explorer from './components/explorer/Explorer';
-import Search from './components/search/Search';
-import Errors from './components/errors/Errors';
+import StoreManageApp from './StoreManageApp';
 
-require('../styles/main.sass');
+import '../styles/main.sass';
 
-render(<Header />, document.getElementById('header'));
-render(<Dropstrip />, document.getElementById('dropzone'));
-render(<Search />, document.getElementById('search'));
-render(<Explorer />, document.getElementById('explorer'));
-render(<Errors />, document.getElementById('errors'));
+const auth = new Auth();
+
+class Root extends React.Component {
+  render() {
+    return (
+      <div>
+        <Route render={history => <Header auth={auth} history={history} />} />
+        { auth.isAuthenticated() &&
+          <Route component={StoreManageApp} />
+        }
+        {
+          !auth.isAuthenticated() &&
+          <div>
+            <h1>Logged Out View Placeholder</h1>
+            <img src="/assets/images/mascot.png" width="400" />
+          </div>
+        }
+      </div>
+    );
+  }
+}
+
+render((
+  <Router>
+    <Root />
+  </Router>
+), document.getElementById('root'));

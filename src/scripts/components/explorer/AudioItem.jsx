@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-const AudioItem = ({ audioItem, isAppending, index }) => {
+export default ({ audioItem, isAppending, index }) => {
   const date = new Date(audioItem.created_at).toLocaleDateString();
   const durationInMilliseconds = audioItem.duration * 1000;
   const duration = moment.utc(durationInMilliseconds).format('HH:mm:ss');
@@ -18,5 +18,3 @@ const AudioItem = ({ audioItem, isAppending, index }) => {
     </div>
   );
 };
-
-module.exports = AudioItem;

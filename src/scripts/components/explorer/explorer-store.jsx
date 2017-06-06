@@ -63,4 +63,4 @@ AppDispatcher.register((action) => {
   return true;
 });
 
-module.exports = ExplorerStore;
+export default ExplorerStore;

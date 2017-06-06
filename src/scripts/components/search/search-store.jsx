@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import assign from 'object-assign';
 import AppDispatcher from '../../dispatcher/app-dispatcher';
-import resoundAPI from '../../utils/resound-api';
+import resoundAPI from '../../services/resound-api';
 import ExplorerActions from '../explorer/explorer-actions';
 
 

@@ -8,7 +8,7 @@ import QueuedItem from './QueuedItem';
 const cable = ActionCable.createConsumer('ws://localhost:3000/cable');
 const getStateFromStore = () => DropstripStore.getQueue();
 
-class Dropstrip extends React.Component {
+export default class Dropstrip extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -111,5 +111,3 @@ class Dropstrip extends React.Component {
     );
   }
 }
-
-module.exports = Dropstrip;

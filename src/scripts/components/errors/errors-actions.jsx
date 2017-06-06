@@ -1,6 +1,6 @@
 import AppDispatcher from '../../dispatcher/app-dispatcher';
 
-module.exports = {
+export default {
   error: (err) => {
     AppDispatcher.dispatch({
       actionType: 'ERROR',

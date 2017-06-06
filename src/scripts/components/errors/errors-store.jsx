@@ -20,7 +20,7 @@ const ErrorsStore = assign({}, EventEmitter.prototype, {
       ErrorsStore.emitChange('There was an error contacting the server.');
     }
     if (process.env.NODE_ENV === 'development') {
-      console.dir(action.err);
+      console.dir(action);
     }
   },
 });
@@ -35,4 +35,4 @@ AppDispatcher.register((action) => {
   }
 });
 
-module.exports = ErrorsStore;
+export default ErrorsStore;
