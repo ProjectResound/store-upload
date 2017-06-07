@@ -21,6 +21,12 @@ Production requirements:
 
 ## Development
 
+1. For authentication to work, you'll need to have the following environment variables set:
+```
+AUTH0_CLIENT_ID=123
+AUTH0_DOMAIN=something.auth0.com
+AUTH0_CALLBACK_URL=http://localhost:8000
+```
 1. `yarn install`
 1. `yarn start`
 1. visit localhost:8000
