@@ -6,14 +6,12 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
-
-import Auth from './services/auth';
 import Header from './components/Header';
 import StoreManageApp from './StoreManageApp';
-
+import ResoundApi from './services/resound-api';
 import '../styles/main.sass';
 
-const auth = new Auth();
+const auth = ResoundApi.auth;
 
 class Root extends React.Component {
   render() {

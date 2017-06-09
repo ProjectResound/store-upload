@@ -47,8 +47,8 @@ module.exports = {
         'NODE_ENV': JSON.stringify('development'),
         'AUTH0_DOMAIN': JSON.stringify(process.env.AUTH0_DOMAIN),
         'AUTH0_CLIENT_ID': JSON.stringify(process.env.AUTH0_CLIENT_ID),
-        'AUTH0_CALLBACK_URL': JSON.stringify(process.env.AUTH0_CALLBACK_URL)
-
+        'AUTH0_CALLBACK_URL': JSON.stringify(process.env.AUTH0_CALLBACK_URL),
+        'AUTH0_AUDIENCE': JSON.stringify(process.env.AUTH0_AUDIENCE)
       },
     })
   ]

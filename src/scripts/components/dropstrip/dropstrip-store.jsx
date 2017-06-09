@@ -125,6 +125,7 @@ DropstripStore.flow = new Flow({
   forceChunkSize: true,
   allowDuplicateUploads: true,
   testChunks: false,
+  headers: resoundAPI.headers,
   query: flowFile => ({
     title: dropzoneQueue[flowFile.name].title,
     contributor: dropzoneQueue[flowFile.name].contributor
