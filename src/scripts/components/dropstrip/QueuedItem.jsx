@@ -11,6 +11,7 @@ class QueuedItem extends React.Component {
     this.state = {
       title: '',
       contributor: '',
+      tags: '',
       errors: {},
       queue: getStateFromStore()
     };
@@ -55,6 +56,11 @@ class QueuedItem extends React.Component {
       } else {
         delete newState.errors[fieldName];
       }
+    }
+    const exists = this.state.queue[this.props.file.name].status.exists;
+    if (exists) {
+      this.state.title = exists.title;
+      this.state.tags = exists.tags;
     }
     newState = Object.assign(this.state, newState);
     this.setState(newState);
@@ -120,7 +126,8 @@ class QueuedItem extends React.Component {
     DropstripActions.uploadFile({
       file: this.props.file,
       title: this.state.title,
-      contributor: this.state.contributor
+      contributor: this.state.contributor,
+      tags: this.state.tags
     });
     this.setState({
       progress: 'uploading'
@@ -176,6 +183,7 @@ class QueuedItem extends React.Component {
                 type="text"
                 className="contributor queued-item__input-text"
                 name="contributor"
+                value={form.contributor}
                 placeholder="Who made this? (Separate 2+ names with commas)"
                 onChange={this.onChange}
               />
@@ -183,6 +191,18 @@ class QueuedItem extends React.Component {
                 You must provide a contributor name (min {this.MAX_CHAR_LENGTH} chars).
               </div>
             </div>
+            <div className="row">
+              <label htmlFor="contributor">Tags</label>
+              <input
+                type="text"
+                className="contributor queued-item__input-text"
+                name="tags"
+                value={form.tags}
+                placeholder="What's this about? (Separate with commas)"
+                onChange={this.onChange}
+              />
+            </div>
+
             <div className="upload__text--right">
               <button type="submit" className="queued-item__button upload-button" disabled={hasErrors}>
                 Upload this file

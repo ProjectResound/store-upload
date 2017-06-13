@@ -27,7 +27,11 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
     resoundAPI.get(file.name).then((resp) => {
       const existingFile = resp[0];
       if (existingFile) {
-        dropzoneQueue[file.name].status.exists = true;
+        dropzoneQueue[file.name].status.exists = {
+          filename: existingFile.filename,
+          title: existingFile.title,
+          tags: existingFile.tags
+        };
         DropstripStore.emitChange();
       }
     }).catch((err) => {
@@ -44,10 +48,12 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
     delete dropzoneQueue[file.name];
   },
 
-  upload(args) {
+  upload(action) {
+    const args = action.args;
     const file = args.file;
     dropzoneQueue[args.file.name].title = args.title;
     dropzoneQueue[args.file.name].contributor = args.contributor;
+    dropzoneQueue[args.file.name].tags = args.tags;
     this.flow.addFile(file);
     this.flow.upload();
   },
@@ -128,7 +134,8 @@ DropstripStore.flow = new Flow({
   headers: resoundAPI.headers,
   query: flowFile => ({
     title: dropzoneQueue[flowFile.name].title,
-    contributor: dropzoneQueue[flowFile.name].contributor
+    contributor: dropzoneQueue[flowFile.name].contributor,
+    tags: dropzoneQueue[flowFile.name].tags
   })
 });
 

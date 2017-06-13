@@ -16,9 +16,7 @@ module.exports = {
   uploadFile: (args) => {
     AppDispatcher.dispatch({
       actionType: 'UPLOAD_FILE',
-      file: args.file,
-      title: args.title,
-      contributor: args.contributor
+      args
     });
   },
   pauseUpload: (filename) => {
