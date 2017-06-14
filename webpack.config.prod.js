@@ -20,7 +20,10 @@ module.exports = {
           presets: ['react', 'es2015']
         }
       },
-      { test: /\.scss$/, loader: "style-loader!css-loader!sass-loader" }
+      {
+        test: /\.s[c|a]ss$/,
+        loader: "style-loader!css-loader!sass-loader"
+      }
     ]
   },
   resolve: {
@@ -29,7 +32,11 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
+        'NODE_ENV': JSON.stringify('production'),
+        'AUTH0_DOMAIN': JSON.stringify('MAGICSTRING_AUTH0_DOMAIN'),
+        'AUTH0_CLIENT_ID': JSON.stringify('MAGICSTRING_AUTH0_CLIENT_ID'),
+        'AUTH0_CALLBACK_URL': JSON.stringify('MAGICSTRING_AUTH0_CALLBACK_URL'),
+        'AUTH0_AUDIENCE': JSON.stringify('MAGICSTRING_AUTH0_AUDIENCE')
       }
     }),
     new webpack.optimize.UglifyJsPlugin({

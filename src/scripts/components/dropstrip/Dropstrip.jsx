@@ -88,7 +88,7 @@ export default class Dropstrip extends React.Component {
       >
         <div className="upload__queue">
           <div className={queueHasItems ? 'queue__header' : 'hidden'}>
-            Files You’re Uploading {this.state.isDragActive}
+            Files You're Uploading {this.state.isDragActive}
           </div>
           <div className="queueItems">
             {files}

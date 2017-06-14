@@ -35,7 +35,7 @@ export default class Errors extends React.Component {
       <div className={msg ? 'errors__overlay col s12' : 'hidden'}>
         {msg}
         <div className="errors__dismiss" onClick={this.dismiss}>
-          ✖
+          <img src="/assets/images/button-remove.png" />
         </div>
       </div>
     );
