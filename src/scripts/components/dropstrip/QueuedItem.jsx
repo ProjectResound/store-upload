@@ -57,7 +57,8 @@ class QueuedItem extends React.Component {
         delete newState.errors[fieldName];
       }
     }
-    const exists = this.state.queue[this.props.file.name].status.exists;
+    const exists = this.state.queue[this.props.file.name] &&
+      this.state.queue[this.props.file.name].status.exists;
     if (exists) {
       this.state.title = exists.title;
       this.state.tags = exists.tags;
@@ -192,10 +193,10 @@ class QueuedItem extends React.Component {
               </div>
             </div>
             <div className="row">
-              <label htmlFor="contributor">Tags</label>
+              <label htmlFor="tags">Tags</label>
               <input
                 type="text"
-                className="contributor queued-item__input-text"
+                className="tags queued-item__input-text"
                 name="tags"
                 value={form.tags}
                 placeholder="What's this about? (Separate with commas)"
