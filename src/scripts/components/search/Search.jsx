@@ -1,6 +1,9 @@
 import React from 'react';
 import SearchActions from './search-actions';
 import SearchStore from './search-store';
+import ExplorerActions from '../explorer/explorer-actions';
+import resoundAPI from '../../services/resound-api';
+import ErrorsActions from '../errors/errors-actions';
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -25,13 +28,23 @@ export default class Search extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.setState({
-      searching: true
-    });
     const query = this.state.query;
-    if (query) {
+    if (query !== '') {
+      this.setState({
+        searching: true
+      });
       SearchActions.search(query);
+    } else {
+      this.clearSearch();
     }
+  }
+
+  clearSearch() {
+    resoundAPI.get()
+      .then(audioList => ExplorerActions.receiveAudioList(audioList))
+      .catch((err) => {
+        ErrorsActions.error(err);
+      });
   }
 
   _searchReturned(success) {
@@ -59,6 +72,7 @@ export default class Search extends React.Component {
             value="Search"
             className="search__submit"
             src={this.state.searching ? '/assets/images/loading.gif' : '/assets/images/icon-search.png'}
+            onClick={this.onSubmit}
           />
         </form>
       </div>
