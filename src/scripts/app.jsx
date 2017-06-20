@@ -8,10 +8,10 @@ import {
 } from 'react-router-dom';
 import Header from './components/Header';
 import StoreManageApp from './StoreManageApp';
-import ResoundApi from './services/resound-api';
+import resoundAPI from './services/resound-api';
 import '../styles/main.sass';
 
-const auth = ResoundApi.auth;
+const auth = resoundAPI.auth;
 
 class Root extends React.Component {
   render() {

@@ -21,6 +21,18 @@ module.exports = {
     return fetch(uri, { headers })
       .then(response => response.json());
   },
+  users: {
+    create: (authToken, idToken) => {
+      const uri = `${apiRoot}/users`;
+      return fetch(uri, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${authToken}`
+        },
+        body: JSON.stringify({ idToken })
+      });
+    }
+  },
   auth,
   headers
 };

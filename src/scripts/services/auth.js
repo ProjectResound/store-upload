@@ -11,7 +11,7 @@ export default class Auth {
       redirectUri: AUTH_CONFIG.callbackUrl,
       audience: AUTH_CONFIG.audience,
       responseType: 'token id_token',
-      scope: 'openid'
+      scope: 'openid profile'
     });
 
     this.login = this.login.bind(this);
@@ -44,7 +44,7 @@ export default class Auth {
         localStorage.setItem('id_token', authResult.idToken);
         localStorage.setItem('expires_at', expiresAt);
       }
-      UserActions.loggedIn();
+      UserActions.loggedIn(authResult.accessToken, authResult.idToken);
     }
   }
 
@@ -72,6 +72,17 @@ export default class Auth {
         ErrorsActions.error('No access token found');
       }
       return accessToken;
+    }
+    return undefined;
+  }
+
+  getIdToken() {
+    if (window.localStorage) {
+      const idToken = localStorage.getItem('id_token');
+      if (!idToken) {
+        ErrorsActions.error('No id token found');
+      }
+      return idToken;
     }
     return undefined;
   }
