@@ -129,7 +129,7 @@ DropstripStore.flow = new Flow({
   target: 'http://localhost:3000/api/v1/audios',
   chunkSize: 1024 * 1024,
   forceChunkSize: true,
-  allowDuplicateUploads: false,
+  allowDuplicateUploads: true,
   testChunks: false,
   headers: resoundAPI.headers,
   simultaneousUploads: 6,
