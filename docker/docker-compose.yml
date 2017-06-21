@@ -19,7 +19,6 @@ services:
       - 'db'
     environment:
       RAILS_ENV: $RAILS_ENV
-      RAILS_RESQUE_REDIS: 'redis:6379'
       AWS_REGION: $AWS_REGION
       AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
       AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
@@ -29,6 +28,7 @@ services:
       AUTH0_DOMAIN: $AUTH0_DOMAIN
       AUTH0_CALLBACK_URL: $AUTH0_CALLBACK_URL
       AUTH0_AUDIENCE: $AUTH0_AUDIENCE
+      REDIS_URL: 'redis://redis:6379'
     volumes:
       - 'api:/app/'
     command: foreman start

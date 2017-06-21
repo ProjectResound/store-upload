@@ -129,9 +129,10 @@ DropstripStore.flow = new Flow({
   target: 'http://localhost:3000/api/v1/audios',
   chunkSize: 1024 * 1024,
   forceChunkSize: true,
-  allowDuplicateUploads: true,
+  allowDuplicateUploads: false,
   testChunks: false,
   headers: resoundAPI.headers,
+  simultaneousUploads: 6,
   query: flowFile => ({
     title: dropzoneQueue[flowFile.name].title,
     contributor: dropzoneQueue[flowFile.name].contributor,
