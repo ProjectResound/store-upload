@@ -33,6 +33,11 @@ module.exports = {
       });
     }
   },
+  getWorkingOn: () => {
+    const uri = `${apiRoot}/audios?working_on=true`;
+    return fetch(uri, { headers })
+      .then(response => response.json());
+  },
   auth,
   headers
 };
