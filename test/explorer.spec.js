@@ -44,7 +44,7 @@ describe('<Explorer />', function () {
         title: `fakeTitle_${n}`,
       });
     });
-    return files;
+    return {audios: files, totalCount: files.length}
   };
 
   it('requests a list from the api on mounting', () => {
@@ -72,23 +72,22 @@ describe('<Explorer />', function () {
   });
 
   it('adds a single file after a successful upload', () => {
-    const listBeforeUpload = ExplorerStore.getAudioList();
-    const actionStub = { response: [{
+    const listBeforeUploadLength = ExplorerStore.getAudioList().audios.length;
+    const actionStub = { response: { audios: [{
       id: 77,
       filename: `fakeFile_77.wav`,
       created_at: new Date(),
       updated_at: new Date(),
       duration: 13,
       title: `fakeTitle_77`,
-    }]};
+    }]}};
     const listAfterUpload = ExplorerStore.appendAudioList(actionStub);
-
-    expect(listAfterUpload.length).to.equal(listBeforeUpload.length + 1)
+    expect(listAfterUpload.audios.length).to.equal(listBeforeUploadLength + 1)
   });
 
   it('sorts the files by updated_at', () => {
-    const unsortedAudioList = _respondWithFiles(5).reverse();
-    ExplorerActions.receiveAudioList(unsortedAudioList);
+    const unsortedAudios = _respondWithFiles(5).audios.reverse();
+    ExplorerActions.receiveAudioList({audios: unsortedAudios, totalCount: unsortedAudios.length});
 
     const newlySortedAudioList = this.component.state.audioList;
     let isSorted = true;

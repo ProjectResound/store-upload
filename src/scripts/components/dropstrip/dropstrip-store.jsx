@@ -25,7 +25,7 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
 
   addToQueue: (file) => {
     resoundAPI.get(file.name).then((resp) => {
-      const existingFile = resp[0];
+      const existingFile = resp.audios[0];
       if (existingFile) {
         dropzoneQueue[file.name].status.exists = {
           filename: existingFile.filename,

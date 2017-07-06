@@ -2,7 +2,7 @@ import { EventEmitter } from 'events';
 import assign from 'object-assign';
 import AppDispatcher from '../../dispatcher/app-dispatcher';
 
-let audioList = [];
+let audioList = { audios: [] };
 let isAppending = false;
 
 const ExplorerStore = assign({}, EventEmitter.prototype, {
@@ -21,12 +21,14 @@ const ExplorerStore = assign({}, EventEmitter.prototype, {
   getAudioList: (action) => {
     if (action && action.response && !action.response.errors) {
       isAppending = false;
-      audioList = action.response;
-      audioList.sort((a, b) => {
+      const audios = action.response.audios;
+      audios.sort((a, b) => {
         const aDate = new Date(a.updated_at);
         const bDate = new Date(b.updated_at);
         return bDate - aDate;
       });
+      audioList = action.response;
+      audioList.audios = audios;
     }
     return audioList;
   },
@@ -34,10 +36,13 @@ const ExplorerStore = assign({}, EventEmitter.prototype, {
   appendAudioList: (action) => {
     if (action && action.response) {
       isAppending = true;
-      audioList = audioList.filter(audio => audio.filename !== action.response[0].filename);
-      audioList = action.response.concat(audioList);
+      audioList.audios = audioList.audios
+        .filter(audio => audio.filename !== action.response.audios[0].filename);
+      if (action.response.audios.length > 0) {
+        audioList.audios = action.response.audios.concat(audioList.audios);
+      }
     }
-    audioList.sort((a, b) => {
+    audioList.audios.sort((a, b) => {
       const aDate = new Date(a.updated_at);
       const bDate = new Date(b.updated_at);
       return bDate - aDate;

@@ -12,5 +12,5 @@ module.exports = {
       actionType: 'APPEND_AUDIO_LIST',
       response,
     });
-  },
+  }
 };

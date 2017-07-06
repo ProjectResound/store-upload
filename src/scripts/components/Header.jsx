@@ -1,6 +1,7 @@
 import React from 'react';
 import Errors from '../components/errors/Errors';
 import UserStore from '../stores/user-store';
+import WorkingOnActions from '../components/working-on/working-on-actions';
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export default class Header extends React.Component {
       });
     }
     UserStore.addChangeListener(this._redirect);
+    WorkingOnActions.get();
   }
 
   login() {

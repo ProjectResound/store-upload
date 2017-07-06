@@ -20,3 +20,39 @@ button
 .header__button
   border: 1px solid $primary-color
   margin: 5px
+  
+// Pagination
+
+.pagination
+  text-align: center
+
+  li
+    display: inline-block
+    border-radius: 2px
+    text-align: center
+    vertical-align: top
+    height: 30px
+
+    a
+      color: #444
+      display: inline-block
+      padding: 0 10px
+      line-height: 30px
+      text-decoration: none
+
+    &.active a
+      color: #fff
+
+    &.active
+      background-color: $primary-color
+
+    &.disabled a
+      cursor: default
+      color: #999
+
+    i
+      font-size: 1.2rem
+
+  li.pages ul li
+    display: inline-block
+    float: none

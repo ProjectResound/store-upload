@@ -16,6 +16,11 @@ module.exports = {
     return fetch(uri, { headers })
       .then(response => response.json());
   },
+  getPage: (page) => {
+    const uri = `${apiRoot}/audios?page=${page}`;
+    return fetch(uri, { headers })
+      .then(response => response.json());
+  },
   search: (query) => {
     const uri = `${apiRoot}/audios/search?q=${query}`;
     return fetch(uri, { headers })

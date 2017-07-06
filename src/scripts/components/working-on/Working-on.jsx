@@ -1,6 +1,5 @@
 import React from 'react';
 import WorkingOnStore from './working-on-store';
-import WorkingOnActions from './working-on-actions';
 
 export default class WorkingOn extends React.Component {
   constructor(props) {
@@ -8,15 +7,15 @@ export default class WorkingOn extends React.Component {
     this.state = {
       audios: []
     };
-    WorkingOnActions.get();
+    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-    WorkingOnStore.addChangeListener(this.onChange.bind(this));
+    WorkingOnStore.addChangeListener(this.onChange);
   }
 
   componentWillUnmount() {
-    WorkingOnStore.removeChangeListener(this.onChange.bind(this));
+    WorkingOnStore.removeChangeListener(this.onChange);
   }
 
   onChange(audios) {

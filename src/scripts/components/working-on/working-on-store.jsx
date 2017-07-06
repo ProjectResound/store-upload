@@ -19,8 +19,8 @@ const WorkingOnStore = assign({}, EventEmitter.prototype, {
 
   get() {
     resoundAPI.getWorkingOn()
-      .then((audios) => {
-        WorkingOnStore.emitChange(audios);
+      .then((response) => {
+        WorkingOnStore.emitChange(response.audios);
       }).catch((err) => {
         ErrorsActions.error(err);
       });
