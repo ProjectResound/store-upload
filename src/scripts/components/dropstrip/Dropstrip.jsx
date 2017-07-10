@@ -4,31 +4,44 @@ import ActionCable from 'actioncable';
 import DropstripActions from './dropstrip-actions';
 import DropstripStore from './dropstrip-store';
 import QueuedItem from './QueuedItem';
+import ContributorStore from '../contributor/contributor-store';
+import ContributorActions from '../contributor/contributor-actions';
 
 const cable = ActionCable.createConsumer('ws://localhost:3000/cable');
 const getStateFromStore = () => DropstripStore.getQueue();
+const getContributorsFromStore = () => ContributorStore.getList();
 
 export default class Dropstrip extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      queue: getStateFromStore()
+      queue: getStateFromStore(),
+      contributors: getContributorsFromStore()
     };
     this.onChange = this.onChange.bind(this);
+    this.onContributorsChange = this.onContributorsChange.bind(this);
   }
 
   componentDidMount() {
     this._initCable();
     DropstripStore.addChangeListener(this.onChange);
+    ContributorStore.addChangeListener(this.onContributorsChange);
   }
 
   componentWillUnmount() {
     DropstripStore.removeChangeListener(this.onChange);
+    ContributorStore.removeChangeListener(this.onContributorsChange);
   }
 
   onChange() {
     this.setState({
       queue: getStateFromStore()
+    });
+  }
+
+  onContributorsChange() {
+    this.setState({
+      contributors: getContributorsFromStore()
     });
   }
 
@@ -60,6 +73,7 @@ export default class Dropstrip extends React.Component {
       received: (msg) => {
         if (msg.filename && msg.status === 'success') {
           DropstripActions.uploadSuccess(msg.filename);
+          ContributorActions.add(msg.contributor);
         } else if (msg.status === 'failed') {
           DropstripActions.uploadFailed(msg.filename);
         }
@@ -75,6 +89,7 @@ export default class Dropstrip extends React.Component {
         <QueuedItem
           key={this.state.queue[queuedItem].name}
           file={this.state.queue[queuedItem].fileObject}
+          contributors={this.state.contributors}
         />
     );
 

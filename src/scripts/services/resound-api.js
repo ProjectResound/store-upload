@@ -43,6 +43,11 @@ module.exports = {
     return fetch(uri, { headers })
       .then(response => response.json());
   },
+  populateContributors: () => {
+    const uri = `${apiRoot}/contributors`;
+    return fetch(uri, { headers })
+      .then(response => response.json());
+  },
   auth,
   headers
 };

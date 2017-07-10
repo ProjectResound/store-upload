@@ -30,7 +30,8 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
         dropzoneQueue[file.name].status.exists = {
           filename: existingFile.filename,
           title: existingFile.title,
-          tags: existingFile.tags
+          tags: existingFile.tags,
+          contributor: existingFile.contributors
         };
         DropstripStore.emitChange();
       }

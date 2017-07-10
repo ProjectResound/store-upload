@@ -2,6 +2,8 @@ import React from 'react';
 import Errors from '../components/errors/Errors';
 import UserStore from '../stores/user-store';
 import WorkingOnActions from '../components/working-on/working-on-actions';
+import ContributorActions from '../components/contributor/contributor-actions';
+
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -23,8 +25,14 @@ export default class Header extends React.Component {
         loggedIn: false
       });
     }
-    UserStore.addChangeListener(this._redirect);
-    WorkingOnActions.get();
+  }
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated()) {
+      UserStore.addChangeListener(this._redirect);
+      WorkingOnActions.get();
+      ContributorActions.populateContributors();
+    }
   }
 
   login() {

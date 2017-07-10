@@ -1,7 +1,7 @@
 import React from 'react';
-
-const DropstripActions = require('./dropstrip-actions');
-const DropstripStore = require('./dropstrip-store');
+import Contributor from '../contributor/Contributor';
+import DropstripActions from './dropstrip-actions';
+import DropstripStore from './dropstrip-store';
 
 const getStateFromStore = () => DropstripStore.getQueue();
 
@@ -13,7 +13,8 @@ class QueuedItem extends React.Component {
       contributor: '',
       tags: '',
       errors: {},
-      queue: getStateFromStore()
+      queue: getStateFromStore(),
+      suggestions: [],
     };
 
     this.MAX_CHAR_LENGTH = 4;
@@ -25,7 +26,8 @@ class QueuedItem extends React.Component {
       'onCancel',
       'onCancelConfirmed',
       'onUpload',
-      'onSuccessOrFailure'
+      'onSuccessOrFailure',
+      'onChangeContributor'
     ]);
   }
 
@@ -62,9 +64,23 @@ class QueuedItem extends React.Component {
     if (exists) {
       this.state.title = exists.title;
       this.state.tags = exists.tags;
+      this.state.contributor = exists.contributor;
     }
     newState = Object.assign(this.state, newState);
     this.setState(newState);
+  }
+
+  onChangeContributor(contributorVal) {
+    if (contributorVal < this.MAX_CHAR_LENGTH) {
+      this.setState({
+        errors: { contributor: true }
+      });
+    } else {
+      this.setState({
+        errors: { contributor: false },
+        contributor: contributorVal
+      });
+    }
   }
 
   onSuccessOrFailure() {
@@ -156,6 +172,7 @@ class QueuedItem extends React.Component {
     };
     const completed = this.state.queue[file.name].completed;
     const failed = this.state.queue[file.name].failed;
+
     return (
       <div className="queued-item" onClick={e => e.stopPropagation()}>
         <button className={this.state.progress === 'canceling' || fileStatus.exists ? 'hidden' : 'queued-item__button--grey'} onClick={this.onCancel}>
@@ -178,20 +195,12 @@ class QueuedItem extends React.Component {
                 You must provide a title (min {this.MAX_CHAR_LENGTH} chars).
               </div>
             </div>
-            <div className="row">
-              <label htmlFor="contributor">Contributor</label>
-              <input
-                type="text"
-                className="contributor queued-item__input-text"
-                name="contributor"
-                value={form.contributor}
-                placeholder="Who made this? (Separate 2+ names with commas)"
-                onChange={this.onChange}
-              />
-              <div className={`queued-item__alert ${hideContributorAlert}`}>
-                You must provide a contributor name (min {this.MAX_CHAR_LENGTH} chars).
-              </div>
-            </div>
+            <Contributor
+              hideContributorAlert={hideContributorAlert}
+              contributors={this.props.contributors}
+              value={this.state.contributor}
+              onChangeContributor={this.onChangeContributor}
+            />
             <div className="row">
               <label htmlFor="tags">Tags</label>
               <input
