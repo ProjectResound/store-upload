@@ -101,8 +101,13 @@ class QueuedItem extends React.Component {
 
   onCancel(e) {
     e.stopPropagation();
+    const fileName = this.props.file.name;
     if (this.state.progress === 'uploading' || this.state.progress === 'paused') {
-      DropstripActions.pauseUpload(this.props.file.name);
+      DropstripActions.pauseUpload(fileName);
+    }
+    if (this.state.queue[fileName].completed) {
+      this.onCancelConfirmed(true);
+      return;
     }
     this.setState({
       previousState: this.state.progress,
