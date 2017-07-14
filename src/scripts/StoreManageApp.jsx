@@ -7,7 +7,7 @@ import WorkingOn from './components/working-on/Working-on';
 export default class StoreManageApp extends React.Component {
   render() {
     return (
-      <div>
+      <div className="body__container">
         <div className="row full-height upload">
           <Dropstrip />
           <WorkingOn />

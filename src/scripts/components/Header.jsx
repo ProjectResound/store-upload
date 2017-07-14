@@ -61,12 +61,15 @@ export default class Header extends React.Component {
       return null;
     }
     return (
-      <div className="row">
+      <div className="row header__row">
         <Errors />
-        <h1 className="header__h1 col s10">Resound Store + Manage</h1>
-        <div className="col s2">
-          <button className={loggedIn ? 'hidden' : 'header__button'} onClick={this.login}>Log in</button>
-          <button className={loggedIn ? 'header__button' : 'hidden'} onClick={this.logout}>Log out</button>
+        <h1 className="header__h1 col s11">
+          <img src="/assets/images/stamp.png" className="header__stamp" alt="Resound Store logo" />
+          store
+        </h1>
+        <div className="header__actions col s1">
+          <button className={loggedIn ? 'hidden' : 'header__button'} onClick={this.login}>log in</button>
+          <button className={loggedIn ? 'header__button' : 'hidden'} onClick={this.logout}>log out</button>
         </div>
       </div>
     );
