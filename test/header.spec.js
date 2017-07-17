@@ -24,7 +24,7 @@ describe('<Header />', function() {
   it('shows log in button', () => {
     const loginButton = TestUtils.findRenderedDOMComponentWithClass(this.component, 'header__button');
     expect(loginButton).to.exist;
-    expect(loginButton.innerHTML).to.equal('Log in');
+    expect(loginButton.innerHTML).to.equal('log in');
   });
 
   it('clicking login will try to authorize the user', () => {
@@ -40,10 +40,10 @@ describe('<Header />', function() {
     });
 
     let logButton = TestUtils.findRenderedDOMComponentWithClass(this.component, 'header__button');
-    expect(logButton.innerHTML).to.equal('Log out');
+    expect(logButton.innerHTML).to.equal('log out');
 
     TestUtils.Simulate.click(logButton);
     logButton = TestUtils.findRenderedDOMComponentWithClass(this.component, 'header__button');
-    expect(logButton.innerHTML).to.equal('Log in');
+    expect(logButton.innerHTML).to.equal('log in');
   });
 });

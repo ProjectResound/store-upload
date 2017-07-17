@@ -16,6 +16,7 @@ export default class Contributor extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
+    this.onGetSuggestionValue = this.onGetSuggestionValue.bind(this);
   }
 
   onChange(event, { newValue }) {
@@ -37,8 +38,14 @@ export default class Contributor extends React.Component {
     });
   }
 
+  onGetSuggestionValue(suggestion) {
+    const oldValue = this.state.value.split(',');
+    oldValue.pop();
+    return `${oldValue.join(',')},${suggestion}`;
+  }
+
   getSuggestions(value) {
-    const inputValue = value.trim().toLowerCase();
+    const inputValue = value.split(',').pop().trim().toLowerCase();
     const inputLength = inputValue.length;
     return inputLength === 0 ? [] : this.props.contributors.filter(contributor =>
       contributor.toLowerCase().slice(0, inputLength) === inputValue
@@ -63,7 +70,7 @@ export default class Contributor extends React.Component {
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          getSuggestionValue={sug => sug}
+          getSuggestionValue={this.onGetSuggestionValue}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
         />

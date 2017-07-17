@@ -21,7 +21,7 @@ describe('<QueuedItem />', function() {
       completed: true
     };
     this.storeMock = sinon.mock(DropstripStore);
-    this.storeMock.expects('getQueue').returns(mockQueue);
+    this.storeMock.expects('getQueue').atLeast(1).returns(mockQueue);
 
     this.component = TestUtils.renderIntoDocument(<QueuedItem file={mockFile} />);
     this.componentDOM = ReactDOM.findDOMNode(this.component);
@@ -38,7 +38,7 @@ describe('<QueuedItem />', function() {
 
   it('on completed upload, removes QueuedItem when Cancel is clicked', () => {
     const cancelButton = TestUtils.findRenderedDOMComponentWithClass(this.component, 'queued-item__button--grey');
-    const spy = sinon.spy(this.component, "onCancelConfirmed");
+    sinon.spy(this.component, "onCancelConfirmed");
 
     TestUtils.Simulate.click(cancelButton);
 

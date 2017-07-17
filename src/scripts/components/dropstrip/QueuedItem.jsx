@@ -31,6 +31,16 @@ class QueuedItem extends React.Component {
     ]);
   }
 
+  componentDidMount() {
+    DropstripStore.addChangeListener(this.onChange);
+    DropstripStore.addChangeListener(this.onSuccessOrFailure);
+  }
+
+  componentWillUnmount() {
+    DropstripStore.removeChangeListener(this.onChange);
+    DropstripStore.removeChangeListener(this.onSuccessOrFailure);
+  }
+
   onChange(e) {
     let newState = {
       errors: this.state.errors
