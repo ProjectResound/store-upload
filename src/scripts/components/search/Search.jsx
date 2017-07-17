@@ -41,7 +41,7 @@ export default class Search extends React.Component {
 
   clearSearch() {
     resoundAPI.get()
-      .then(audioList => ExplorerActions.receiveAudioList(audioList))
+      .then(audioList => ExplorerActions.parseAudioList(audioList))
       .catch((err) => {
         ErrorsActions.error(err);
       });

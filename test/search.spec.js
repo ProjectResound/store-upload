@@ -57,7 +57,7 @@ describe('<Search />', function() {
       const fileName1 = 'your eyes, can I have them?';
       const fileName2 = 'nope I still need them';
       const response = [{filename: fileName1}, {filename: fileName2}];
-      const explorerStub = sinon.stub(ExplorerActions, 'receiveAudioList');
+      const explorerStub = sinon.stub(ExplorerActions, 'parseAudioList');
       apiStub.resolves(response);
 
       TestUtils.Simulate.change(TestUtils.findRenderedDOMComponentWithClass(this.component, 'search__query'),

@@ -51,9 +51,6 @@ const ContributorStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register((action) => {
   switch (action.actionType) {
-    case 'GET_CONTRIBUTORS':
-      ContributorStore.get();
-      break;
     case 'ADD_CONTRIBUTORS':
       ContributorStore.add(action.contributors);
       break;

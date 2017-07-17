@@ -9,7 +9,7 @@
 - The store keeps track of the audio list (an array of objects)
 - `GET_AUDIO_LIST` is the only action.
 - API call is declared as a utility function found in `src/scripts/utils/resound-api.js`
-    - At the completion of the fetch promise, it calls the receiveAudioList action with the contents of the call (the audio list)
+    - At the completion of the fetch promise, it calls the parseAudioList action with the contents of the call (the audio list)
     - `resoundAPI.get()` is called in the `dropstrip-store.jsx` within the `success` function, so that the list updates as a new item has been successfully uploaded
     - `resoundAPI.get()` is also called in componentDidMount of `Explorer.jsx`
 

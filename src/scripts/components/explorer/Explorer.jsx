@@ -6,7 +6,7 @@ import ExplorerActions from './explorer-actions';
 import AudioItem from './AudioItem';
 import ErrorsActions from '../errors/errors-actions';
 
-const getStateFromStore = () => ExplorerStore.getAudioList();
+const getStateFromStore = () => ExplorerStore.parseAudioList();
 const getTransitionStateFromStore = () => ExplorerStore.getTransitionState();
 
 export default class Explorer extends React.Component {
@@ -22,7 +22,7 @@ export default class Explorer extends React.Component {
   componentDidMount() {
     ExplorerStore.addChangeListener(this.onChange);
     resoundAPI.get()
-      .then(audioList => ExplorerActions.receiveAudioList(audioList))
+      .then(audioList => ExplorerActions.parseAudioList(audioList))
       .catch((err) => {
         ErrorsActions.error(err);
       });
@@ -41,7 +41,7 @@ export default class Explorer extends React.Component {
 
   handlePageChange(e) {
     resoundAPI.getPage(e)
-      .then(audioList => ExplorerActions.receiveAudioList(audioList))
+      .then(audioList => ExplorerActions.parseAudioList(audioList))
       .catch((err) => {
         ErrorsActions.error(err);
       });

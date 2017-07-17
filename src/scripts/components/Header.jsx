@@ -1,8 +1,8 @@
 import React from 'react';
 import Errors from '../components/errors/Errors';
 import UserStore from '../stores/user-store';
-import WorkingOnActions from '../components/working-on/working-on-actions';
-import ContributorActions from '../components/contributor/contributor-actions';
+import WorkingOnStore from '../components/working-on/working-on-store';
+import ContributorStore from '../components/contributor/contributor-store';
 
 
 export default class Header extends React.Component {
@@ -30,8 +30,8 @@ export default class Header extends React.Component {
   componentDidMount() {
     if (this.props.auth.isAuthenticated()) {
       UserStore.addChangeListener(this._redirect);
-      WorkingOnActions.get();
-      ContributorActions.populateContributors();
+      WorkingOnStore.get();
+      ContributorStore.get();
     }
   }
 

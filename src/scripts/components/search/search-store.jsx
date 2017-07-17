@@ -21,7 +21,7 @@ const SearchStore = assign({}, EventEmitter.prototype, {
   search: (query) => {
     resoundAPI.search(query)
       .then((results) => {
-        ExplorerActions.receiveAudioList(results);
+        ExplorerActions.parseAudioList(results);
         SearchStore.emitChange(true);
       });
   },

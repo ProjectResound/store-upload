@@ -27,14 +27,4 @@ const WorkingOnStore = assign({}, EventEmitter.prototype, {
   }
 });
 
-AppDispatcher.register((action) => {
-  switch (action.actionType) {
-    case 'WORKING_ON_GET':
-      WorkingOnStore.get();
-      break;
-    default:
-  }
-  return true;
-});
-
 module.exports = WorkingOnStore;

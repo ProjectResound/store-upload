@@ -18,7 +18,7 @@ const ExplorerStore = assign({}, EventEmitter.prototype, {
     this.removeListener('change', cb);
   },
 
-  getAudioList: (action) => {
+  parseAudioList: (action) => {
     if (action && action.response && !action.response.errors) {
       isAppending = false;
       const audios = action.response.audios;
@@ -55,8 +55,8 @@ const ExplorerStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register((action) => {
   switch (action.actionType) {
-    case 'GET_AUDIO_LIST':
-      ExplorerStore.getAudioList(action);
+    case 'PARSE_AUDIO_LIST':
+      ExplorerStore.parseAudioList(action);
       break;
     case 'APPEND_AUDIO_LIST':
       ExplorerStore.appendAudioList(action);

@@ -52,14 +52,14 @@ describe('<Explorer />', function () {
   });
 
   it('renders a list of files', () => {
-    ExplorerActions.receiveAudioList(_respondWithFiles(5));
+    ExplorerActions.parseAudioList(_respondWithFiles(5));
     const fileList = this.stripDOM.getElementsByClassName('explorer__table__audio-item');
 
     expect(fileList).to.have.length(5);
   });
 
   it('renders list of properties for each file', () => {
-    ExplorerActions.receiveAudioList(_respondWithFiles());
+    ExplorerActions.parseAudioList(_respondWithFiles());
     const audioItem = this.stripDOM.getElementsByClassName('explorer__table__audio-item')[0];
     const properties = Array.from(audioItem.children);
     let eachColumnIsRendered = true;
@@ -72,7 +72,7 @@ describe('<Explorer />', function () {
   });
 
   it('adds a single file after a successful upload', () => {
-    const listBeforeUploadLength = ExplorerStore.getAudioList().audios.length;
+    const listBeforeUploadLength = ExplorerStore.parseAudioList().audios.length;
     const actionStub = { response: { audios: [{
       id: 77,
       filename: `fakeFile_77.wav`,
@@ -87,7 +87,7 @@ describe('<Explorer />', function () {
 
   it('sorts the files by updated_at', () => {
     const unsortedAudios = _respondWithFiles(5).audios.reverse();
-    ExplorerActions.receiveAudioList({audios: unsortedAudios, totalCount: unsortedAudios.length});
+    ExplorerActions.parseAudioList({audios: unsortedAudios, totalCount: unsortedAudios.length});
 
     const newlySortedAudioList = this.component.state.audioList;
     let isSorted = true;
@@ -103,7 +103,7 @@ describe('<Explorer />', function () {
   });
 
   it('renders dates in the correct format', () => {
-    ExplorerActions.receiveAudioList(_respondWithFiles());
+    ExplorerActions.parseAudioList(_respondWithFiles());
     const dateFromDOM = this.stripDOM.getElementsByClassName('explorer__table__audio-item-date')[0];
     const date = new Date(dateFromDOM.innerHTML);
 
@@ -116,7 +116,7 @@ describe('<Explorer />', function () {
   });
 
   it('renders durations in the correct format', () => {
-    ExplorerActions.receiveAudioList(_respondWithFiles());
+    ExplorerActions.parseAudioList(_respondWithFiles());
     const durationFromDOM = this.stripDOM.getElementsByClassName('explorer__table__audio-item-duration')[0].innerHTML;
     const duration = moment(durationFromDOM, 'HH:mm:ss');
 

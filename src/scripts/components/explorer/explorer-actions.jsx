@@ -1,9 +1,9 @@
 const AppDispatcher = require('../../dispatcher/app-dispatcher');
 
 module.exports = {
-  receiveAudioList: (response) => {
+  parseAudioList: (response) => {
     AppDispatcher.dispatch({
-      actionType: 'GET_AUDIO_LIST',
+      actionType: 'PARSE_AUDIO_LIST',
       response,
     });
   },
