@@ -73,7 +73,8 @@ class QueuedItem extends React.Component {
   onChangeContributor(contributorVal) {
     if (contributorVal < this.MAX_CHAR_LENGTH) {
       this.setState({
-        errors: { contributor: true }
+        errors: { contributor: true },
+        contributor: contributorVal
       });
     } else {
       this.setState({

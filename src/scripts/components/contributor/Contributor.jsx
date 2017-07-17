@@ -41,7 +41,13 @@ export default class Contributor extends React.Component {
   onGetSuggestionValue(suggestion) {
     const oldValue = this.state.value.split(',');
     oldValue.pop();
-    return `${oldValue.join(',')},${suggestion}`;
+    const trimmed = oldValue.filter(val => {
+      return val.trim();
+    });
+    if (!trimmed.includes(suggestion)) {
+      trimmed.push(suggestion);
+    }
+    return trimmed.join(',');
   }
 
   getSuggestions(value) {
