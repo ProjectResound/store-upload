@@ -9,7 +9,6 @@ import TestUtils from 'react-dom/test-utils'
 import Dropstrip from '../src/scripts/components/dropstrip/Dropstrip';
 import DropstripActions from '../src/scripts/components/dropstrip/dropstrip-actions';
 import DropstripStore from '../src/scripts/components/dropstrip/dropstrip-store';
-import resoundAPI from '../src/scripts/services/resound-api';
 import Dropzone from 'react-dropzone';
 import _ from 'underscore';
 import {expect, assert} from 'chai';
