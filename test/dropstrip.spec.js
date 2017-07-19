@@ -8,6 +8,8 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-dom/test-utils'
 import Dropstrip from '../src/scripts/components/dropstrip/Dropstrip';
 import DropstripActions from '../src/scripts/components/dropstrip/dropstrip-actions';
+import DropstripStore from '../src/scripts/components/dropstrip/dropstrip-store';
+import resoundAPI from '../src/scripts/services/resound-api';
 import Dropzone from 'react-dropzone';
 import _ from 'underscore';
 import {expect, assert} from 'chai';
@@ -62,8 +64,22 @@ describe('<Dropstrip />', function() {
   });
 
   it('renders QueuedItems when an files dropped into Dropstrip', () => {
+    const fileName = 'fakeFile_0.wav';
+    const queueStub = sinon.stub(DropstripStore, 'getQueue').returns({
+      'fakeFile_0.wav': {
+        status: {
+          checked: true,
+        },
+        name: fileName,
+        fileObject: {
+          size: '123',
+          name: fileName
+        }
+      }
+    });
     _dropInMockFiles();
     expect(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'queued-item').length).to.equal(1);
+    queueStub.restore();
   });
 
   it('shows cancellation message when user clicks cancel on a queuedItem', () => {
@@ -111,17 +127,32 @@ describe('<Dropstrip />', function() {
   describe('on clicking upload', () => {
     beforeEach(() => {
       this.flowUploadStub = sinon.stub(Flow.prototype, 'upload');
+      const fileName = 'fakeFile_0.wav';
+
       _dropInMockFiles();
       const titleInput = TestUtils.findRenderedDOMComponentWithClass(this.component, 'title');
       const contributorInput = TestUtils.findRenderedDOMComponentWithClass(this.component, 'contributor');
 
       TestUtils.Simulate.change(titleInput, {target: {value: 'here is a title', name: 'title'}});
       TestUtils.Simulate.change(contributorInput, {target: {value: 'Contributor McPants', name: 'contributor'}});
-      TestUtils.Simulate.submit(TestUtils.findRenderedDOMComponentWithClass(this.component, 'form__queuedItem'));
+      this.queueStub = sinon.stub(DropstripStore, 'getQueue').returns({
+        'fakeFile_0.wav': {
+          status: {
+            checked: true,
+          },
+          name: fileName,
+          fileObject: {
+            size: '123',
+            name: fileName
+          }
+        }
+      });
+      TestUtils.Simulate.submit(TestUtils.findRenderedDOMComponentWithTag(this.component, 'form'));
     });
 
     afterEach(() => {
       this.flowUploadStub.restore();
+      this.queueStub.restore();
     });
 
     it('shows a progress bar and pause button', () => {

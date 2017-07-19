@@ -178,13 +178,14 @@ class QueuedItem extends React.Component {
     };
     const completed = this.state.queue[file.name].completed;
     const failed = this.state.queue[file.name].failed;
+    const showForm = fileStatus.checked && (!this.state.progress && !fileStatus.exists);
 
     return (
-      <div className="queued-item" onClick={e => e.stopPropagation()}>
+      <div onClick={e => e.stopPropagation()} className={fileStatus.checked ? 'queued-item' : 'hidden'}>
         <button className={this.state.progress === 'canceling' || fileStatus.exists ? 'hidden' : 'queued-item__button--grey'} onClick={this.onCancel}>
           <img src="/assets/images/button-remove.png" />
         </button>
-        <form onSubmit={this.onUpload} className={this.state.progress || fileStatus.exists ? 'hidden' : 'form__queuedItem'}>
+        <form onSubmit={this.onUpload} className={showForm ? 'form__queuedItem' : 'hidden'}>
           <div className="dz-details">
             <div className="queued-item__filename">{file.name}</div>
             <div className="row">

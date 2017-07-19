@@ -33,8 +33,9 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
           tags: existingFile.tags,
           contributor: existingFile.contributors
         };
-        DropstripStore.emitChange();
       }
+      dropzoneQueue[file.name].status.checked = true;
+      DropstripStore.emitChange();
     }).catch((err) => {
       ErrorsActions.error(err);
     });
