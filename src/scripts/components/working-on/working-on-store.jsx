@@ -1,6 +1,5 @@
 import { EventEmitter } from 'events';
 import assign from 'object-assign';
-import AppDispatcher from '../../dispatcher/app-dispatcher';
 import resoundAPI from '../../services/resound-api';
 import ErrorsActions from '../../components/errors/errors-actions';
 

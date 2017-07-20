@@ -73,8 +73,9 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
     dropzoneQueue[filename].flowFile.retry();
   },
 
-  success(filename) {
-    dropzoneQueue[filename].completed = true;
+  success(msg) {
+    const filename = msg.filename;
+    dropzoneQueue[filename].completed = msg.audio_id;
     resoundAPI.get(filename)
       .then(audioList => ExplorerActions.appendAudioList(audioList));
   },
@@ -108,7 +109,7 @@ AppDispatcher.register((action) => {
       DropstripStore.resume(action.filename);
       break;
     case 'UPLOAD_SUCCESS':
-      DropstripStore.success(action.filename);
+      DropstripStore.success(action.msg);
       successFlag = 'success';
       break;
     case 'OVERWRITE':

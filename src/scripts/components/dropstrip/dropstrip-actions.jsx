@@ -37,10 +37,10 @@ module.exports = {
       filename
     });
   },
-  uploadSuccess: (filename) => {
+  uploadSuccess: (msg) => {
     AppDispatcher.dispatch({
       actionType: 'UPLOAD_SUCCESS',
-      filename
+      msg
     });
   },
   overwriteFile: (filename) => {

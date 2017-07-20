@@ -60,8 +60,9 @@
   },
   "scripts": {
     "start": "npm run webpack & npm run serve",
+    "stop": "pkill -9 -f npm & pkill -9 node & nginx -s stop",
     "webpack": "webpack -w --config webpack.config.dev.js",
-    "serve": "cd dist && python -m SimpleHTTPServer",
+    "serve": "nginx  -g 'daemon off;' -c `pwd`/nginx.conf -p `pwd`",
     "build": "webpack --config webpack.config.prod.js",
     "test": "mocha -r jsdom-global/register --compilers js:babel-core/register test/**/*.spec.js"
   }

@@ -1,7 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Contributor from '../contributor/Contributor';
 import DropstripActions from './dropstrip-actions';
 import DropstripStore from './dropstrip-store';
+import audioUrl from '../../services/url-generator';
+
 
 const getStateFromStore = () => DropstripStore.getQueue();
 
@@ -269,7 +272,7 @@ class QueuedItem extends React.Component {
           <div className="row">
             <div className="col s6 completed__metadata">{fileSize}MB</div>
             <div className="col s6 completed__edit">
-              <a>Edit this file</a>
+              <Link to={audioUrl({ id: completed, title: form.title })}>Edit this file</Link>
             </div>
           </div>
         </div>

@@ -16,6 +16,9 @@ module.exports = {
     return fetch(uri, { headers })
       .then(response => response.json());
   },
+  getAudioById: id =>
+    fetch(`${apiRoot}/audios/${id}`, { headers })
+      .then(response => response.json()),
   getPage: (page) => {
     const uri = `${apiRoot}/audios?page=${page}`;
     return fetch(uri, { headers })

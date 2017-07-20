@@ -72,7 +72,7 @@ export default class Dropstrip extends React.Component {
     cable.subscriptions.create('FilesChannel', {
       received: (msg) => {
         if (msg.filename && msg.status === 'success') {
-          DropstripActions.uploadSuccess(msg.filename);
+          DropstripActions.uploadSuccess(msg);
           ContributorActions.add(msg.contributor);
         } else if (msg.status === 'failed') {
           DropstripActions.uploadFailed(msg.filename);

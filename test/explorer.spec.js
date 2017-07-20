@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { MemoryRouter } from 'react-router-dom';
 import TestUtils from 'react-dom/test-utils';
-import { Promise } from 'es6-promise';
 import { expect } from 'chai';
 import _ from 'underscore';
 import sinon from 'sinon';
@@ -10,7 +10,6 @@ import moment from 'moment';
 import Explorer from '../src/scripts/components/explorer/Explorer';
 import ExplorerActions from '../src/scripts/components/explorer/explorer-actions';
 import ExplorerStore from '../src/scripts/components/explorer/explorer-store';
-import DropstripActions from '../src/scripts/components/dropstrip/dropstrip-actions';
 import 'isomorphic-fetch';
 
 sinonStubPromise(sinon);
@@ -18,7 +17,11 @@ sinonStubPromise(sinon);
 describe('<Explorer />', function () {
   beforeEach(() => {
     this.stub = sinon.stub(global, 'fetch').returnsPromise();
-    this.component = TestUtils.renderIntoDocument(<Explorer />);
+    this.component = TestUtils.renderIntoDocument(
+      <MemoryRouter>
+        <Explorer />
+      </MemoryRouter>
+    );
     this.stripDOM = ReactDOM.findDOMNode(this.component);
   });
 
@@ -89,7 +92,7 @@ describe('<Explorer />', function () {
     const unsortedAudios = _respondWithFiles(5).audios.reverse();
     ExplorerActions.parseAudioList({audios: unsortedAudios, totalCount: unsortedAudios.length});
 
-    const newlySortedAudioList = this.component.state.audioList;
+    const newlySortedAudioList = ExplorerStore.parseAudioList();
     let isSorted = true;
     for (let i = 0; i < newlySortedAudioList.length - 1; i += 1) {
       const currentUpdatedDate = new Date(newlySortedAudioList[i].updated_at);

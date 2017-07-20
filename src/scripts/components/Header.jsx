@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Errors from '../components/errors/Errors';
 import UserStore from '../stores/user-store';
 import WorkingOnStore from '../components/working-on/working-on-store';
@@ -65,7 +66,7 @@ export default class Header extends React.Component {
         <Errors />
         <h1 className="header__h1 col s11">
           <img src="/assets/images/stamp.png" className="header__stamp" alt="Resound Store logo" />
-          store
+          <Link to="/" className="header__link">store</Link>
         </h1>
         <div className="header__actions col s1">
           <button className={loggedIn ? 'hidden' : 'header__button'} onClick={this.login}>log in</button>

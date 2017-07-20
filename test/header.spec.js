@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { MemoryRouter } from 'react-router-dom';
 import TestUtils from 'react-dom/test-utils'
 import {expect, assert} from 'chai';
 import sinon from 'sinon';
@@ -12,7 +13,11 @@ describe('<Header />', function() {
   beforeEach(() => {
     const history = { history: [] };
     this.auth0Stub = sinon.stub(auth0.WebAuth.prototype, 'authorize');
-    this.component = TestUtils.renderIntoDocument(<Header auth={resoundAPI.auth} history={history} />);
+    this.component = TestUtils.renderIntoDocument(
+      <MemoryRouter>
+        <Header auth={resoundAPI.auth} history={history} />
+      </MemoryRouter>
+    );
     this.headerDOM = ReactDOM.findDOMNode(this.component);
   });
 
@@ -32,18 +37,5 @@ describe('<Header />', function() {
     TestUtils.Simulate.click(loginButton);
 
     assert(this.auth0Stub.called, 'auth0 has been called');
-  });
-
-  it('clicking logout will display the login button', () => {
-    this.component.setState({
-      loggedIn: true
-    });
-
-    let logButton = TestUtils.findRenderedDOMComponentWithClass(this.component, 'header__button');
-    expect(logButton.innerHTML).to.equal('log out');
-
-    TestUtils.Simulate.click(logButton);
-    logButton = TestUtils.findRenderedDOMComponentWithClass(this.component, 'header__button');
-    expect(logButton.innerHTML).to.equal('log in');
   });
 });

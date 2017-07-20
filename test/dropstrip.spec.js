@@ -5,6 +5,7 @@ window.URL.createObjectURL = () => {
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { MemoryRouter } from 'react-router-dom';
 import TestUtils from 'react-dom/test-utils'
 import Dropstrip from '../src/scripts/components/dropstrip/Dropstrip';
 import DropstripActions from '../src/scripts/components/dropstrip/dropstrip-actions';
@@ -22,7 +23,10 @@ const FlowFile = Flow.FlowFile;
 
 describe('<Dropstrip />', function() {
   beforeEach(() => {
-    this.component = TestUtils.renderIntoDocument(<Dropstrip />);
+    this.component = TestUtils.renderIntoDocument(
+      <MemoryRouter>
+        <Dropstrip />
+      </MemoryRouter>);
     this.stripDOM = ReactDOM.findDOMNode(this.component);
   });
 
@@ -184,7 +188,8 @@ describe('<Dropstrip />', function() {
     it('shows success', () => {
       const stub = sinon.stub(global, 'fetch').returnsPromise().resolves();
 
-      DropstripActions.uploadSuccess('fakeFile_0.wav');
+      DropstripActions.uploadSuccess({ filename: 'fakeFile_0.wav', audio_id: 123, status: 'success' });
+
       expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'success-container')).to.exist;
       stub.restore();
     });

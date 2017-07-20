@@ -6,4 +6,8 @@ The client-facing part of audio uploading. For quick setup, see [Docker](#docker
 The javascript takes a large audio file and uploads it in chunks to the server.  The uploading process can be paused
 and resumed.
 
+## Requirements
+* node
+* nginx
+
 [More info in the wiki](https://github.com/ProjectResound/planning/wiki)

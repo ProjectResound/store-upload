@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { MemoryRouter } from 'react-router-dom';
 import TestUtils from 'react-dom/test-utils'
 import {expect} from 'chai';
 import sinon from 'sinon';
@@ -23,7 +24,10 @@ describe('<QueuedItem />', function() {
     this.storeMock = sinon.mock(DropstripStore);
     this.storeMock.expects('getQueue').atLeast(1).returns(mockQueue);
 
-    this.component = TestUtils.renderIntoDocument(<QueuedItem file={mockFile} />);
+    this.component = TestUtils.renderIntoDocument(
+      <MemoryRouter>
+        <QueuedItem file={mockFile} />
+      </MemoryRouter>);
     this.componentDOM = ReactDOM.findDOMNode(this.component);
   });
 
@@ -38,11 +42,12 @@ describe('<QueuedItem />', function() {
 
   it('on completed upload, removes QueuedItem when Cancel is clicked', () => {
     const cancelButton = TestUtils.findRenderedDOMComponentWithClass(this.component, 'queued-item__button--grey');
-    sinon.spy(this.component, "onCancelConfirmed");
+    const queuedItemComponent = TestUtils.findRenderedComponentWithType(this.component, QueuedItem);
+    sinon.spy(queuedItemComponent, "onCancelConfirmed");
 
     TestUtils.Simulate.click(cancelButton);
 
-    expect(this.component.onCancelConfirmed.calledWith(true));
-    expect(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'queued-item__prompt__centered').length).to.equal(0);
+    expect(queuedItemComponent.onCancelConfirmed.calledWith(true));
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(queuedItemComponent, 'queued-item__prompt__centered').length).to.equal(0);
   });
 });
