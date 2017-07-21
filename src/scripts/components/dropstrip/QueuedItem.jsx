@@ -4,6 +4,7 @@ import Contributor from '../contributor/Contributor';
 import DropstripActions from './dropstrip-actions';
 import DropstripStore from './dropstrip-store';
 import audioUrl from '../../services/url-generator';
+import bindHandlers from '../../services/bind-handlers';
 
 
 const getStateFromStore = () => DropstripStore.getQueue();
@@ -22,7 +23,7 @@ class QueuedItem extends React.Component {
 
     this.MAX_CHAR_LENGTH = 4;
 
-    this._bindAllTheHandlers([
+    bindHandlers(this, [
       'onChange',
       'onPause',
       'onResume',
@@ -157,12 +158,6 @@ class QueuedItem extends React.Component {
     });
     this.setState({
       progress: 'uploading'
-    });
-  }
-
-  _bindAllTheHandlers(arr) {
-    arr.forEach((thing) => {
-      this[thing] = this[thing].bind(this);
     });
   }
 

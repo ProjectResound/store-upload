@@ -1,5 +1,6 @@
 import React from 'react';
 import AudioStore from './audio-store';
+import EditFile from './EditFile';
 
 export default class Audio extends React.Component {
   constructor(props) {
@@ -28,10 +29,34 @@ export default class Audio extends React.Component {
     const audio = this.state.audio;
 
     return (
-      <div className="audio-page__container">
+      <div>
         { audio &&
-          <div className="row">
-            <h1 className="audio-page__title">{audio.title}</h1>
+          <div className="audio-page__container">
+            <div className="row">
+              <h1 className="audio-page__title">{audio.title}</h1>
+            </div>
+            <div className="row">
+              <div className="col s2 audio-actions__container">
+                <div className="row">
+                  <EditFile />
+                </div>
+                <div className="row image__container">
+                  <img src="/assets/images/icon-link.png" className="copy__icon" alt="copy a link icon" />
+                  Copy a link
+                </div>
+                <div className="row image__container">
+                  <img src="/assets/images/icon-download.png" alt="download icon" />
+                  Download
+                </div>
+                <div className="row image__container delete__container">
+                  <img src="/assets/images/icon-delete.png" className="trash__icon" alt="delete icon" />
+                  Delete this file
+                </div>
+              </div>
+              <div className="col s10">
+                meta stuff and the bigger things
+              </div>
+            </div>
           </div>
         }
       </div>
