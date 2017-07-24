@@ -1,6 +1,7 @@
 import React from 'react';
 import AudioStore from './audio-store';
 import EditFile from './EditFile';
+import Metadata from './Metadata';
 
 export default class Audio extends React.Component {
   constructor(props) {
@@ -38,7 +39,7 @@ export default class Audio extends React.Component {
             <div className="row">
               <div className="col s2 audio-actions__container">
                 <div className="row">
-                  <EditFile />
+                  <EditFile audio={audio} />
                 </div>
                 <div className="row image__container">
                   <img src="/assets/images/icon-link.png" className="copy__icon" alt="copy a link icon" />
@@ -54,7 +55,7 @@ export default class Audio extends React.Component {
                 </div>
               </div>
               <div className="col s10">
-                meta stuff and the bigger things
+                <Metadata audio={audio} />
               </div>
             </div>
           </div>

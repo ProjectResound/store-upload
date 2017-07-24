@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Errors from '../components/errors/Errors';
 import UserStore from '../stores/user-store';
-import WorkingOnStore from '../components/working-on/working-on-store';
 import ContributorStore from '../components/contributor/contributor-store';
 
 
@@ -31,7 +30,6 @@ export default class Header extends React.Component {
   componentDidMount() {
     if (this.props.auth.isAuthenticated()) {
       UserStore.addChangeListener(this._redirect);
-      WorkingOnStore.get();
       ContributorStore.get();
     }
   }
