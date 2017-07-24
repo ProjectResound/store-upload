@@ -87,6 +87,11 @@ export default class Explorer extends React.Component {
               audioItem={audioItem}
             />
           ))}
+          { !audioList.totalCount &&
+            <div className="explorer__loading">
+              loading audio files
+            </div>
+          }
         </div>
         <img src="/assets/images/mascot.png" width="100%" className="explorer__mascot" />
       </div>
