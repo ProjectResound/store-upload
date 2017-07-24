@@ -6,6 +6,10 @@ import resoundAPI from '../../services/resound-api';
 import ExplorerActions from '../explorer/explorer-actions';
 import ErrorsActions from '../errors/errors-actions';
 
+// Allows a lot of QueuedItems in the dropzone queue to register
+// their handlers.
+EventEmitter.defaultMaxListeners = 100;
+
 const dropzoneQueue = {};
 
 const DropstripStore = assign({}, EventEmitter.prototype, {
