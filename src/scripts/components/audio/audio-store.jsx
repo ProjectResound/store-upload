@@ -5,10 +5,11 @@ import resoundAPI from '../../services/resound-api';
 import ErrorsActions from '../errors/errors-actions';
 
 let _store;
+let _inEditMode = false;
 
 const AudioStore = assign({}, EventEmitter.prototype, {
-  emitChange() {
-    this.emit('change');
+  emitChange(changeType) {
+    this.emit('change', changeType);
   },
 
   addChangeListener(cb) {
@@ -32,22 +33,41 @@ const AudioStore = assign({}, EventEmitter.prototype, {
 
   get() {
     return _store;
-  }
+  },
+
+  toggleEditMode(toggle) {
+    _inEditMode = toggle;
+  },
+
+  inEditMode() {
+    return _inEditMode;
+  },
+
+  save(form) {
+    resoundAPI.updateAudio(form)
+      .then((response) => {
+        _store = response;
+        AudioStore.toggleEditMode(false);
+        AudioStore.emitChange('saved');
+      })
+      .catch((err) => {
+        ErrorsActions.error(err);
+      });
+  },
 });
 
-// AppDispatcher.register((action) => {
-//   switch (action.actionType) {
-//     case 'PARSE_AUDIO_LIST':
-//       ExplorerStore.parseAudioList(action);
-//       break;
-//     case 'APPEND_AUDIO_LIST':
-//       ExplorerStore.appendAudioList(action);
-//       break;
-//     default:
-//   }
-//
-//   ExplorerStore.emitChange();
-//   return true;
-// });
+AppDispatcher.register((action) => {
+  switch (action.actionType) {
+    case 'AUDIO_EDIT_ON':
+      AudioStore.toggleEditMode(action.toggle);
+      break;
+    case 'AUDIO_SAVE':
+      AudioStore.save(action.form);
+      break;
+    default:
+  }
+  AudioStore.emitChange();
+  return true;
+});
 
 export default AudioStore;

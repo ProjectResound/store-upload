@@ -1,17 +1,14 @@
 import React from 'react';
 import bindHandlers from '../../services/bind-handlers';
+import AudioActions from './audio-actions';
 
 export default class EditFile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      editMode: false
-    };
     bindHandlers(this,
       [
         'onChange',
         'edit',
-        'save',
         'cancel'
       ]
     );
@@ -27,34 +24,29 @@ export default class EditFile extends React.Component {
   }
 
   edit() {
-    this.setState({
-      editMode: true
-    });
-  }
-
-  save() {
-    this.setState({
-      editMode: false
-    });
+    AudioActions.edit(true);
   }
 
   cancel() {
-    this.setState({
-      editMode: false
-    });
+    AudioActions.edit(false);
   }
 
   render() {
-    const editting = this.state.editMode;
+    const editing = this.props.editMode;
     return (
       <div className="edit__container">
-        { editting &&
+        { editing &&
           <div>
-            <button className="edit__button" onClick={this.save}>save changes</button>
+            {this.props.validForm &&
+            <button className="edit__button" onClick={this.props.save}>save changes</button>
+            }
+            {!this.props.validForm &&
+            <button className="edit__button edit__button--disabled">save changes</button>
+            }
             <button className="edit__button edit__cancel" onClick={this.cancel}>cancel</button>
           </div>
         }
-        { !editting &&
+        { !editing &&
           <button className="edit__button" onClick={this.edit}>edit file</button>
         }
       </div>

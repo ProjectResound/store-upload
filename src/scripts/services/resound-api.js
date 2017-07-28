@@ -51,6 +51,19 @@ module.exports = {
     return fetch(uri, { headers })
       .then(response => response.json());
   },
+  updateAudio: (audio) => {
+    const uri = `${apiRoot}/audios/${audio.id}`;
+    return fetch(uri, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify({
+        title: audio.title,
+        contributors: audio.contributors,
+        tags: audio.tags
+      })
+    })
+      .then(response => response.json());
+  },
   auth,
   headers
 };

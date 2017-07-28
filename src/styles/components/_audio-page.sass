@@ -1,6 +1,5 @@
 .audio-page__container
   margin: 40px
-
   .audio-page__title
     font-weight: normal
 
@@ -30,19 +29,55 @@
     font-size: 1em
     font-weight: lighter
 
+  .edit__button--disabled
+    background-color: $table-border-color
+    cursor: not-allowed
+
   .edit__cancel
     background-color: rgba(15, 179, 204, 0.5)
     margin-top: 10px
 
   .metadata__container .row
     margin: 0
+
   .md__row
     font-size: 0.75rem
     padding: 10px 0
+
   .md__row--large
     font-size: 1rem
     border-top: 1px solid $table-border-color
     padding: 10px 0
-    border-bottom: 1px solid $table-border-color
-  .md__row--large:first-child
-    border-bottom: 0
+
+  .md__row--editing
+    font-size: 1rem
+    border: 1px solid $primary-color
+    padding: 10px 5px
+
+  .md__row--error
+    border: 1px solid $error-color
+
+  input.title__input
+    display: block
+    font-size: 2em
+    margin: 20px 0 15px 0
+    padding-left: 5px
+    padding-right: 5px
+    width: 100%
+    border: 1px solid $primary-color
+
+  input.title__input--error
+    border: 1px solid $error-color
+
+  .metadata__inputs
+    position: relative
+  .metadata__inputs > label
+    position: absolute
+    left: 5px
+    top: 11px
+  .metadata__inputs > input
+    padding-left: 100px
+
+  .audio__alert
+    font-size: 0.7rem
+    color: $error-color

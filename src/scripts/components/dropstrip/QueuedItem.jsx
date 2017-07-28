@@ -4,8 +4,7 @@ import Contributor from '../contributor/Contributor';
 import DropstripActions from './dropstrip-actions';
 import DropstripStore from './dropstrip-store';
 import bindHandlers from '../../services/bind-handlers';
-import { generateUrl } from '../../services/audio-tools';
-
+import { generateUrl, isValidLength } from '../../services/audio-tools';
 
 const getStateFromStore = () => DropstripStore.getQueue();
 
@@ -57,7 +56,7 @@ class QueuedItem extends React.Component {
       //  change event is triggered by filling out the form
       const fieldName = e.target.name;
       newState[fieldName] = e.target.value;
-      if (e.target.value.length > 0 && (e.target.value.length < this.MAX_CHAR_LENGTH)) {
+      if (!isValidLength(e.target.value, this.MAX_CHAR_LENGTH)) {
         newState.errors[fieldName] = true;
       } else {
         delete newState.errors[fieldName];
