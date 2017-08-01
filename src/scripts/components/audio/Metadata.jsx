@@ -1,5 +1,7 @@
 import React from 'react';
 import { getDuration, getCreatedAt } from '../../services/audio-tools';
+import Contributor from '../contributor/Contributor';
+
 
 export default class Metadata extends React.Component {
   constructor(props) {
@@ -31,19 +33,14 @@ export default class Metadata extends React.Component {
         { editing &&
         <div>
           <div className="row metadata__inputs">
-            <input
-              className={this.props.validContributors ? 'col s6 md__row--editing contributors__input' : 'col s6 md__row--editing md__row--error'}
-              type="text"
-              name="contributors"
+            <Contributor
+              hideContributorAlert={this.props.validContributors}
+              contributorsSuggestions={this.props.contributorsSuggestions}
               value={this.props.contributors}
-              onChange={this.props.onContributorsChange}
+              onChangeContributor={this.props.onContributorsChange}
+              label="Contributors:"
+              inputClass={this.props.validContributors ? 'col s6 md__row--editing contributors__input' : 'col s6 md__row--editing md__row--error'}
             />
-            <label htmlFor="contributor">Contributors:</label>
-            {!this.props.validContributors &&
-            <div className={this.props.validContributors ? 'hidden' : 'col s6 audio__alert'}>
-              Minimum length should be {this.props.MAX_CHAR_LENGTH} characters.
-            </div>
-            }
           </div>
           <div className="row metadata__inputs">
             <input

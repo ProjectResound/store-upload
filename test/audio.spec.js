@@ -66,16 +66,5 @@ describe('<Audio />', function() {
       expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'title__input--error')).to.exist;
       expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'edit__button--disabled')).to.exist;
     });
-
-    it('validates contributor field', () => {
-      AudioActions.edit(true);
-
-      const contributorField = TestUtils.findRenderedDOMComponentWithClass(this.component, 'contributors__input');
-      contributorField.value = '';
-      TestUtils.Simulate.change(contributorField);
-
-      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'md__row--error')).to.exist;
-      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'edit__button--disabled')).to.exist;
-    })
   });
 });

@@ -71,13 +71,18 @@
 
   .metadata__inputs
     position: relative
-  .metadata__inputs > label
+  .metadata__inputs label
     position: absolute
     left: 5px
     top: 11px
-  .metadata__inputs > input
+  .metadata__inputs input
     padding-left: 100px
+    background-color: inherit
 
   .audio__alert
     font-size: 0.7rem
     color: $error-color
+
+  .react-autosuggest__suggestions-container--open
+    top: 41px
+    width: 50%

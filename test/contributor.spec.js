@@ -22,7 +22,7 @@ describe('<Contributor />', function() {
   it('when input is comma separated, show correct suggestions', () => {
     const suggestions = ['katie', 'louise', 'josie'];
     const stubbedFunc = () => {};
-    this.component = TestUtils.renderIntoDocument(<Contributor contributors={suggestions}
+    this.component = TestUtils.renderIntoDocument(<Contributor contributorsSuggestions={suggestions}
                                                                value=''
                                                                onChangeContributor={stubbedFunc} />);
     this.componentDOM = ReactDOM.findDOMNode(this.component);

@@ -5,6 +5,7 @@ import EditFile from './EditFile';
 import Metadata from './Metadata';
 import bindHandlers from '../../services/bind-handlers';
 import { isValidLength } from '../../services/audio-tools';
+import ContributorStore from '../../components/contributor/contributor-store';
 
 export default class Audio extends React.Component {
   constructor(props) {
@@ -21,17 +22,20 @@ export default class Audio extends React.Component {
       'onTitleChange',
       'onContributorsChange',
       'onTagsChange',
-      'save'
+      'save',
+      'populateContributorsSuggestions'
     ]);
   }
 
   componentDidMount() {
     AudioStore.addChangeListener(this.onChange);
     AudioStore.fetch(this.audioId);
+    ContributorStore.addChangeListener(this.populateContributorsSuggestions);
   }
 
   componentWillUnmount() {
     AudioStore.removeChangeListener(this.onChange);
+    ContributorStore.removeChangeListener(this.populateContributorsSuggestions);
   }
 
   onChange(changeType) {
@@ -65,8 +69,7 @@ export default class Audio extends React.Component {
     });
   }
 
-  onContributorsChange(e) {
-    const str = e.target.value;
+  onContributorsChange(str) {
     const valid = !!isValidLength(str, this.MAX_CHAR_LENGTH);
     this.setState({
       formContributors: str,
@@ -94,6 +97,12 @@ export default class Audio extends React.Component {
         },
       );
     }
+  }
+
+  populateContributorsSuggestions() {
+    this.setState({
+      contributorsSuggestions: ContributorStore.getList()
+    });
   }
 
   render() {
@@ -156,6 +165,7 @@ export default class Audio extends React.Component {
                   MAX_CHAR_LENGTH={this.MAX_CHAR_LENGTH}
                   tags={this.state.formTags}
                   onTagsChange={this.onTagsChange}
+                  contributorsSuggestions={this.state.contributorsSuggestions}
                 />
               </div>
             </div>

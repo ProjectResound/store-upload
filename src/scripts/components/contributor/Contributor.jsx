@@ -17,6 +17,7 @@ export default class Contributor extends React.Component {
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
     this.onGetSuggestionValue = this.onGetSuggestionValue.bind(this);
+    this.MAX_CHAR_LENGTH = 4;
   }
 
   onChange(event, { newValue }) {
@@ -39,7 +40,7 @@ export default class Contributor extends React.Component {
   }
 
   onGetSuggestionValue(suggestion) {
-    const oldValue = this.state.value.split(',');
+    const oldValue = this.state.value ? this.state.value.split(',') : [];
     oldValue.pop();
     const trimmed = oldValue.filter(val => val.trim());
     if (!trimmed.includes(suggestion)) {
@@ -51,25 +52,30 @@ export default class Contributor extends React.Component {
   getSuggestions(value) {
     const inputValue = value.split(',').pop().trim().toLowerCase();
     const inputLength = inputValue.length;
-    return inputLength === 0 ? [] : this.props.contributors.filter(contributor =>
+    if (inputLength === 0 || !this.props.contributorsSuggestions) {
+      return [];
+    }
+    return this.props.contributorsSuggestions.filter(contributor =>
       contributor.toLowerCase().slice(0, inputLength) === inputValue
     );
   }
 
   render() {
+    const labelClass = this.props.labelClass || '';
+    const label = this.props.label || 'Contributors';
+    const inputClass = this.props.inputClass || 'contributor queued-item__input-text';
     const suggestions = this.state.suggestions;
-
     const inputProps = {
       placeholder: 'Who made this? (Separate 2+ names with commas)',
       value: this.props.value || '',
-      className: 'contributor queued-item__input-text',
+      className: inputClass,
       onChange: this.onChange,
       name: 'contributor'
     };
     const hideContributorAlert = this.props.hideContributorAlert;
     return (
       <div className="row">
-        <label htmlFor="contributor">Contributor</label>
+        <label htmlFor="contributor" className={labelClass}>{label}</label>
         <Autosuggest
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -78,7 +84,7 @@ export default class Contributor extends React.Component {
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
         />
-        <div className={`queued-item__alert ${hideContributorAlert}`}>
+        <div className={hideContributorAlert ? 'hidden' : 'queued-item__alert'}>
           You must provide a contributor name (min {this.MAX_CHAR_LENGTH} chars).
         </div>
       </div>

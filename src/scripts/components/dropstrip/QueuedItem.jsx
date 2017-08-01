@@ -13,7 +13,7 @@ class QueuedItem extends React.Component {
     super(props);
     this.state = {
       title: '',
-      contributor: '',
+      contributors: '',
       tags: '',
       errors: {},
       queue: getStateFromStore(),
@@ -67,7 +67,7 @@ class QueuedItem extends React.Component {
     if (exists) {
       this.state.title = exists.title;
       this.state.tags = exists.tags;
-      this.state.contributor = exists.contributor;
+      this.state.contributors = exists.contributors;
     }
     newState = Object.assign(this.state, newState);
     this.setState(newState);
@@ -76,13 +76,13 @@ class QueuedItem extends React.Component {
   onChangeContributor(contributorVal) {
     if (contributorVal < this.MAX_CHAR_LENGTH) {
       this.setState({
-        errors: { contributor: true },
-        contributor: contributorVal
+        errors: { contributors: true },
+        contributors: contributorVal
       });
     } else {
       this.setState({
-        errors: { contributor: false },
-        contributor: contributorVal
+        errors: { contributors: false },
+        contributors: contributorVal
       });
     }
   }
@@ -152,7 +152,7 @@ class QueuedItem extends React.Component {
     DropstripActions.uploadFile({
       file: this.props.file,
       title: this.state.title,
-      contributor: this.state.contributor,
+      contributors: this.state.contributors,
       tags: this.state.tags
     });
     this.setState({
@@ -167,9 +167,9 @@ class QueuedItem extends React.Component {
     const fileSize = Math.round(file.size / 10000) / 100;
     const fileStatus = dropzoneQueue[file.name].status;
     const hideTitleAlert = form.errors.title ? '' : 'hidden';
-    const hideContributorAlert = form.errors.contributor ? '' : 'hidden';
-    const hasErrors = (!form.title || !form.contributor) ||
-      form.errors.title || form.errors.contributor;
+    const hideContributorAlert = form.errors.contributors ? '' : 'hidden';
+    const hasErrors = (!form.title || !form.contributors) ||
+      form.errors.title || form.errors.contributors;
     const progressBarStyle = {
       width: `${fileStatus.progress}%`
     };
@@ -201,8 +201,8 @@ class QueuedItem extends React.Component {
             </div>
             <Contributor
               hideContributorAlert={hideContributorAlert}
-              contributors={this.props.contributors}
-              value={this.state.contributor}
+              contributorsSuggestions={this.props.contributors}
+              value={this.state.contributors}
               onChangeContributor={this.onChangeContributor}
             />
             <div className="row">
