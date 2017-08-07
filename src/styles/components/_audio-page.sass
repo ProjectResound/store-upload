@@ -1,5 +1,5 @@
 .audio-page__container
-  margin: 40px
+  margin: 40px 100px
   .audio-page__title
     font-weight: normal
 
@@ -24,7 +24,7 @@
     color: white
     text-transform: capitalize
     padding: 10px
-    width: 150px
+    width: 100px
     text-align: center
     font-size: 1em
     font-weight: lighter
@@ -86,3 +86,38 @@
   .react-autosuggest__suggestions-container--open
     top: 41px
     width: 50%
+
+  .copydownload__container
+    margin-top: 40px
+
+  .copydownload__container > .row
+    border-bottom: 1px solid $table-border-color
+    text-align: left
+    padding: 20px
+    margin: 0
+
+  .copydownload__header
+    color: $primary-color
+
+  .download__col
+    text-align: center
+
+  .download__icon
+    height: 15px
+
+  =copy_button
+    font-size: 0.7rem
+    padding: 3px 7px
+    text-transform: uppercase
+    margin-bottom: 3px
+    margin-left: 10px
+
+  .hover
+    +copy_button
+    color: $primary-color
+    border: 1px solid $primary-color
+
+  .copied
+    +copy_button
+    color: $green-color
+    border: 1px solid $green-color

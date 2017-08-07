@@ -3,6 +3,7 @@ import AudioStore from './audio-store';
 import AudioActions from './audio-actions';
 import EditFile from './EditFile';
 import Metadata from './Metadata';
+import CopyDownload from './CopyDownload';
 import bindHandlers from '../../services/bind-handlers';
 import { isValidLength } from '../../services/audio-tools';
 import ContributorStore from '../../components/contributor/contributor-store';
@@ -146,10 +147,6 @@ export default class Audio extends React.Component {
                   <img src="/assets/images/icon-link.png" className="copy__icon" alt="copy a link icon" />
                   Copy a link
                 </div>
-                <div className="row image__container">
-                  <img src="/assets/images/icon-download.png" alt="download icon" />
-                  Download
-                </div>
                 <div className="row image__container delete__container">
                   <img src="/assets/images/icon-delete.png" className="trash__icon" alt="delete icon" />
                   Delete this file
@@ -168,6 +165,13 @@ export default class Audio extends React.Component {
                   contributorsSuggestions={this.state.contributorsSuggestions}
                 />
               </div>
+              {audio.files &&
+              <div className="col s10">
+                <CopyDownload
+                  audio={audio}
+                />
+              </div>
+              }
             </div>
           </div>
         }

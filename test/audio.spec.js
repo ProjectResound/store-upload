@@ -25,7 +25,8 @@ describe('<Audio />', function() {
     this.componentDOM = ReactDOM.findDOMNode(this.component);
     this.audioStub = sinon.stub(AudioStore, 'get').returns({
       title: this.title,
-      id: this.audioId
+      id: this.audioId,
+      files: { mp3: '123123123' }
     });
   });
 
@@ -38,6 +39,11 @@ describe('<Audio />', function() {
     AudioStore.emitChange();
     const titleDOM = TestUtils.findRenderedDOMComponentWithClass(this.component, 'audio-page__title');
     expect(titleDOM.innerHTML).to.eq(this.title);
+  });
+
+  it('renders a CopyDownload component', () => {
+    AudioStore.emitChange();
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'copydownload__container').length).to.equal(1);
   });
 
   describe('edit', () => {
@@ -65,6 +71,17 @@ describe('<Audio />', function() {
 
       expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'title__input--error')).to.exist;
       expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'edit__button--disabled')).to.exist;
+    });
+  });
+
+  describe('CopyDownload', () => {
+    it('has a copy button on hover', () => {
+      AudioStore.emitChange();
+      const urlContainer = TestUtils.findRenderedDOMComponentWithClass(this.component, 'url__hoverzone');
+      TestUtils.Simulate.mouseOver(urlContainer);
+
+      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'hover'));
+      expect(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'copied').length).to.equal(0);
     });
   });
 });
