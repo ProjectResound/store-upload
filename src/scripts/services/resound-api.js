@@ -64,6 +64,13 @@ module.exports = {
     })
       .then(response => response.json());
   },
+  deleteAudio: (audioId) => {
+    const uri = `${apiRoot}/audios/${audioId}`;
+    return fetch(uri, {
+      method: 'DELETE',
+      headers
+    });
+  },
   auth,
   headers
 };

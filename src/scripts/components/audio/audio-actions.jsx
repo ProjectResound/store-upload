@@ -12,5 +12,10 @@ export default {
       actionType: 'AUDIO_SAVE',
       form
     });
+  },
+  delete: () => {
+    AppDispatcher.dispatch({
+      actionType: 'AUDIO_DELETE'
+    });
   }
 };

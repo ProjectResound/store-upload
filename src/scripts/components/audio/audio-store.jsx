@@ -6,6 +6,7 @@ import ErrorsActions from '../errors/errors-actions';
 
 let _store;
 let _inEditMode = false;
+let _audioId;
 
 const AudioStore = assign({}, EventEmitter.prototype, {
   emitChange(changeType) {
@@ -21,6 +22,7 @@ const AudioStore = assign({}, EventEmitter.prototype, {
   },
 
   fetch(audioId) {
+    _audioId = audioId;
     resoundAPI.getAudioById(audioId)
       .then((response) => {
         _store = response;
@@ -54,6 +56,16 @@ const AudioStore = assign({}, EventEmitter.prototype, {
         ErrorsActions.error(err);
       });
   },
+
+  delete() {
+    resoundAPI.deleteAudio(_audioId)
+      .then(() => {
+        AudioStore.emitChange('deleted');
+      })
+      .catch((err) => {
+        ErrorsActions.error(err);
+      });
+  }
 });
 
 AppDispatcher.register((action) => {
@@ -63,6 +75,9 @@ AppDispatcher.register((action) => {
       break;
     case 'AUDIO_SAVE':
       AudioStore.save(action.form);
+      break;
+    case 'AUDIO_DELETE':
+      AudioStore.delete();
       break;
     default:
   }

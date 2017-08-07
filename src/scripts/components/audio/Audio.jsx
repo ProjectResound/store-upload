@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from 'react-modal';
 import AudioStore from './audio-store';
 import AudioActions from './audio-actions';
 import EditFile from './EditFile';
@@ -24,7 +25,9 @@ export default class Audio extends React.Component {
       'onContributorsChange',
       'onTagsChange',
       'save',
-      'populateContributorsSuggestions'
+      'populateContributorsSuggestions',
+      'handleCloseModal',
+      'handleDeleteAudio'
     ]);
   }
 
@@ -49,6 +52,8 @@ export default class Audio extends React.Component {
       this.setState({
         validContributor: AudioStore.getValidation()
       });
+    } else if (changeType === 'deleted') {
+      this.props.history.push('/');
     } else {
       const audio = AudioStore.get();
       this.setState({
@@ -84,6 +89,15 @@ export default class Audio extends React.Component {
     });
   }
 
+  handleCloseModal() {
+    this.setState({ showModal: false });
+  }
+
+  handleDeleteAudio() {
+    this.setState({ showModal: false });
+    AudioActions.delete();
+  }
+
   save() {
     if (
       !!isValidLength(this.state.formTitle, this.MAX_CHAR_LENGTH) &&
@@ -112,6 +126,23 @@ export default class Audio extends React.Component {
     const validForm = this.state.validTitle && this.state.validContributors;
     return (
       <div>
+        <Modal
+          isOpen={this.state.showModal}
+          contentLabel="Delete Modal"
+          onRequestClose={this.handleCloseModal}
+          className="modal"
+          overlayClassName="modal__overlay"
+        >
+          Are you sure you want to permanently delete this file?
+          <div className="row">
+            <div className="delete__yes" onClick={this.handleDeleteAudio}>
+              Yes
+            </div>
+            <div className="delete__no" onClick={this.handleCloseModal}>
+              No
+            </div>
+          </div>
+        </Modal>
         { audio &&
           <div className="audio-page__container">
             <div className="row">
@@ -143,11 +174,7 @@ export default class Audio extends React.Component {
                     save={this.save}
                   />
                 </div>
-                <div className="row image__container">
-                  <img src="/assets/images/icon-link.png" className="copy__icon" alt="copy a link icon" />
-                  Copy a link
-                </div>
-                <div className="row image__container delete__container">
+                <div className="row delete__container" onClick={() => this.setState({ showModal: true })}>
                   <img src="/assets/images/icon-delete.png" className="trash__icon" alt="delete icon" />
                   Delete this file
                 </div>
@@ -164,14 +191,12 @@ export default class Audio extends React.Component {
                   onTagsChange={this.onTagsChange}
                   contributorsSuggestions={this.state.contributorsSuggestions}
                 />
-              </div>
-              {audio.files &&
-              <div className="col s10">
+                {audio.files &&
                 <CopyDownload
                   audio={audio}
                 />
+                }
               </div>
-              }
             </div>
           </div>
         }
