@@ -1,5 +1,5 @@
-import React from 'react';
-import ErrorsStore from './errors-store';
+import React from "react";
+import ErrorsStore from "./errors-store";
 
 export default class Errors extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ export default class Errors extends React.Component {
   render() {
     const msg = this.state.msg;
     return (
-      <div className={msg ? 'errors__overlay col s12' : 'hidden'}>
+      <div className={msg ? "errors__overlay col s12" : "hidden"}>
         {msg}
         <div className="errors__dismiss" onClick={this.dismiss}>
           <img src="/assets/images/button-remove.png" />
@@ -41,4 +41,3 @@ export default class Errors extends React.Component {
     );
   }
 }
-

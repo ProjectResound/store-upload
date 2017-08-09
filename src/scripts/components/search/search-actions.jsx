@@ -1,10 +1,10 @@
-import AppDispatcher from '../../dispatcher/app-dispatcher';
+import AppDispatcher from "../../dispatcher/app-dispatcher";
 
 module.exports = {
-  search: (query) => {
+  search: query => {
     AppDispatcher.dispatch({
-      actionType: 'SEARCH',
-      query,
+      actionType: "SEARCH",
+      query
     });
-  },
+  }
 };

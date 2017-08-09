@@ -1,10 +1,10 @@
-import { EventEmitter } from 'events';
-import assign from 'object-assign';
-import Flow from '@flowjs/flow.js';
-import AppDispatcher from '../../dispatcher/app-dispatcher';
-import resoundAPI from '../../services/resound-api';
-import ExplorerActions from '../explorer/explorer-actions';
-import ErrorsActions from '../errors/errors-actions';
+import { EventEmitter } from "events";
+import assign from "object-assign";
+import Flow from "@flowjs/flow.js";
+import AppDispatcher from "../../dispatcher/app-dispatcher";
+import resoundAPI from "../../services/resound-api";
+import ExplorerActions from "../explorer/explorer-actions";
+import ErrorsActions from "../errors/errors-actions";
 
 // Allows a lot of QueuedItems in the dropzone queue to register
 // their handlers.
@@ -14,35 +14,38 @@ const dropzoneQueue = {};
 
 const DropstripStore = assign({}, EventEmitter.prototype, {
   emitChange(successFlag) {
-    this.emit('change', successFlag);
+    this.emit("change", successFlag);
   },
 
   addChangeListener(cb) {
-    this.on('change', cb);
+    this.on("change", cb);
   },
 
   removeChangeListener(cb) {
-    this.removeListener('change', cb);
+    this.removeListener("change", cb);
   },
 
   getQueue: () => dropzoneQueue,
 
-  addToQueue: (file) => {
-    resoundAPI.get(file.name).then((resp) => {
-      const existingFile = resp.audios[0];
-      if (existingFile) {
-        dropzoneQueue[file.name].status.exists = {
-          filename: existingFile.filename,
-          title: existingFile.title,
-          tags: existingFile.tags,
-          contributors: existingFile.contributors
-        };
-      }
-      dropzoneQueue[file.name].status.checked = true;
-      DropstripStore.emitChange();
-    }).catch((err) => {
-      ErrorsActions.error(err);
-    });
+  addToQueue: file => {
+    resoundAPI
+      .get(file.name)
+      .then(resp => {
+        const existingFile = resp.audios[0];
+        if (existingFile) {
+          dropzoneQueue[file.name].status.exists = {
+            filename: existingFile.filename,
+            title: existingFile.title,
+            tags: existingFile.tags,
+            contributors: existingFile.contributors
+          };
+        }
+        dropzoneQueue[file.name].status.checked = true;
+        DropstripStore.emitChange();
+      })
+      .catch(err => {
+        ErrorsActions.error(err);
+      });
     dropzoneQueue[file.name] = {};
     dropzoneQueue[file.name].name = file.name;
     dropzoneQueue[file.name].fileObject = file;
@@ -50,7 +53,7 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
     dropzoneQueue[file.name].status = {};
   },
 
-  removeFromQueue: (file) => {
+  removeFromQueue: file => {
     delete dropzoneQueue[file.name];
   },
 
@@ -80,7 +83,8 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
   success(msg) {
     const filename = msg.filename;
     dropzoneQueue[filename].completed = msg.audio_id;
-    resoundAPI.get(filename)
+    resoundAPI
+      .get(filename)
       .then(audioList => ExplorerActions.appendAudioList(audioList));
   },
 
@@ -90,39 +94,39 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
 
   failed(filename) {
     dropzoneQueue[filename].failed = true;
-    this.emitChange('failed');
+    this.emitChange("failed");
   }
 });
 
-AppDispatcher.register((action) => {
+AppDispatcher.register(action => {
   let successFlag;
   switch (action.actionType) {
-    case 'ENQUEUE_FILE':
+    case "ENQUEUE_FILE":
       DropstripStore.addToQueue(action.file);
       break;
-    case 'REMOVE_FILE':
+    case "REMOVE_FILE":
       DropstripStore.removeFromQueue(action.file);
       break;
-    case 'UPLOAD_FILE':
+    case "UPLOAD_FILE":
       DropstripStore.upload(action);
       break;
-    case 'PAUSE_UPLOAD':
+    case "PAUSE_UPLOAD":
       DropstripStore.pause(action.filename);
       break;
-    case 'RESUME_UPLOAD':
+    case "RESUME_UPLOAD":
       DropstripStore.resume(action.filename);
       break;
-    case 'UPLOAD_SUCCESS':
+    case "UPLOAD_SUCCESS":
       DropstripStore.success(action.msg);
-      successFlag = 'success';
+      successFlag = "success";
       break;
-    case 'OVERWRITE':
+    case "OVERWRITE":
       DropstripStore.overwrite(action.filename);
       break;
-    case 'UPLOAD_FAILED':
+    case "UPLOAD_FAILED":
       DropstripStore.failed(action.filename);
       break;
-    case 'RETRY_UPLOAD':
+    case "RETRY_UPLOAD":
       DropstripStore.retry(action.filename);
       break;
     default:
@@ -133,7 +137,7 @@ AppDispatcher.register((action) => {
 });
 
 DropstripStore.flow = new Flow({
-  target: 'http://localhost:3000/api/v1/audios',
+  target: "http://localhost:3000/api/v1/audios",
   chunkSize: 1024 * 1024,
   forceChunkSize: true,
   allowDuplicateUploads: true,
@@ -147,17 +151,19 @@ DropstripStore.flow = new Flow({
   })
 });
 
-DropstripStore.flow.on('fileProgress', (flowFile) => {
-  dropzoneQueue[flowFile.name].status.progress =
-    parseInt(flowFile.progress() * 100, 10);
+DropstripStore.flow.on("fileProgress", flowFile => {
+  dropzoneQueue[flowFile.name].status.progress = parseInt(
+    flowFile.progress() * 100,
+    10
+  );
   DropstripStore.emitChange();
 });
 
-DropstripStore.flow.on('fileAdded', (flowFile) => {
+DropstripStore.flow.on("fileAdded", flowFile => {
   dropzoneQueue[flowFile.name].flowFile = flowFile;
 });
 
-DropstripStore.flow.on('fileError', (flowFile) => {
+DropstripStore.flow.on("fileError", flowFile => {
   DropstripStore.failed(flowFile.name);
 });
 

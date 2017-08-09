@@ -1,8 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import WorkingOnStore from './working-on-store';
-import { generateUrl } from '../../services/audio-tools';
-
+import React from "react";
+import { Link } from "react-router-dom";
+import WorkingOnStore from "./working-on-store";
+import { generateUrl } from "../../services/audio-tools";
 
 export default class WorkingOn extends React.Component {
   constructor(props) {
@@ -28,16 +27,17 @@ export default class WorkingOn extends React.Component {
   }
 
   render() {
-    const audios = this.state.audios.map(
-      audio =>
-        <div className="working-on__audio col s4" key={audio.filename}>
-          <div className="audio__title">
-            <Link to={generateUrl({ id: audio.id, title: audio.title })}>{audio.title}</Link>
-          </div>
-          <div className="audio__date">
-            {new Date(audio.created_at).toLocaleDateString()}
-          </div>
+    const audios = this.state.audios.map(audio =>
+      <div className="working-on__audio col s4" key={audio.filename}>
+        <div className="audio__title">
+          <Link to={generateUrl({ id: audio.id, title: audio.title })}>
+            {audio.title}
+          </Link>
         </div>
+        <div className="audio__date">
+          {new Date(audio.created_at).toLocaleDateString()}
+        </div>
+      </div>
     );
 
     return (
@@ -51,7 +51,7 @@ export default class WorkingOn extends React.Component {
           </div>
         </div>
         <div className="working-on__audios">
-          { audios }
+          {audios}
         </div>
       </div>
     );

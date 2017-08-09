@@ -1,21 +1,21 @@
-import AppDispatcher from '../../dispatcher/app-dispatcher';
+import AppDispatcher from "../../dispatcher/app-dispatcher";
 
 export default {
-  edit: (toggle) => {
+  edit: toggle => {
     AppDispatcher.dispatch({
-      actionType: 'AUDIO_EDIT_ON',
+      actionType: "AUDIO_EDIT_ON",
       toggle
     });
   },
-  save: (form) => {
+  save: form => {
     AppDispatcher.dispatch({
-      actionType: 'AUDIO_SAVE',
+      actionType: "AUDIO_SAVE",
       form
     });
   },
   delete: () => {
     AppDispatcher.dispatch({
-      actionType: 'AUDIO_DELETE'
+      actionType: "AUDIO_DELETE"
     });
   }
 };

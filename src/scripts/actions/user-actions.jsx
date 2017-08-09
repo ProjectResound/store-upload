@@ -1,9 +1,9 @@
-import AppDispatcher from '../dispatcher/app-dispatcher';
+import AppDispatcher from "../dispatcher/app-dispatcher";
 
 export default {
   loggedIn: (accessToken, idToken) => {
     AppDispatcher.dispatch({
-      actionType: 'USER_LOGGED_IN',
+      actionType: "USER_LOGGED_IN",
       idToken,
       accessToken
     });
@@ -11,7 +11,7 @@ export default {
 
   loggedOut: () => {
     AppDispatcher.dispatch({
-      actionType: 'USER_LOGGED_OUT'
+      actionType: "USER_LOGGED_OUT"
     });
   }
 };

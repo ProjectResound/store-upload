@@ -1,57 +1,57 @@
-import AppDispatcher from '../../dispatcher/app-dispatcher';
+import AppDispatcher from "../../dispatcher/app-dispatcher";
 
 module.exports = {
-  queueFile: (file) => {
+  queueFile: file => {
     AppDispatcher.dispatch({
-      actionType: 'ENQUEUE_FILE',
+      actionType: "ENQUEUE_FILE",
       file
     });
   },
-  removeFile: (file) => {
+  removeFile: file => {
     AppDispatcher.dispatch({
-      actionType: 'REMOVE_FILE',
+      actionType: "REMOVE_FILE",
       file
     });
   },
-  uploadFile: (args) => {
+  uploadFile: args => {
     AppDispatcher.dispatch({
-      actionType: 'UPLOAD_FILE',
+      actionType: "UPLOAD_FILE",
       args
     });
   },
-  pauseUpload: (filename) => {
+  pauseUpload: filename => {
     AppDispatcher.dispatch({
-      actionType: 'PAUSE_UPLOAD',
+      actionType: "PAUSE_UPLOAD",
       filename
     });
   },
-  resumeUpload: (filename) => {
+  resumeUpload: filename => {
     AppDispatcher.dispatch({
-      actionType: 'RESUME_UPLOAD',
+      actionType: "RESUME_UPLOAD",
       filename
     });
   },
-  retryUpload: (filename) => {
+  retryUpload: filename => {
     AppDispatcher.dispatch({
-      actionType: 'RETRY_UPLOAD',
+      actionType: "RETRY_UPLOAD",
       filename
     });
   },
-  uploadSuccess: (msg) => {
+  uploadSuccess: msg => {
     AppDispatcher.dispatch({
-      actionType: 'UPLOAD_SUCCESS',
+      actionType: "UPLOAD_SUCCESS",
       msg
     });
   },
-  overwriteFile: (filename) => {
+  overwriteFile: filename => {
     AppDispatcher.dispatch({
-      actionType: 'OVERWRITE',
+      actionType: "OVERWRITE",
       filename
     });
   },
-  uploadFailed: (filename) => {
+  uploadFailed: filename => {
     AppDispatcher.dispatch({
-      actionType: 'UPLOAD_FAILED',
+      actionType: "UPLOAD_FAILED",
       filename
     });
   }

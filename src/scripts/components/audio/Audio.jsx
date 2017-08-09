@@ -1,13 +1,13 @@
-import React from 'react';
-import Modal from 'react-modal';
-import AudioStore from './audio-store';
-import AudioActions from './audio-actions';
-import EditFile from './EditFile';
-import Metadata from './Metadata';
-import CopyDownload from './CopyDownload';
-import bindHandlers from '../../services/bind-handlers';
-import { isValidLength } from '../../services/audio-tools';
-import ContributorStore from '../../components/contributor/contributor-store';
+import React from "react";
+import Modal from "react-modal";
+import AudioStore from "./audio-store";
+import AudioActions from "./audio-actions";
+import EditFile from "./EditFile";
+import Metadata from "./Metadata";
+import CopyDownload from "./CopyDownload";
+import bindHandlers from "../../services/bind-handlers";
+import { isValidLength } from "../../services/audio-tools";
+import ContributorStore from "../../components/contributor/contributor-store";
 
 export default class Audio extends React.Component {
   constructor(props) {
@@ -16,18 +16,18 @@ export default class Audio extends React.Component {
     this.state = {
       inEditMode: false,
       validTitle: true,
-      validContributors: true,
+      validContributors: true
     };
-    this.audioId = props.match.params.id.split('-')[0];
+    this.audioId = props.match.params.id.split("-")[0];
     bindHandlers(this, [
-      'onChange',
-      'onTitleChange',
-      'onContributorsChange',
-      'onTagsChange',
-      'save',
-      'populateContributorsSuggestions',
-      'handleCloseModal',
-      'handleDeleteAudio'
+      "onChange",
+      "onTitleChange",
+      "onContributorsChange",
+      "onTagsChange",
+      "save",
+      "populateContributorsSuggestions",
+      "handleCloseModal",
+      "handleDeleteAudio"
     ]);
   }
 
@@ -43,17 +43,17 @@ export default class Audio extends React.Component {
   }
 
   onChange(changeType) {
-    if (changeType === 'saved') {
+    if (changeType === "saved") {
       this.setState({
         audio: AudioStore.get(),
         inEditMode: AudioStore.inEditMode()
       });
-    } else if (changeType === 'validate') {
+    } else if (changeType === "validate") {
       this.setState({
         validContributor: AudioStore.getValidation()
       });
-    } else if (changeType === 'deleted') {
-      this.props.history.push('/');
+    } else if (changeType === "deleted") {
+      this.props.history.push("/");
     } else {
       const audio = AudioStore.get();
       this.setState({
@@ -61,7 +61,7 @@ export default class Audio extends React.Component {
         inEditMode: AudioStore.inEditMode(),
         formTitle: audio.title,
         formContributors: audio.contributors,
-        formTags: audio.tags,
+        formTags: audio.tags
       });
     }
   }
@@ -103,14 +103,12 @@ export default class Audio extends React.Component {
       !!isValidLength(this.state.formTitle, this.MAX_CHAR_LENGTH) &&
       !!isValidLength(this.state.formContributors, this.MAX_CHAR_LENGTH)
     ) {
-      AudioActions.save(
-        {
-          id: this.audioId,
-          title: this.state.formTitle,
-          contributors: this.state.formContributors,
-          tags: this.state.formTags
-        },
-      );
+      AudioActions.save({
+        id: this.audioId,
+        title: this.state.formTitle,
+        contributors: this.state.formContributors,
+        tags: this.state.formTags
+      });
     }
   }
 
@@ -143,26 +141,34 @@ export default class Audio extends React.Component {
             </div>
           </div>
         </Modal>
-        { audio &&
+        {audio &&
           <div className="audio-page__container">
             <div className="row">
-              { !editing &&
-                <h1 className="audio-page__title">{audio.title}</h1>
-              }
-              { editing &&
+              {!editing &&
+                <h1 className="audio-page__title">
+                  {audio.title}
+                </h1>}
+              {editing &&
                 <div>
                   <input
-                    className={this.state.validTitle ? 'title__input' : 'title__input title__input--error'}
+                    className={
+                      this.state.validTitle
+                        ? "title__input"
+                        : "title__input title__input--error"
+                    }
                     type="text"
                     name="title"
                     value={this.state.formTitle}
                     onChange={this.onTitleChange}
                   />
-                  <div className={this.state.validTitle ? 'hidden' : 'audio__alert'}>
+                  <div
+                    className={
+                      this.state.validTitle ? "hidden" : "audio__alert"
+                    }
+                  >
                     Minimum length should be {this.MAX_CHAR_LENGTH} characters.
                   </div>
-                </div>
-              }
+                </div>}
             </div>
             <div className="row">
               <div className="col s2 audio-actions__container">
@@ -174,8 +180,15 @@ export default class Audio extends React.Component {
                     save={this.save}
                   />
                 </div>
-                <div className="row delete__container" onClick={() => this.setState({ showModal: true })}>
-                  <img src="/assets/images/icon-delete.png" className="trash__icon" alt="delete icon" />
+                <div
+                  className="row delete__container"
+                  onClick={() => this.setState({ showModal: true })}
+                >
+                  <img
+                    src="/assets/images/icon-delete.png"
+                    className="trash__icon"
+                    alt="delete icon"
+                  />
                   Delete this file
                 </div>
               </div>
@@ -191,15 +204,10 @@ export default class Audio extends React.Component {
                   onTagsChange={this.onTagsChange}
                   contributorsSuggestions={this.state.contributorsSuggestions}
                 />
-                {audio.files &&
-                <CopyDownload
-                  audio={audio}
-                />
-                }
+                {audio.files && <CopyDownload audio={audio} />}
               </div>
             </div>
-          </div>
-        }
+          </div>}
       </div>
     );
   }

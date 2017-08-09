@@ -1,15 +1,15 @@
-import AppDispatcher from '../../dispatcher/app-dispatcher';
+import AppDispatcher from "../../dispatcher/app-dispatcher";
 
 export default {
-  error: (err) => {
+  error: err => {
     AppDispatcher.dispatch({
-      actionType: 'ERROR',
-      err,
+      actionType: "ERROR",
+      err
     });
   },
-  silentError: (err) => {
+  silentError: err => {
     AppDispatcher.dispatch({
-      actionType: 'DEV_ERROR',
+      actionType: "DEV_ERROR",
       err
     });
   }

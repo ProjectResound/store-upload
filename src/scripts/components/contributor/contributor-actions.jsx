@@ -1,9 +1,9 @@
-import AppDispatcher from '../../dispatcher/app-dispatcher';
+import AppDispatcher from "../../dispatcher/app-dispatcher";
 
 export default {
-  add: (contributors) => {
+  add: contributors => {
     AppDispatcher.dispatch({
-      actionType: 'ADD_CONTRIBUTORS',
+      actionType: "ADD_CONTRIBUTORS",
       contributors
     });
   }

@@ -1,24 +1,24 @@
-import { EventEmitter } from 'events';
-import assign from 'object-assign';
-import AppDispatcher from '../../dispatcher/app-dispatcher';
+import { EventEmitter } from "events";
+import assign from "object-assign";
+import AppDispatcher from "../../dispatcher/app-dispatcher";
 
 let audioList = { audios: [] };
 let isAppending = false;
 
 const ExplorerStore = assign({}, EventEmitter.prototype, {
   emitChange() {
-    this.emit('change');
+    this.emit("change");
   },
 
   addChangeListener(cb) {
-    this.on('change', cb);
+    this.on("change", cb);
   },
 
   removeChangeListener(cb) {
-    this.removeListener('change', cb);
+    this.removeListener("change", cb);
   },
 
-  parseAudioList: (action) => {
+  parseAudioList: action => {
     if (action && action.response && !action.response.errors) {
       isAppending = false;
       const audios = action.response.audios;
@@ -33,11 +33,12 @@ const ExplorerStore = assign({}, EventEmitter.prototype, {
     return audioList;
   },
 
-  appendAudioList: (action) => {
+  appendAudioList: action => {
     if (action && action.response) {
       isAppending = true;
-      audioList.audios = audioList.audios
-        .filter(audio => audio.filename !== action.response.audios[0].filename);
+      audioList.audios = audioList.audios.filter(
+        audio => audio.filename !== action.response.audios[0].filename
+      );
       if (action.response.audios.length > 0) {
         audioList.audios = action.response.audios.concat(audioList.audios);
       }
@@ -50,15 +51,15 @@ const ExplorerStore = assign({}, EventEmitter.prototype, {
     return audioList;
   },
 
-  getTransitionState: () => isAppending,
+  getTransitionState: () => isAppending
 });
 
-AppDispatcher.register((action) => {
+AppDispatcher.register(action => {
   switch (action.actionType) {
-    case 'PARSE_AUDIO_LIST':
+    case "PARSE_AUDIO_LIST":
       ExplorerStore.parseAudioList(action);
       break;
-    case 'APPEND_AUDIO_LIST':
+    case "APPEND_AUDIO_LIST":
       ExplorerStore.appendAudioList(action);
       break;
     default:

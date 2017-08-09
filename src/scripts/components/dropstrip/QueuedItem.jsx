@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Contributor from '../contributor/Contributor';
-import DropstripActions from './dropstrip-actions';
-import DropstripStore from './dropstrip-store';
-import bindHandlers from '../../services/bind-handlers';
-import { generateUrl, isValidLength } from '../../services/audio-tools';
+import React from "react";
+import { Link } from "react-router-dom";
+import Contributor from "../contributor/Contributor";
+import DropstripActions from "./dropstrip-actions";
+import DropstripStore from "./dropstrip-store";
+import bindHandlers from "../../services/bind-handlers";
+import { generateUrl, isValidLength } from "../../services/audio-tools";
 
 const getStateFromStore = () => DropstripStore.getQueue();
 
@@ -12,25 +12,25 @@ class QueuedItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
-      contributors: '',
-      tags: '',
+      title: "",
+      contributors: "",
+      tags: "",
       errors: {},
       queue: getStateFromStore(),
-      suggestions: [],
+      suggestions: []
     };
 
     this.MAX_CHAR_LENGTH = 4;
 
     bindHandlers(this, [
-      'onChange',
-      'onPause',
-      'onResume',
-      'onCancel',
-      'onCancelConfirmed',
-      'onUpload',
-      'onSuccessOrFailure',
-      'onChangeContributor'
+      "onChange",
+      "onPause",
+      "onResume",
+      "onCancel",
+      "onCancelConfirmed",
+      "onUpload",
+      "onSuccessOrFailure",
+      "onChangeContributor"
     ]);
   }
 
@@ -48,7 +48,7 @@ class QueuedItem extends React.Component {
     let newState = {
       errors: this.state.errors
     };
-    if (e === 'success' || e === 'failed') {
+    if (e === "success" || e === "failed") {
       this.onSuccessOrFailure();
       return;
     }
@@ -62,7 +62,8 @@ class QueuedItem extends React.Component {
         delete newState.errors[fieldName];
       }
     }
-    const exists = this.state.queue[this.props.file.name] &&
+    const exists =
+      this.state.queue[this.props.file.name] &&
       this.state.queue[this.props.file.name].status.exists;
     if (exists) {
       this.state.title = exists.title;
@@ -95,28 +96,31 @@ class QueuedItem extends React.Component {
   onPause() {
     DropstripActions.pauseUpload(this.props.file.name);
     this.setState({
-      progress: 'paused'
+      progress: "paused"
     });
   }
 
   onResume() {
     DropstripActions.resumeUpload(this.props.file.name);
     this.setState({
-      progress: 'uploading'
+      progress: "uploading"
     });
   }
 
   onRetry() {
     DropstripActions.retryUpload(this.props.file.name);
     this.setState({
-      progress: 'uploading'
+      progress: "uploading"
     });
   }
 
   onCancel(e) {
     e.stopPropagation();
     const fileName = this.props.file.name;
-    if (this.state.progress === 'uploading' || this.state.progress === 'paused') {
+    if (
+      this.state.progress === "uploading" ||
+      this.state.progress === "paused"
+    ) {
       DropstripActions.pauseUpload(fileName);
     }
     if (this.state.queue[fileName].completed) {
@@ -125,7 +129,7 @@ class QueuedItem extends React.Component {
     }
     this.setState({
       previousState: this.state.progress,
-      progress: 'canceling'
+      progress: "canceling"
     });
   }
 
@@ -156,7 +160,7 @@ class QueuedItem extends React.Component {
       tags: this.state.tags
     });
     this.setState({
-      progress: 'uploading'
+      progress: "uploading"
     });
   }
 
@@ -166,25 +170,44 @@ class QueuedItem extends React.Component {
     const file = this.props.file;
     const fileSize = Math.round(file.size / 10000) / 100;
     const fileStatus = dropzoneQueue[file.name].status;
-    const hideTitleAlert = form.errors.title ? '' : 'hidden';
-    const hideContributorAlert = form.errors.contributors ? '' : 'hidden';
-    const hasErrors = (!form.title || !form.contributors) ||
-      form.errors.title || form.errors.contributors;
+    const hideTitleAlert = form.errors.title ? "" : "hidden";
+    const hideContributorAlert = form.errors.contributors ? "" : "hidden";
+    const hasErrors =
+      !form.title ||
+      !form.contributors ||
+      form.errors.title ||
+      form.errors.contributors;
     const progressBarStyle = {
       width: `${fileStatus.progress}%`
     };
     const completed = this.state.queue[file.name].completed;
     const failed = this.state.queue[file.name].failed;
-    const showForm = fileStatus.checked && (!this.state.progress && !fileStatus.exists);
+    const showForm =
+      fileStatus.checked && (!this.state.progress && !fileStatus.exists);
 
     return (
-      <div onClick={e => e.stopPropagation()} className={fileStatus.checked ? 'queued-item' : 'hidden'}>
-        <button className={this.state.progress === 'canceling' || fileStatus.exists ? 'hidden' : 'queued-item__button--grey'} onClick={this.onCancel}>
+      <div
+        onClick={e => e.stopPropagation()}
+        className={fileStatus.checked ? "queued-item" : "hidden"}
+      >
+        <button
+          className={
+            this.state.progress === "canceling" || fileStatus.exists
+              ? "hidden"
+              : "queued-item__button--grey"
+          }
+          onClick={this.onCancel}
+        >
           <img src="/assets/images/button-remove.png" />
         </button>
-        <form onSubmit={this.onUpload} className={showForm ? 'form__queuedItem' : 'hidden'}>
+        <form
+          onSubmit={this.onUpload}
+          className={showForm ? "form__queuedItem" : "hidden"}
+        >
           <div className="dz-details">
-            <div className="queued-item__filename">{file.name}</div>
+            <div className="queued-item__filename">
+              {file.name}
+            </div>
             <div className="row">
               <label htmlFor="title">Title</label>
               <input
@@ -218,82 +241,165 @@ class QueuedItem extends React.Component {
             </div>
 
             <div className="upload__text--right">
-              <button type="submit" className="queued-item__button upload-button" disabled={hasErrors}>
+              <button
+                type="submit"
+                className="queued-item__button upload-button"
+                disabled={hasErrors}
+              >
                 Upload this file
               </button>
             </div>
           </div>
         </form>
         <div
-          className={this.state.progress === 'uploading' && !completed && !failed ? 'uploading-container' : 'hidden'}
+          className={
+            this.state.progress === "uploading" && !completed && !failed
+              ? "uploading-container"
+              : "hidden"
+          }
         >
-          <div className="file-title">{form.title}</div>
+          <div className="file-title">
+            {form.title}
+          </div>
           <div className="progress-container">
-            <button className="progress-container__button--pause" onClick={this.onPause}>
-              <img src="/assets/images/button-pause_upload.png" className="progress-container__image" alt="Pause Upload" />
+            <button
+              className="progress-container__button--pause"
+              onClick={this.onPause}
+            >
+              <img
+                src="/assets/images/button-pause_upload.png"
+                className="progress-container__image"
+                alt="Pause Upload"
+              />
             </button>
             <div className="progress-container__bar" style={progressBarStyle}>
               Loading ({fileStatus.progress}%)
             </div>
           </div>
         </div>
-        <div className={this.state.progress === 'paused' ? 'paused-container' : 'hidden'}>
-          <div className="file-title">{form.title}</div>
+        <div
+          className={
+            this.state.progress === "paused" ? "paused-container" : "hidden"
+          }
+        >
+          <div className="file-title">
+            {form.title}
+          </div>
           <div className="progress-container paused">
-            <button className="progress-container__button--resume" onClick={this.onResume}>
-              <img src="/assets/images/button-resume_upload.png" alt="Resume Upload" className="progress-container__image" />
+            <button
+              className="progress-container__button--resume"
+              onClick={this.onResume}
+            >
+              <img
+                src="/assets/images/button-resume_upload.png"
+                alt="Resume Upload"
+                className="progress-container__image"
+              />
             </button>
-            <div className="progress-container__bar--paused" style={progressBarStyle}>
+            <div
+              className="progress-container__bar--paused"
+              style={progressBarStyle}
+            >
               Paused at at {fileStatus.progress}%
             </div>
           </div>
         </div>
-        <div className={this.state.progress === 'canceling' ? 'queued-item__prompt__centered' : 'hidden'}>
+        <div
+          className={
+            this.state.progress === "canceling"
+              ? "queued-item__prompt__centered"
+              : "hidden"
+          }
+        >
           <div className="prompt__text">
             Are you sure you want to remove this file?
           </div>
-          <div className="file-title">{file.name}</div>
-          <a className="queued-item__button--yes" onClick={() => this.onCancelConfirmed(true)}>Yes</a>
-          <a className="queued-item__button--no" onClick={() => this.onCancelConfirmed(false)}>No</a>
+          <div className="file-title">
+            {file.name}
+          </div>
+          <a
+            className="queued-item__button--yes"
+            onClick={() => this.onCancelConfirmed(true)}
+          >
+            Yes
+          </a>
+          <a
+            className="queued-item__button--no"
+            onClick={() => this.onCancelConfirmed(false)}
+          >
+            No
+          </a>
         </div>
         <div
-          className={completed && this.state.progress !== 'canceling' ? 'completed-container success-container' : 'hidden'}
+          className={
+            completed && this.state.progress !== "canceling"
+              ? "completed-container success-container"
+              : "hidden"
+          }
         >
           <div className="queued-item__file-title">
-            <img src="/assets/images/indicator-success.png" className="file-title__img" />
+            <img
+              src="/assets/images/indicator-success.png"
+              className="file-title__img"
+            />
             {form.title}
           </div>
           <div className="row">
-            <div className="col s6 completed__metadata">{fileSize}MB</div>
+            <div className="col s6 completed__metadata">
+              {fileSize}MB
+            </div>
             <div className="col s6 completed__edit">
-              <Link to={generateUrl({ id: completed, title: form.title })}>Edit this file</Link>
+              <Link to={generateUrl({ id: completed, title: form.title })}>
+                Edit this file
+              </Link>
             </div>
           </div>
         </div>
         <div
-          className={failed && this.state.progress !== 'canceling' ? 'completed-container queued-item__failed' : 'hidden'}
+          className={
+            failed && this.state.progress !== "canceling"
+              ? "completed-container queued-item__failed"
+              : "hidden"
+          }
         >
           <div className="file-title">
-            <img src="/assets/images/indicator-failure.png" className="indicator" />
+            <img
+              src="/assets/images/indicator-failure.png"
+              className="indicator"
+            />
             {form.title}
           </div>
-          <div className="queued-item__failed-msg">
-            upload failed
-          </div>
+          <div className="queued-item__failed-msg">upload failed</div>
           <div className="upload__text--right">
             <div className="queued-item__button" onClick={() => this.onRetry()}>
               Try again
-          </div>
+            </div>
           </div>
         </div>
-        <div className={fileStatus.exists ? 'queued-item__prompt__centered' : 'hidden'}>
+        <div
+          className={
+            fileStatus.exists ? "queued-item__prompt__centered" : "hidden"
+          }
+        >
           <div className="prompt__text">
             A file already exists by that name. Do you want to overwrite it?
           </div>
           <br />
-          <div className="file-title">{file.name}</div>
-          <a className="queued-item__button--yes" onClick={() => this.onOverwrite(true)}>Yes</a>
-          <a className="queued-item__button--no" onClick={() => this.onOverwrite(false)}>No</a>
+          <div className="file-title">
+            {file.name}
+          </div>
+          <a
+            className="queued-item__button--yes"
+            onClick={() => this.onOverwrite(true)}
+          >
+            Yes
+          </a>
+          <a
+            className="queued-item__button--no"
+            onClick={() => this.onOverwrite(false)}
+          >
+            No
+          </a>
         </div>
       </div>
     );

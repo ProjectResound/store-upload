@@ -1,10 +1,10 @@
-import React from 'react';
-import Pagination from 'react-js-pagination';
-import resoundAPI from '../../services/resound-api';
-import ExplorerStore from './explorer-store';
-import ExplorerActions from './explorer-actions';
-import AudioItem from './AudioItem';
-import ErrorsActions from '../errors/errors-actions';
+import React from "react";
+import Pagination from "react-js-pagination";
+import resoundAPI from "../../services/resound-api";
+import ExplorerStore from "./explorer-store";
+import ExplorerActions from "./explorer-actions";
+import AudioItem from "./AudioItem";
+import ErrorsActions from "../errors/errors-actions";
 
 const getStateFromStore = () => ExplorerStore.parseAudioList();
 const getTransitionStateFromStore = () => ExplorerStore.getTransitionState();
@@ -14,16 +14,17 @@ export default class Explorer extends React.Component {
     super(props);
     this.state = {
       audioList: [],
-      isAppending: false,
+      isAppending: false
     };
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
     ExplorerStore.addChangeListener(this.onChange);
-    resoundAPI.get()
+    resoundAPI
+      .get()
       .then(audioList => ExplorerActions.parseAudioList(audioList))
-      .catch((err) => {
+      .catch(err => {
         ErrorsActions.error(err);
       });
   }
@@ -35,14 +36,15 @@ export default class Explorer extends React.Component {
   onChange() {
     this.setState({
       audioList: getStateFromStore(),
-      isAppending: getTransitionStateFromStore(),
+      isAppending: getTransitionStateFromStore()
     });
   }
 
   handlePageChange(e) {
-    resoundAPI.getPage(e)
+    resoundAPI
+      .getPage(e)
       .then(audioList => ExplorerActions.parseAudioList(audioList))
-      .catch((err) => {
+      .catch(err => {
         ErrorsActions.error(err);
       });
   }
@@ -58,7 +60,7 @@ export default class Explorer extends React.Component {
         <div className="explorer__table col s12">
           <div className="row">
             <div className="col s12">
-              { audioList.totalCount &&
+              {audioList.totalCount &&
                 <Pagination
                   activePage={audioList.currentPage}
                   itemsCountPerPage={audioList.perPage}
@@ -69,8 +71,7 @@ export default class Explorer extends React.Component {
                   firstPageText="first"
                   lastPageText="last"
                   nextPageText="next"
-                />
-              }
+                />}
             </div>
           </div>
           <div className="row">
@@ -79,23 +80,24 @@ export default class Explorer extends React.Component {
             <div className="explorer__table-header col s3">Date</div>
             <div className="explorer__table-header col s3">Length</div>
           </div>
-          {audioList.audios && audioList.audios.map((audioItem, index) => (
-            <AudioItem
-              index={index}
-              isAppending={this.state.isAppending}
-              key={audioItem.filename + audioItem.updated_at}
-              audioItem={audioItem}
-            />
-          ))}
-          { !audioList.totalCount &&
-            <div className="explorer__loading">
-              loading audio files
-            </div>
-          }
+          {audioList.audios &&
+            audioList.audios.map((audioItem, index) =>
+              <AudioItem
+                index={index}
+                isAppending={this.state.isAppending}
+                key={audioItem.filename + audioItem.updated_at}
+                audioItem={audioItem}
+              />
+            )}
+          {!audioList.totalCount &&
+            <div className="explorer__loading">loading audio files</div>}
         </div>
-        <img src="/assets/images/mascot.png" width="100%" className="explorer__mascot" />
+        <img
+          src="/assets/images/mascot.png"
+          width="100%"
+          className="explorer__mascot"
+        />
       </div>
     );
   }
 }
-

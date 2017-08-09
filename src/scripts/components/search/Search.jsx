@@ -1,14 +1,14 @@
-import React from 'react';
-import SearchActions from './search-actions';
-import SearchStore from './search-store';
-import ExplorerActions from '../explorer/explorer-actions';
-import resoundAPI from '../../services/resound-api';
-import ErrorsActions from '../errors/errors-actions';
+import React from "react";
+import SearchActions from "./search-actions";
+import SearchStore from "./search-store";
+import ExplorerActions from "../explorer/explorer-actions";
+import resoundAPI from "../../services/resound-api";
+import ErrorsActions from "../errors/errors-actions";
 
 export default class Search extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { query: '' };
+    this.state = { query: "" };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this._searchReturned = this._searchReturned.bind(this);
@@ -29,7 +29,7 @@ export default class Search extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     const query = this.state.query;
-    if (query !== '') {
+    if (query !== "") {
       this.setState({
         searching: true
       });
@@ -40,9 +40,10 @@ export default class Search extends React.Component {
   }
 
   clearSearch() {
-    resoundAPI.get()
+    resoundAPI
+      .get()
       .then(audioList => ExplorerActions.parseAudioList(audioList))
-      .catch((err) => {
+      .catch(err => {
         ErrorsActions.error(err);
       });
   }
@@ -71,7 +72,11 @@ export default class Search extends React.Component {
             type="image"
             value="Search"
             className="search__submit"
-            src={this.state.searching ? '/assets/images/loading.gif' : '/assets/images/icon-search.png'}
+            src={
+              this.state.searching
+                ? "/assets/images/loading.gif"
+                : "/assets/images/icon-search.png"
+            }
             onClick={this.onSubmit}
           />
         </form>

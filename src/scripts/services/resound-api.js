@@ -1,39 +1,37 @@
-import Auth from './auth';
+import Auth from "./auth";
 
 const auth = new Auth();
-const apiRoot = 'http://localhost:3000/api/v1';
+const apiRoot = "http://localhost:3000/api/v1";
 const accessToken = auth.getAccessToken();
 const headers = {
   Authorization: `Bearer ${accessToken}`
 };
 
 module.exports = {
-  get: (filename) => {
+  get: filename => {
     let uri = `${apiRoot}/audios`;
     if (filename) {
       uri = `${uri}?filename=${filename}`;
     }
-    return fetch(uri, { headers })
-      .then(response => response.json());
+    return fetch(uri, { headers }).then(response => response.json());
   },
   getAudioById: id =>
-    fetch(`${apiRoot}/audios/${id}`, { headers })
-      .then(response => response.json()),
-  getPage: (page) => {
+    fetch(`${apiRoot}/audios/${id}`, { headers }).then(response =>
+      response.json()
+    ),
+  getPage: page => {
     const uri = `${apiRoot}/audios?page=${page}`;
-    return fetch(uri, { headers })
-      .then(response => response.json());
+    return fetch(uri, { headers }).then(response => response.json());
   },
-  search: (query) => {
+  search: query => {
     const uri = `${apiRoot}/audios/search?q=${query}`;
-    return fetch(uri, { headers })
-      .then(response => response.json());
+    return fetch(uri, { headers }).then(response => response.json());
   },
   users: {
     create: (authToken, idToken) => {
       const uri = `${apiRoot}/users`;
       return fetch(uri, {
-        method: 'POST',
+        method: "POST",
         headers: {
           Authorization: `Bearer ${authToken}`
         },
@@ -43,35 +41,31 @@ module.exports = {
   },
   getWorkingOn: () => {
     const uri = `${apiRoot}/audios?working_on=true`;
-    return fetch(uri, { headers })
-      .then(response => response.json());
+    return fetch(uri, { headers }).then(response => response.json());
   },
   populateContributors: () => {
     const uri = `${apiRoot}/contributors`;
-    return fetch(uri, { headers })
-      .then(response => response.json());
+    return fetch(uri, { headers }).then(response => response.json());
   },
-  updateAudio: (audio) => {
+  updateAudio: audio => {
     const uri = `${apiRoot}/audios/${audio.id}`;
     return fetch(uri, {
-      method: 'PATCH',
+      method: "PATCH",
       headers,
       body: JSON.stringify({
         title: audio.title,
         contributors: audio.contributors,
         tags: audio.tags
       })
-    })
-      .then(response => response.json());
+    }).then(response => response.json());
   },
-  deleteAudio: (audioId) => {
+  deleteAudio: audioId => {
     const uri = `${apiRoot}/audios/${audioId}`;
     return fetch(uri, {
-      method: 'DELETE',
+      method: "DELETE",
       headers
     });
   },
   auth,
   headers
 };
-

@@ -1,8 +1,8 @@
-import { EventEmitter } from 'events';
-import assign from 'object-assign';
-import AppDispatcher from '../../dispatcher/app-dispatcher';
-import resoundAPI from '../../services/resound-api';
-import ErrorsActions from '../errors/errors-actions';
+import { EventEmitter } from "events";
+import assign from "object-assign";
+import AppDispatcher from "../../dispatcher/app-dispatcher";
+import resoundAPI from "../../services/resound-api";
+import ErrorsActions from "../errors/errors-actions";
 
 let _store;
 let _inEditMode = false;
@@ -10,25 +10,26 @@ let _audioId;
 
 const AudioStore = assign({}, EventEmitter.prototype, {
   emitChange(changeType) {
-    this.emit('change', changeType);
+    this.emit("change", changeType);
   },
 
   addChangeListener(cb) {
-    this.on('change', cb);
+    this.on("change", cb);
   },
 
   removeChangeListener(cb) {
-    this.removeListener('change', cb);
+    this.removeListener("change", cb);
   },
 
   fetch(audioId) {
     _audioId = audioId;
-    resoundAPI.getAudioById(audioId)
-      .then((response) => {
+    resoundAPI
+      .getAudioById(audioId)
+      .then(response => {
         _store = response;
         AudioStore.emitChange();
       })
-      .catch((err) => {
+      .catch(err => {
         ErrorsActions.error(err);
       });
   },
@@ -46,37 +47,39 @@ const AudioStore = assign({}, EventEmitter.prototype, {
   },
 
   save(form) {
-    resoundAPI.updateAudio(form)
-      .then((response) => {
+    resoundAPI
+      .updateAudio(form)
+      .then(response => {
         _store = response;
         AudioStore.toggleEditMode(false);
-        AudioStore.emitChange('saved');
+        AudioStore.emitChange("saved");
       })
-      .catch((err) => {
+      .catch(err => {
         ErrorsActions.error(err);
       });
   },
 
   delete() {
-    resoundAPI.deleteAudio(_audioId)
+    resoundAPI
+      .deleteAudio(_audioId)
       .then(() => {
-        AudioStore.emitChange('deleted');
+        AudioStore.emitChange("deleted");
       })
-      .catch((err) => {
+      .catch(err => {
         ErrorsActions.error(err);
       });
   }
 });
 
-AppDispatcher.register((action) => {
+AppDispatcher.register(action => {
   switch (action.actionType) {
-    case 'AUDIO_EDIT_ON':
+    case "AUDIO_EDIT_ON":
       AudioStore.toggleEditMode(action.toggle);
       break;
-    case 'AUDIO_SAVE':
+    case "AUDIO_SAVE":
       AudioStore.save(action.form);
       break;
-    case 'AUDIO_DELETE':
+    case "AUDIO_DELETE":
       AudioStore.delete();
       break;
     default:
