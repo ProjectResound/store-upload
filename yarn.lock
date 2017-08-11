@@ -4710,6 +4710,10 @@ react-themeable@^1.1.0:
   dependencies:
     object-assign "^3.0.0"
 
+react-wavesurfer@^0.8.4:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/react-wavesurfer/-/react-wavesurfer-0.8.4.tgz#98a6630a392b0b2d17e85881c77ac609fe5a8206"
+
 react@15.5.4, react@^15.0.0:
   version "15.5.4"
   resolved "https://registry.yarnpkg.com/react/-/react-15.5.4.tgz#fa83eb01506ab237cdc1c8c3b1cea8de012bf047"

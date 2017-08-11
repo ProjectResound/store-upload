@@ -22,6 +22,7 @@
     "react-js-pagination": "^2.1.0",
     "react-modal": "^2.2.2",
     "react-router-dom": "^4.1.1",
+    "react-wavesurfer": "^0.8.4",
     "sinon-stub-promise": "^4.0.0",
     "underscore": "^1.8.3"
   },
