@@ -56,8 +56,8 @@ export default class Explorer extends React.Component {
     const audioList = this.state.audioList;
 
     return (
-      <div className="explorer col s9">
-        <div className="explorer__table col s12">
+      <div className="explorer col s12">
+        <div className="explorer__table">
           <div className="row">
             <div className="col s12">
               {audioList.totalCount &&

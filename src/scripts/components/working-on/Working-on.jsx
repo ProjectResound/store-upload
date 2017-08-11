@@ -41,7 +41,7 @@ export default class WorkingOn extends React.Component {
     );
 
     return (
-      <div className="working-on col s9">
+      <div className="working-on col s12">
         <div className="working-on__header row">
           <div className="working-on__title col s8">
             What You&apos;ve Been Working On

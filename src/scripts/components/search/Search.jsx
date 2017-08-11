@@ -58,7 +58,7 @@ export default class Search extends React.Component {
 
   render() {
     return (
-      <div className="search col s9">
+      <div className="search col s12">
         <form onSubmit={this.onSubmit} className="search__form">
           <input
             type="text"

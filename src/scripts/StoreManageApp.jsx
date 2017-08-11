@@ -14,10 +14,14 @@ export default class StoreManageApp extends React.Component {
     return (
       <div className="body__container">
         <div className="row full-height upload">
-          <Dropstrip />
-          <WorkingOn />
-          <Search />
-          <Explorer />
+          <div className="col s3">
+            <Dropstrip />
+          </div>
+          <div className="col s9">
+            <WorkingOn />
+            <Search />
+            <Explorer />
+          </div>
         </div>
       </div>
     );
