@@ -122,27 +122,42 @@ export default class Audio extends React.Component {
     const audio = this.state.audio;
     const editing = this.state.inEditMode;
     const validForm = this.state.validTitle && this.state.validContributors;
+    let fileItems;
+    if (audio) {
+      fileItems = Object.keys(audio.files).map(type =>
+        <div key={type} className="file-list__item">
+          {audio.files[type]}
+        </div>
+      );
+    }
+
     return (
       <div>
-        <Modal
-          isOpen={this.state.showModal}
-          contentLabel="Delete Modal"
-          onRequestClose={this.handleCloseModal}
-          className="modal"
-          overlayClassName="modal__overlay"
-        >
-          Are you sure you want to permanently delete this file?
-          <div className="row">
-            <div className="delete__yes" onClick={this.handleDeleteAudio}>
-              Yes
-            </div>
-            <div className="delete__no" onClick={this.handleCloseModal}>
-              No
-            </div>
-          </div>
-        </Modal>
         {audio &&
           <div className="audio-page__container">
+            <Modal
+              isOpen={this.state.showModal}
+              contentLabel="Delete Modal"
+              onRequestClose={this.handleCloseModal}
+              className="modal"
+              overlayClassName="modal__overlay"
+            >
+              Are you sure you want to permanently delete these files?
+              <div className="row">
+                <ul>
+                  {fileItems}
+                </ul>
+              </div>
+              <div className="row">
+                <div className="delete__yes" onClick={this.handleDeleteAudio}>
+                  Delete
+                </div>
+                <div className="delete__no" onClick={this.handleCloseModal}>
+                  No
+                </div>
+              </div>
+            </Modal>
+
             <div className="row">
               {!editing &&
                 <h1 className="audio-page__title">
