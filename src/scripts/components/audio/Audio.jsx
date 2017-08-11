@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
+import Wavesurfer from "react-wavesurfer";
 import AudioStore from "./audio-store";
 import AudioActions from "./audio-actions";
 import EditFile from "./EditFile";
@@ -16,8 +17,11 @@ export default class Audio extends React.Component {
     this.state = {
       inEditMode: false,
       validTitle: true,
-      validContributors: true
+      validContributors: true,
+      playing: true,
+      pos: 0
     };
+    this.wavesurfer = Wavesurfer;
     this.audioId = props.match.params.id.split("-")[0];
     bindHandlers(this, [
       "onChange",
@@ -27,7 +31,9 @@ export default class Audio extends React.Component {
       "save",
       "populateContributorsSuggestions",
       "handleCloseModal",
-      "handleDeleteAudio"
+      "handleDeleteAudio",
+      "handleTogglePlay",
+      "handlePosChange"
     ]);
   }
 
@@ -96,6 +102,18 @@ export default class Audio extends React.Component {
   handleDeleteAudio() {
     this.setState({ showModal: false });
     AudioActions.delete();
+  }
+
+  handleTogglePlay() {
+    this.setState({
+      playing: !this.state.playing
+    });
+  }
+
+  handlePosChange(e) {
+    this.setState({
+      pos: e.originalArgs[0]
+    });
   }
 
   save() {
@@ -193,6 +211,19 @@ export default class Audio extends React.Component {
                 </div>
               </div>
               <div className="col s10">
+                <div className="row">
+                  <div className="col s1">
+                    <button>Play</button>
+                  </div>
+                  <div className="col s11">
+                    <Wavesurfer
+                      audioFile={audio.files["mp3_128"]}
+                      pos={this.state.pos}
+                      onPosChange={this.handlePosChange}
+                      playing={this.state.playing}
+                    />
+                  </div>
+                </div>
                 <Metadata
                   audio={audio}
                   editing={editing}
