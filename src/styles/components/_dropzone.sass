@@ -8,6 +8,7 @@
   display: inline-block
 
 .upload
+  display: flex
   $progressbar-height: 30px
   $action-button-width: 30px
   margin-bottom: 0px
@@ -31,7 +32,8 @@
   .upload__dz
     background-color: $secondary-background-color
     padding: 0 0
-    display: table-cell
+    height: 100%
+    //display: table-cell
 
     // The following classes are added by a dropzone library, so we have no control
     // of what the classnames are.
