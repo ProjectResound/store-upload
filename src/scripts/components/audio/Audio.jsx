@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
+import Wavesurfer from "react-wavesurfer";
 import AudioStore from "./audio-store";
 import AudioActions from "./audio-actions";
 import EditFile from "./EditFile";
@@ -16,8 +17,11 @@ export default class Audio extends React.Component {
     this.state = {
       inEditMode: false,
       validTitle: true,
-      validContributors: true
+      validContributors: true,
+      playing: false,
+      pos: 0
     };
+    this.wavesurfer = Wavesurfer;
     this.audioId = props.match.params.id.split("-")[0];
     bindHandlers(this, [
       "onChange",
@@ -27,7 +31,9 @@ export default class Audio extends React.Component {
       "save",
       "populateContributorsSuggestions",
       "handleCloseModal",
-      "handleDeleteAudio"
+      "handleDeleteAudio",
+      "handleTogglePlay",
+      "handlePosChange"
     ]);
   }
 
@@ -98,6 +104,18 @@ export default class Audio extends React.Component {
     AudioActions.delete();
   }
 
+  handleTogglePlay() {
+    this.setState({
+      playing: !this.state.playing
+    });
+  }
+
+  handlePosChange(e) {
+    this.setState({
+      pos: e.originalArgs[0]
+    });
+  }
+
   save() {
     if (
       !!isValidLength(this.state.formTitle, this.MAX_CHAR_LENGTH) &&
@@ -130,6 +148,16 @@ export default class Audio extends React.Component {
         </div>
       );
     }
+
+    const waveSurferOptions = {
+      normalize: true,
+      barWidth: 1,
+      cursorWidth: 0,
+      progressColor: "#0fb3cc",
+      scrollParent: true,
+      waveColor: "#a2e0e3",
+      height: 75
+    };
 
     return (
       <div>
@@ -208,6 +236,29 @@ export default class Audio extends React.Component {
                 </div>
               </div>
               <div className="col s10">
+                <div className="row">
+                  <div className="playpause__container">
+                    {this.state.playing &&
+                      <img
+                        src="/assets/images/button-pause_audio.png"
+                        className="waveform__button__pause"
+                        onClick={this.handleTogglePlay}
+                      />}
+                    {!this.state.playing &&
+                      <img
+                        src="/assets/images/button-play_audio.png"
+                        className="waveform__button__play"
+                        onClick={this.handleTogglePlay}
+                      />}
+                  </div>
+                  <Wavesurfer
+                    audioFile={audio.files["mp3_128"]}
+                    pos={this.state.pos}
+                    onPosChange={this.handlePosChange}
+                    playing={this.state.playing}
+                    options={waveSurferOptions}
+                  />
+                </div>
                 <Metadata
                   audio={audio}
                   editing={editing}
