@@ -141,6 +141,15 @@ export default class Audio extends React.Component {
     const audio = this.state.audio;
     const editing = this.state.inEditMode;
     const validForm = this.state.validTitle && this.state.validContributors;
+    const waveSurferOptions = {
+      normalize: true,
+      barWidth: 1,
+      cursorWidth: 0,
+      progressColor: "#0fb3cc",
+      scrollParent: true,
+      waveColor: "#a2e0e3",
+      height: 75
+    };
     return (
       <div>
         <Modal
@@ -214,7 +223,18 @@ export default class Audio extends React.Component {
               <div className="col s10">
                 <div className="row">
                   <div className="col s1">
-                    <button onClick={this.handleTogglePlay}>Play</button>
+                    {this.state.playing &&
+                      <img
+                        src="/assets/images/button-pause_audio.png"
+                        className="waveform__button__pause"
+                        onClick={this.handleTogglePlay}
+                      />}
+                    {!this.state.playing &&
+                      <img
+                        src="/assets/images/button-play_audio.png"
+                        className="waveform__button__play"
+                        onClick={this.handleTogglePlay}
+                      />}
                   </div>
                   <div className="col s11">
                     <Wavesurfer
@@ -222,6 +242,7 @@ export default class Audio extends React.Component {
                       pos={this.state.pos}
                       onPosChange={this.handlePosChange}
                       playing={this.state.playing}
+                      options={waveSurferOptions}
                     />
                   </div>
                 </div>
