@@ -18,7 +18,7 @@ export default class Audio extends React.Component {
       inEditMode: false,
       validTitle: true,
       validContributors: true,
-      playing: true,
+      playing: false,
       pos: 0
     };
     this.wavesurfer = Wavesurfer;
@@ -105,6 +105,7 @@ export default class Audio extends React.Component {
   }
 
   handleTogglePlay() {
+    console.log("toggle play");
     this.setState({
       playing: !this.state.playing
     });
@@ -213,7 +214,7 @@ export default class Audio extends React.Component {
               <div className="col s10">
                 <div className="row">
                   <div className="col s1">
-                    <button>Play</button>
+                    <button onClick={this.handleTogglePlay}>Play</button>
                   </div>
                   <div className="col s11">
                     <Wavesurfer
