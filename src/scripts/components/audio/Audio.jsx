@@ -105,7 +105,6 @@ export default class Audio extends React.Component {
   }
 
   handleTogglePlay() {
-    console.log("toggle play");
     this.setState({
       playing: !this.state.playing
     });
