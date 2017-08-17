@@ -1,4 +1,5 @@
 import auth0 from "auth0-js";
+import autoBind from "react-autobind";
 import AUTH_CONFIG from "../../config/auth0-variables";
 import UserActions from "../actions/user-actions";
 import ErrorsActions from "../components/errors/errors-actions";
@@ -13,11 +14,7 @@ export default class Auth {
       responseType: "token id_token",
       scope: "openid profile"
     });
-
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-    this.handleAuthentication = this.handleAuthentication.bind(this);
-    this.getAccessToken = this.getAccessToken.bind(this);
+    autoBind(this);
   }
 
   handleAuthentication() {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Contributor from "../contributor/Contributor";
 import DropstripActions from "./dropstrip-actions";
 import DropstripStore from "./dropstrip-store";
-import bindHandlers from "../../services/bind-handlers";
+import autoBind from "react-autobind";
 import { generateUrl, isValidLength } from "../../services/audio-tools";
 
 const getStateFromStore = () => DropstripStore.getQueue();
@@ -11,6 +11,8 @@ const getStateFromStore = () => DropstripStore.getQueue();
 class QueuedItem extends React.Component {
   constructor(props) {
     super(props);
+    autoBind(this);
+
     this.state = {
       title: "",
       contributors: "",
@@ -21,17 +23,6 @@ class QueuedItem extends React.Component {
     };
 
     this.MAX_CHAR_LENGTH = 4;
-
-    bindHandlers(this, [
-      "onChange",
-      "onPause",
-      "onResume",
-      "onCancel",
-      "onCancelConfirmed",
-      "onUpload",
-      "onSuccessOrFailure",
-      "onChangeContributor"
-    ]);
   }
 
   componentDidMount() {

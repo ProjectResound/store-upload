@@ -1,4 +1,5 @@
 import React from "react";
+import autoBind from "react-autobind";
 import { Link } from "react-router-dom";
 import WorkingOnStore from "./working-on-store";
 import { generateUrl } from "../../services/audio-tools";
@@ -9,7 +10,7 @@ export default class WorkingOn extends React.Component {
     this.state = {
       audios: []
     };
-    this.onChange = this.onChange.bind(this);
+    autoBind(this);
   }
 
   componentDidMount() {

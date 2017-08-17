@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import autoBind from "react-autobind";
 import Errors from "../components/errors/Errors";
 import UserStore from "../stores/user-store";
 import ContributorStore from "../components/contributor/contributor-store";
@@ -8,8 +9,7 @@ export default class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
+    autoBind(this);
   }
 
   componentWillMount() {

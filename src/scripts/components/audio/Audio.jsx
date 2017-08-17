@@ -6,7 +6,7 @@ import AudioActions from "./audio-actions";
 import EditFile from "./EditFile";
 import Metadata from "./Metadata";
 import CopyDownload from "./CopyDownload";
-import bindHandlers from "../../services/bind-handlers";
+import autoBind from "react-autobind";
 import { isValidLength } from "../../services/audio-tools";
 import ContributorStore from "../../components/contributor/contributor-store";
 
@@ -23,18 +23,7 @@ export default class Audio extends React.Component {
     };
     this.wavesurfer = Wavesurfer;
     this.audioId = props.match.params.id.split("-")[0];
-    bindHandlers(this, [
-      "onChange",
-      "onTitleChange",
-      "onContributorsChange",
-      "onTagsChange",
-      "save",
-      "populateContributorsSuggestions",
-      "handleCloseModal",
-      "handleDeleteAudio",
-      "handleTogglePlay",
-      "handlePosChange"
-    ]);
+    autoBind(this);
   }
 
   componentDidMount() {

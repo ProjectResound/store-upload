@@ -1,5 +1,6 @@
 import React from "react";
 import Autosuggest from "react-autosuggest";
+import autoBind from "react-autobind";
 
 const renderSuggestion = suggestion =>
   <div>
@@ -12,14 +13,7 @@ export default class Contributor extends React.Component {
     this.state = {
       suggestions: []
     };
-    this.onChange = this.onChange.bind(this);
-    this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(
-      this
-    );
-    this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(
-      this
-    );
-    this.onGetSuggestionValue = this.onGetSuggestionValue.bind(this);
+    autoBind(this);
     this.MAX_CHAR_LENGTH = 4;
   }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import autoBind from "react-autobind";
 import SearchActions from "./search-actions";
 import SearchStore from "./search-store";
 import ExplorerActions from "../explorer/explorer-actions";
@@ -9,9 +10,7 @@ export default class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = { query: "" };
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this._searchReturned = this._searchReturned.bind(this);
+    autoBind(this);
   }
 
   componentDidMount() {

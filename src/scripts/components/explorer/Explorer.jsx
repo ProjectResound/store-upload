@@ -1,5 +1,6 @@
 import React from "react";
 import Pagination from "react-js-pagination";
+import autoBind from "react-autobind";
 import resoundAPI from "../../services/resound-api";
 import ExplorerStore from "./explorer-store";
 import ExplorerActions from "./explorer-actions";
@@ -16,7 +17,7 @@ export default class Explorer extends React.Component {
       audioList: [],
       isAppending: false
     };
-    this.onChange = this.onChange.bind(this);
+    autoBind(this);
   }
 
   componentDidMount() {
