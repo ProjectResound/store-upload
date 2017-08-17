@@ -1,12 +1,12 @@
 import React from "react";
+import autoBind from "react-autobind";
 import ErrorsStore from "./errors-store";
 
 export default class Errors extends React.Component {
   constructor(props) {
     super(props);
     this.state = { msg: undefined };
-    this._displayError = this._displayError.bind(this);
-    this.dismiss = this.dismiss.bind(this);
+    autoBind(this);
   }
 
   componentDidMount() {

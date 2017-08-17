@@ -1,11 +1,11 @@
 import React from "react";
-import bindHandlers from "../../services/bind-handlers";
+import autoBind from "react-autobind";
 import AudioActions from "./audio-actions";
 
 export default class EditFile extends React.Component {
   constructor(props) {
     super(props);
-    bindHandlers(this, ["onChange", "edit", "cancel"]);
+    autoBind(this);
   }
 
   componentDidMount() {}

@@ -1,6 +1,7 @@
 import React from "react";
 import Dropzone from "react-dropzone";
 import ActionCable from "actioncable";
+import autoBind from "react-autobind";
 import DropstripActions from "./dropstrip-actions";
 import DropstripStore from "./dropstrip-store";
 import QueuedItem from "./QueuedItem";
@@ -18,8 +19,7 @@ export default class Dropstrip extends React.Component {
       queue: getStateFromStore(),
       contributors: getContributorsFromStore()
     };
-    this.onChange = this.onChange.bind(this);
-    this.onContributorsChange = this.onContributorsChange.bind(this);
+    autoBind(this);
   }
 
   componentDidMount() {
