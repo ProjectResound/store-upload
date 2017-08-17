@@ -59,7 +59,7 @@ export default class Auth {
     UserActions.loggedOut();
   }
 
-  isAuthenticated() {
+  get isAuthenticated() {
     if (window.localStorage) {
       const expiresAt = JSON.parse(localStorage.getItem("expires_at"));
       return new Date().getTime() < expiresAt;

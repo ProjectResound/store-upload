@@ -1,32 +1,33 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { MemoryRouter } from 'react-router-dom';
-import TestUtils from 'react-dom/test-utils'
-import {expect, assert} from 'chai';
-import sinon from 'sinon';
-import sinonStubPromise from 'sinon-stub-promise';
-import Audio from '../src/scripts/components/audio/Audio';
-import AudioActions from '../src/scripts/components/audio/audio-actions';
-import AudioStore from '../src/scripts/components/audio/audio-store';
+import React from "react";
+import ReactDOM from "react-dom";
+import { MemoryRouter } from "react-router-dom";
+import TestUtils from "react-dom/test-utils";
+import { expect, assert } from "chai";
+import sinon from "sinon";
+import sinonStubPromise from "sinon-stub-promise";
+import Audio from "../src/scripts/components/audio/Audio";
+import AudioActions from "../src/scripts/components/audio/audio-actions";
+import AudioStore from "../src/scripts/components/audio/audio-store";
 
 sinonStubPromise(sinon);
 
-describe('<Audio />', function() {
+describe("<Audio />", function() {
   beforeEach(() => {
-    this.title = 'madeline says boohoo';
-    this.audioId = '123';
+    this.title = "madeline says boohoo";
+    this.audioId = "123";
     const fakeMatchObj = {
       params: { id: this.audioId }
     };
     this.component = TestUtils.renderIntoDocument(
       <MemoryRouter>
-        <Audio match={fakeMatchObj}/>
-      </MemoryRouter>);
+        <Audio match={fakeMatchObj} />
+      </MemoryRouter>
+    );
     this.componentDOM = ReactDOM.findDOMNode(this.component);
-    this.audioStub = sinon.stub(AudioStore, 'get').returns({
+    this.audioStub = sinon.stub(AudioStore, "get").returns({
       title: this.title,
       id: this.audioId,
-      files: { mp3: '123123123' }
+      files: { mp3: "123123123" }
     });
   });
 
@@ -35,53 +36,97 @@ describe('<Audio />', function() {
     this.audioStub.restore();
   });
 
-  it('renders the audio.title', () => {
+  it("renders the audio.title", () => {
     AudioStore.emitChange();
-    const titleDOM = TestUtils.findRenderedDOMComponentWithClass(this.component, 'audio-page__title');
+    const titleDOM = TestUtils.findRenderedDOMComponentWithClass(
+      this.component,
+      "audio-page__title"
+    );
     expect(titleDOM.innerHTML).to.eq(this.title);
   });
 
-  it('renders a CopyDownload component', () => {
+  it("renders a CopyDownload component", () => {
     AudioStore.emitChange();
-    expect(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'copydownload__container').length).to.equal(1);
+    expect(
+      TestUtils.scryRenderedDOMComponentsWithClass(
+        this.component,
+        "copydownload__container"
+      ).length
+    ).to.equal(1);
   });
 
-  describe('edit', () => {
-    it('shows title input field', () => {
+  describe("edit", () => {
+    it("shows title input field", () => {
       AudioActions.edit(true);
-      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'title__input')).to.exist;
+      expect(
+        TestUtils.findRenderedDOMComponentWithClass(
+          this.component,
+          "title__input"
+        )
+      ).to.exist;
     });
 
-    it('shows contributor input field', () => {
+    it("shows contributor input field", () => {
       AudioActions.edit(true);
-      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'contributors__input')).to.exist;
+      expect(
+        TestUtils.findRenderedDOMComponentWithClass(
+          this.component,
+          "contributors__input"
+        )
+      ).to.exist;
     });
 
-    it('shows tags input field', () => {
+    it("shows tags input field", () => {
       AudioActions.edit(true);
-      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'tags__input')).to.exist;
+      expect(
+        TestUtils.findRenderedDOMComponentWithClass(
+          this.component,
+          "tags__input"
+        )
+      ).to.exist;
     });
 
-    it('validates title field', () => {
+    it("validates title field", () => {
       AudioActions.edit(true);
 
-      const titleField = TestUtils.findRenderedDOMComponentWithClass(this.component, 'title__input');
-      titleField.value = 'y';
+      const titleField = TestUtils.findRenderedDOMComponentWithClass(
+        this.component,
+        "title__input"
+      );
+      titleField.value = "y";
       TestUtils.Simulate.change(titleField);
 
-      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'title__input--error')).to.exist;
-      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'edit__button--disabled')).to.exist;
+      expect(
+        TestUtils.findRenderedDOMComponentWithClass(
+          this.component,
+          "title__input--error"
+        )
+      ).to.exist;
+      expect(
+        TestUtils.findRenderedDOMComponentWithClass(
+          this.component,
+          "edit__button--disabled"
+        )
+      ).to.exist;
     });
   });
 
-  describe('CopyDownload', () => {
-    it('has a copy button on hover', () => {
+  describe("CopyDownload", () => {
+    it("has a copy button on hover", () => {
       AudioStore.emitChange();
-      const urlContainer = TestUtils.findRenderedDOMComponentWithClass(this.component, 'url__hoverzone');
+      const urlContainer = TestUtils.findRenderedDOMComponentWithClass(
+        this.component,
+        "url__hoverzone"
+      );
       TestUtils.Simulate.mouseOver(urlContainer);
 
-      expect(TestUtils.findRenderedDOMComponentWithClass(this.component, 'hover'));
-      expect(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'copied').length).to.equal(0);
+      expect(
+        TestUtils.findRenderedDOMComponentWithClass(this.component, "hover")
+      );
+      expect(
+        TestUtils.scryRenderedDOMComponentsWithClass(this.component, "copied")
+          .length
+      ).to.equal(0);
     });
   });
 });

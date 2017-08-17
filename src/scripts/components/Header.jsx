@@ -15,7 +15,7 @@ export default class Header extends React.Component {
   componentWillMount() {
     this._redirect = this._redirect.bind(this);
     this.props.auth.handleAuthentication();
-    if (this.props.auth.isAuthenticated()) {
+    if (this.props.auth.isAuthenticated) {
       this.setState({
         loggedIn: true
       });
@@ -27,7 +27,7 @@ export default class Header extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.auth.isAuthenticated()) {
+    if (this.props.auth.isAuthenticated) {
       UserStore.addChangeListener(this._redirect);
       ContributorStore.get();
     }
@@ -45,7 +45,7 @@ export default class Header extends React.Component {
   }
 
   _redirect() {
-    if (this.props.auth.isAuthenticated()) {
+    if (this.props.auth.isAuthenticated) {
       this.setState({
         loggedIn: true
       });
@@ -61,30 +61,24 @@ export default class Header extends React.Component {
     return (
       <div className="row header__row">
         <Errors />
-        <h1 className="header__h1 col s11">
-          <img
-            src="/assets/images/stamp.png"
-            className="header__stamp"
-            alt="Resound Store logo"
-          />
-          <Link to="/" className="header__link">
-            store
-          </Link>
-        </h1>
-        <div className="header__actions col s1">
-          <button
-            className={loggedIn ? "hidden" : "header__button"}
-            onClick={this.login}
-          >
-            log in
-          </button>
-          <button
-            className={loggedIn ? "header__button" : "hidden"}
-            onClick={this.logout}
-          >
-            log out
-          </button>
-        </div>
+        {this.state.loggedIn &&
+          <div>
+            <h1 className="header__h1 col s11">
+              <img
+                src="/assets/images/stamp.png"
+                className="header__stamp"
+                alt="Resound Store logo"
+              />
+              <Link to="/" className="header__link">
+                store
+              </Link>
+            </h1>
+            <div className="header__actions col s1">
+              <button className="header__button" onClick={this.logout}>
+                log out
+              </button>
+            </div>
+          </div>}
       </div>
     );
   }

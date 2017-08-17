@@ -12,19 +12,27 @@ import "../styles/main.sass";
 const auth = resoundAPI.auth;
 
 class Root extends React.Component {
+  redirectIfLoggedOut() {
+    if (!auth.isAuthenticated) {
+      auth.login();
+    }
+  }
+
   render() {
     return (
       <div>
-        <Route render={history => <Header auth={auth} history={history} />} />
-        {auth.isAuthenticated() &&
+        <Route
+          render={history =>
+            <Header
+              auth={auth}
+              history={history}
+              onEnter={this.redirectIfLoggedOut(this)}
+            />}
+        />
+        {auth.isAuthenticated &&
           <div>
             <Route exact path="/" component={StoreManageApp} />
             <Route path="/audio/:id" component={Audio} />
-          </div>}
-        {!auth.isAuthenticated() &&
-          <div>
-            <h1>Logged Out View Placeholder</h1>
-            <img src="/assets/images/mascot.png" width="400" />
           </div>}
       </div>
     );
