@@ -19,9 +19,7 @@ describe("<Audio />", function() {
       params: { id: this.audioId }
     };
     this.component = TestUtils.renderIntoDocument(
-      <MemoryRouter>
-        <Audio match={fakeMatchObj} />
-      </MemoryRouter>
+      <Audio match={fakeMatchObj} />
     );
     this.componentDOM = ReactDOM.findDOMNode(this.component);
     this.audioStub = sinon.stub(AudioStore, "get").returns({
@@ -108,6 +106,14 @@ describe("<Audio />", function() {
           "edit__button--disabled"
         )
       ).to.exist;
+    });
+
+    it("pauses play if audio is playing", () => {
+      this.component.setState({ playing: true });
+      expect(this.component.state.playing).to.be.truthy;
+      AudioStore.toggleEditMode(true);
+      AudioStore.emitChange();
+      expect(this.component.state.playing).to.be.false;
     });
   });
 
