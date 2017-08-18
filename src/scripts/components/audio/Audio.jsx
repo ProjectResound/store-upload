@@ -38,10 +38,11 @@ export default class Audio extends React.Component {
   }
 
   onChange(changeType) {
+    const inEditMode = AudioStore.inEditMode();
     if (changeType === "saved") {
       this.setState({
         audio: AudioStore.get(),
-        inEditMode: AudioStore.inEditMode()
+        inEditMode
       });
     } else if (changeType === "validate") {
       this.setState({
@@ -51,9 +52,14 @@ export default class Audio extends React.Component {
       this.props.history.push("/");
     } else {
       const audio = AudioStore.get();
+      if (this.state.playing && inEditMode) {
+        this.setState({
+          playing: false
+        });
+      }
       this.setState({
         audio,
-        inEditMode: AudioStore.inEditMode(),
+        inEditMode,
         formTitle: audio.title,
         formContributors: audio.contributors,
         formTags: audio.tags
