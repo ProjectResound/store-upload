@@ -9,7 +9,7 @@ export default class CopyDownload extends React.Component {
 
   render() {
     const audio = this.props.audio;
-
+    const editing = this.props.editing;
     const files = audio.files;
     const fileRows = Object.keys(audio.files).map(type =>
       <div className="row" key={type.toString()}>
@@ -17,39 +17,54 @@ export default class CopyDownload extends React.Component {
           {type}
         </div>
         <div className="col s8 url__cell">
-          <CopyToClipboard
-            text={files[type]}
-            onCopy={() => this.setState({ copied: type })}
-          >
-            <div
-              onMouseOver={() => this.setState({ hover: type })}
-              className="url__hoverzone"
+          {editing && files[type]}
+          {!editing &&
+            <CopyToClipboard
+              text={files[type]}
+              onCopy={() => this.setState({ copied: type })}
             >
-              {files[type]}
-              {this.state.copied &&
-                this.state.copied === type &&
-                <span className="copied">copied!</span>}
-              {this.state.hover &&
-                this.state.hover === type &&
-                this.state.copied !== type &&
-                <span className="hover">copy</span>}
-            </div>
-          </CopyToClipboard>
+              <div
+                onMouseOver={() => this.setState({ hover: type })}
+                className="url__hoverzone"
+              >
+                {files[type]}
+                {this.state.copied &&
+                  this.state.copied === type &&
+                  <span className="copied">copied!</span>}
+                {this.state.hover &&
+                  this.state.hover === type &&
+                  this.state.copied !== type &&
+                  <span className="hover">copy</span>}
+              </div>
+            </CopyToClipboard>}
         </div>
         <div className="col s2 download__col">
-          <a href={files[type]}>
+          {editing &&
             <img
               src="/assets/images/icon-download.png"
               alt="download icon"
               className="download__icon"
-            />
-          </a>
+            />}
+          {!editing &&
+            <a href={files[type]}>
+              <img
+                src="/assets/images/icon-download.png"
+                alt="download icon"
+                className="download__icon"
+              />
+            </a>}
         </div>
       </div>
     );
 
     return (
-      <div className="copydownload__container">
+      <div
+        className={
+          editing
+            ? "copydownload__container copydownload__container--disabled"
+            : "copydownload__container"
+        }
+      >
         <div className="row">
           <div className="col s2 copydownload__header">File Type</div>
           <div className="col s8 copydownload__header">Copy a link</div>

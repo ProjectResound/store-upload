@@ -61,6 +61,9 @@
   .md__row--error
     border: 1px solid $error-color
 
+  .md__row--disabled
+    opacity: 0.5
+
   input.title__input
     display: block
     font-size: 2em
@@ -93,6 +96,9 @@
 
   .copydownload__container
     margin-top: 40px
+
+  .copydownload__container--disabled
+    opacity: 0.5
 
   .copydownload__container > .row
     border-bottom: 1px solid $table-border-color
@@ -130,6 +136,9 @@
     float: left
     margin-right: 10px
 
+  .playpause__container--disabled
+    opacity: 0.5
+
   =waveform_button
     width: 75px
     cursor: pointer
@@ -137,6 +146,25 @@
     +waveform_button
   .waveform__button__pause
     +waveform_button
+
+  .waveform__container
+    margin-left: 75px
+    position: relative
+
+  .audio__waveform--disabled
+    opacity: 0.5
+
+  .replace__button
+    border: 1px solid $primary-color
+    padding: 5px 10px
+    background: white
+    color: $primary-color
+    font-weight: bold
+    position: absolute
+    top: 25px
+    left: 50%
+    transform: translateX(-50%)
+    z-index: $middle-z-index
 
 =delete_button
   width: 55px

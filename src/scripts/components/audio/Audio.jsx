@@ -100,6 +100,9 @@ export default class Audio extends React.Component {
   }
 
   handleTogglePlay() {
+    if (this.state.inEditMode) {
+      return;
+    }
     this.setState({
       playing: !this.state.playing
     });
@@ -232,7 +235,13 @@ export default class Audio extends React.Component {
               </div>
               <div className="col s10">
                 <div className="row">
-                  <div className="playpause__container">
+                  <div
+                    className={
+                      editing
+                        ? "playpause__container playpause__container--disabled"
+                        : "playpause__container"
+                    }
+                  >
                     {this.state.playing &&
                       <img
                         src="/assets/images/button-pause_audio.png"
@@ -246,13 +255,20 @@ export default class Audio extends React.Component {
                         onClick={this.handleTogglePlay}
                       />}
                   </div>
-                  <Wavesurfer
-                    audioFile={audio.files["mp3_128"]}
-                    pos={this.state.pos}
-                    onPosChange={this.handlePosChange}
-                    playing={this.state.playing}
-                    options={waveSurferOptions}
-                  />
+                  <div className="waveform__container">
+                    <div className={editing ? "audio__waveform--disabled" : ""}>
+                      <Wavesurfer
+                        audioFile={audio.files["mp3_128"]}
+                        pos={this.state.pos}
+                        onPosChange={this.handlePosChange}
+                        playing={this.state.playing}
+                        options={waveSurferOptions}
+                      />
+                    </div>
+                    <button className={editing ? "replace__button" : "hidden"}>
+                      Replace audio
+                    </button>
+                  </div>
                 </div>
                 <Metadata
                   audio={audio}
@@ -265,7 +281,8 @@ export default class Audio extends React.Component {
                   onTagsChange={this.onTagsChange}
                   contributorsSuggestions={this.state.contributorsSuggestions}
                 />
-                {audio.files && <CopyDownload audio={audio} />}
+                {audio.files &&
+                  <CopyDownload audio={audio} editing={editing} />}
               </div>
             </div>
           </div>}
