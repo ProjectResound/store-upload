@@ -34,6 +34,7 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
         const existingFile = resp.audios[0];
         if (existingFile) {
           dropzoneQueue[file.name].status.exists = {
+            id: existingFile.id,
             filename: existingFile.filename,
             title: existingFile.title,
             tags: existingFile.tags,
@@ -55,6 +56,12 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
 
   removeFromQueue: file => {
     delete dropzoneQueue[file.name];
+  },
+
+  clearQueue() {
+    Object.keys(dropzoneQueue).forEach(filename => {
+      delete dropzoneQueue[filename];
+    });
   },
 
   upload(action) {
@@ -152,15 +159,19 @@ DropstripStore.flow = new Flow({
 });
 
 DropstripStore.flow.on("fileProgress", flowFile => {
-  dropzoneQueue[flowFile.name].status.progress = parseInt(
-    flowFile.progress() * 100,
-    10
-  );
-  DropstripStore.emitChange();
+  if (dropzoneQueue[flowFile.name]) {
+    dropzoneQueue[flowFile.name].status.progress = parseInt(
+      flowFile.progress() * 100,
+      10
+    );
+    DropstripStore.emitChange();
+  }
 });
 
 DropstripStore.flow.on("fileAdded", flowFile => {
-  dropzoneQueue[flowFile.name].flowFile = flowFile;
+  if (dropzoneQueue[flowFile.name]) {
+    dropzoneQueue[flowFile.name].flowFile = flowFile;
+  }
 });
 
 DropstripStore.flow.on("fileError", flowFile => {

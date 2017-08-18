@@ -1,4 +1,6 @@
 .audio-page__container
+  $secondary-button-background: rgba(15, 179, 204, 0.5)
+
   margin: 40px 100px
   .audio-page__title
     font-weight: normal
@@ -38,7 +40,7 @@
     cursor: not-allowed
 
   .edit__cancel
-    background-color: rgba(15, 179, 204, 0.5)
+    background-color: $secondary-button-background
     margin-top: 10px
 
   .metadata__container .row
@@ -60,6 +62,9 @@
 
   .md__row--error
     border: 1px solid $error-color
+
+  .md__row--disabled
+    opacity: 0.5
 
   input.title__input
     display: block
@@ -93,6 +98,9 @@
 
   .copydownload__container
     margin-top: 40px
+
+  .copydownload__container--disabled
+    opacity: 0.5
 
   .copydownload__container > .row
     border-bottom: 1px solid $table-border-color
@@ -130,6 +138,15 @@
     float: left
     margin-right: 10px
 
+  .playpause__container--disabled
+    opacity: 0.5
+
+  .success__message
+    color: $primary-color
+
+  .error__message
+    color: $error-color
+
   =waveform_button
     width: 75px
     cursor: pointer
@@ -137,6 +154,91 @@
     +waveform_button
   .waveform__button__pause
     +waveform_button
+
+  .waveform__container
+    margin-left: 75px
+    position: relative
+
+  .audio__waveform--disabled
+    opacity: 0.5
+
+  .replace__button
+    border: 1px solid $primary-color
+    padding: 5px 10px
+    background: white
+    color: $primary-color
+    font-weight: bold
+    position: absolute
+    top: 25px
+    left: 50%
+    transform: translateX(-50%)
+    z-index: $middle-z-index
+
+  .dropzone__container
+    height: 80px
+
+  .dropzone__container .col
+    padding: 0
+
+  .upload__border--hover
+    border: 2px $primary-color dashed
+    height: 100%
+
+  .dz-message
+    opacity: 0.5
+
+  .upload__dz
+    text-align: center
+
+  .queue__text
+    color: $primary-color
+
+  =primary_button
+    background-color: $primary-color
+    color: white
+    padding: 5px 10px
+    font-size: 0.8rem
+    cursor: pointer
+
+  .upload__btn
+    +primary_button
+    display: inline-block
+    margin-top: 1em
+
+  .exists__container
+    text-align: center
+
+  .exists__button
+    +primary_button
+    margin: 0 10px
+    text-decoration: none
+
+  .different__link
+    background-color: $secondary-button-background
+
+  .filename
+    margin: 5px 0
+
+  .file__actions
+    text-align: right
+
+  .file__buttons
+    +primary_button
+    margin: 5px
+
+  .file__buttons--faded
+    background-color: $secondary-background-color
+
+  .valign
+    text-align: center
+
+  .cancel-upload__link
+    cursor: pointer
+    color: $error-color
+    text-align: right
+
+  .uploading__container .row
+    margin-bottom: 0
 
 =delete_button
   width: 55px

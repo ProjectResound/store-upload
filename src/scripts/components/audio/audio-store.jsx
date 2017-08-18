@@ -5,7 +5,6 @@ import resoundAPI from "../../services/resound-api";
 import ErrorsActions from "../errors/errors-actions";
 
 let _store;
-let _inEditMode = false;
 let _audioId;
 
 const AudioStore = assign({}, EventEmitter.prototype, {
@@ -38,20 +37,11 @@ const AudioStore = assign({}, EventEmitter.prototype, {
     return _store;
   },
 
-  toggleEditMode(toggle) {
-    _inEditMode = toggle;
-  },
-
-  inEditMode() {
-    return _inEditMode;
-  },
-
   save(form) {
     resoundAPI
       .updateAudio(form)
       .then(response => {
         _store = response;
-        AudioStore.toggleEditMode(false);
         AudioStore.emitChange("saved");
       })
       .catch(err => {
@@ -73,9 +63,6 @@ const AudioStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(action => {
   switch (action.actionType) {
-    case "AUDIO_EDIT_ON":
-      AudioStore.toggleEditMode(action.toggle);
-      break;
     case "AUDIO_SAVE":
       AudioStore.save(action.form);
       break;

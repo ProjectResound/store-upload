@@ -1,6 +1,5 @@
 import React from "react";
 import autoBind from "react-autobind";
-import AudioActions from "./audio-actions";
 
 export default class EditFile extends React.Component {
   constructor(props) {
@@ -12,18 +11,8 @@ export default class EditFile extends React.Component {
 
   componentWillUnmount() {}
 
-  onChange() {}
-
-  edit() {
-    AudioActions.edit(true);
-  }
-
-  cancel() {
-    AudioActions.edit(false);
-  }
-
   render() {
-    const editing = this.props.editMode;
+    const editing = this.props.inEditMode;
     return (
       <div className="edit__container">
         {editing &&
@@ -36,12 +25,22 @@ export default class EditFile extends React.Component {
               <button className="edit__button edit__button--disabled">
                 save changes
               </button>}
-            <button className="edit__button edit__cancel" onClick={this.cancel}>
+            <button
+              className="edit__button edit__cancel"
+              onClick={() => {
+                this.props.onEdit(false);
+              }}
+            >
               cancel
             </button>
           </div>}
         {!editing &&
-          <button className="edit__button" onClick={this.edit}>
+          <button
+            className="edit__button"
+            onClick={() => {
+              this.props.onEdit(true);
+            }}
+          >
             edit file
           </button>}
       </div>

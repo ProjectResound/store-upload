@@ -53,14 +53,35 @@ export default class Metadata extends React.Component {
               <label htmlFor="tags">Tags:</label>
             </div>
           </div>}
-        <div className="row md__row--large">
+        <div
+          className={
+            this.props.editing
+              ? "row md__row--large md__row--disabled"
+              : "row md__row--large"
+          }
+        >
           Date created: {getCreatedAt(audio)}
         </div>
-        <div className="row md__row">
+        <div
+          className={
+            this.props.editing ? "row md__row md__row--disabled" : "row md__row"
+          }
+        >
           Uploaded by: {audio.uploader}
         </div>
-        <div className="row md__row">
+        <div
+          className={
+            this.props.editing ? "row md__row md__row--disabled" : "row md__row"
+          }
+        >
           Length: {getDuration(audio)}
+        </div>
+        <div
+          className={
+            this.props.editing ? "row md__row md__row--disabled" : "row md__row"
+          }
+        >
+          Original file: {audio.filename}
         </div>
       </div>
     );

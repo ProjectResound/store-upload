@@ -1,0 +1,50 @@
+
+.progress-container
+  $progressbar-height: 30px
+  $action-button-width: 30px
+
+  position: relative
+  height: $progressbar-height
+  display: block
+  width: 100%
+  background-color: $secondary-background-color
+  border-radius: 2px
+  margin: 0
+  overflow: hidden
+
+  &.paused
+    background-color: lighten($error-color, 20%)
+
+  =bar-background
+    color: white
+    position: absolute
+    top: 0
+    left: $action-button-width
+    bottom: 0
+    transition: width .3s linear
+    font-size: 0.75rem
+    padding-top: 7px
+    padding-left: 7px
+    white-space: nowrap
+
+  .progress-container__bar
+    +bar-background
+    background-color: $secondary-color
+
+  .progress-container__bar--paused
+    +bar-background
+    background-color: lighten($error-color, 10%)
+
+  .progress-container__button--pause
+    padding: 0
+    width: $action-button-width
+    height: $progressbar-height
+
+  .progress-container__button--resume
+    padding: 0
+    width: $action-button-width
+    height: $progressbar-height
+
+  .progress-container__image
+    height: 100%
+
