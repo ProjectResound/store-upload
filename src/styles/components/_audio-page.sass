@@ -166,6 +166,47 @@
     transform: translateX(-50%)
     z-index: $middle-z-index
 
+  .dropzone__container
+    height: 80px
+
+  .upload__border--hover
+    border: 2px $primary-color dashed
+    height: 100%
+
+  .dz-message
+    opacity: 0.5
+
+  .upload__dz
+    text-align: center
+
+  .queue__text
+    color: $primary-color
+
+  =primary_button
+    background-color: $primary-color
+    color: white
+    padding: 5px 10px
+    font-size: 0.8rem
+    cursor: pointer
+
+  .upload__btn
+    +primary_button
+    display: inline-block
+    margin-top: 1em
+
+  .filename
+    margin: 5px 0
+
+  .file__buttons
+    +primary_button
+    margin: 5px
+
+  .file__buttons--faded
+    background-color: $secondary-background-color
+
+  .valign
+    text-align: center
+
 =delete_button
   width: 55px
   margin: 20px 5px

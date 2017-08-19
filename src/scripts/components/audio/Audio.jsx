@@ -9,6 +9,7 @@ import CopyDownload from "./CopyDownload";
 import autoBind from "react-autobind";
 import { isValidLength } from "../../services/audio-tools";
 import ContributorStore from "../../components/contributor/contributor-store";
+import SingleAudioDropzone from "./SingleAudioDropzone";
 
 export default class Audio extends React.Component {
   constructor(props) {
@@ -138,6 +139,10 @@ export default class Audio extends React.Component {
     const audio = this.state.audio;
     const editing = this.state.inEditMode;
     const validForm = this.state.validTitle && this.state.validContributors;
+    let replaceButtonClass = "hidden";
+    if (editing && !this.state.replacing) {
+      replaceButtonClass = "replace__button";
+    }
     let fileItems;
     if (audio) {
       fileItems = Object.keys(audio.files).map(type =>
@@ -234,42 +239,53 @@ export default class Audio extends React.Component {
                 </div>
               </div>
               <div className="col s10">
-                <div className="row">
-                  <div
-                    className={
-                      editing
-                        ? "playpause__container playpause__container--disabled"
-                        : "playpause__container"
-                    }
-                  >
-                    {this.state.playing &&
-                      <img
-                        src="/assets/images/button-pause_audio.png"
-                        className="waveform__button__pause"
-                        onClick={this.handleTogglePlay}
-                      />}
-                    {!this.state.playing &&
-                      <img
-                        src="/assets/images/button-play_audio.png"
-                        className="waveform__button__play"
-                        onClick={this.handleTogglePlay}
-                      />}
-                  </div>
-                  <div className="waveform__container">
-                    <div className={editing ? "audio__waveform--disabled" : ""}>
-                      <Wavesurfer
-                        audioFile={audio.files["mp3_128"]}
-                        pos={this.state.pos}
-                        onPosChange={this.handlePosChange}
-                        playing={this.state.playing}
-                        options={waveSurferOptions}
-                      />
+                {this.state.replacing &&
+                  <SingleAudioDropzone
+                    onCancelReplacing={() =>
+                      this.setState({ replacing: false })}
+                  />}
+                {!this.state.replacing &&
+                  <div className="row">
+                    <div
+                      className={
+                        editing
+                          ? "playpause__container playpause__container--disabled"
+                          : "playpause__container"
+                      }
+                    >
+                      {this.state.playing &&
+                        <img
+                          src="/assets/images/button-pause_audio.png"
+                          className="waveform__button__pause"
+                          onClick={this.handleTogglePlay}
+                        />}
+                      {!this.state.playing &&
+                        <img
+                          src="/assets/images/button-play_audio.png"
+                          className="waveform__button__play"
+                          onClick={this.handleTogglePlay}
+                        />}
                     </div>
-                    <button className={editing ? "replace__button" : "hidden"}>
-                      Replace audio
-                    </button>
-                  </div>
-                </div>
+                    <div className="waveform__container">
+                      <div
+                        className={editing ? "audio__waveform--disabled" : ""}
+                      >
+                        <Wavesurfer
+                          audioFile={audio.files["mp3_128"]}
+                          pos={this.state.pos}
+                          onPosChange={this.handlePosChange}
+                          playing={this.state.playing}
+                          options={waveSurferOptions}
+                        />
+                      </div>
+                      <button
+                        className={replaceButtonClass}
+                        onClick={() => this.setState({ replacing: true })}
+                      >
+                        Replace audio
+                      </button>
+                    </div>
+                  </div>}
                 <Metadata
                   audio={audio}
                   editing={editing}
