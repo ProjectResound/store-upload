@@ -63,6 +63,7 @@ export default class SingleAudioDropzone extends React.Component {
     return (
       <div className="row dropzone__container">
         {fileName &&
+          this.state.file[fileName] &&
           <div className="row">
             <div className="col s8 filename">
               {fileName}
@@ -80,6 +81,7 @@ export default class SingleAudioDropzone extends React.Component {
             </div>
           </div>}
         {!this.state.progress &&
+          !this.state.file[fileName] &&
           <Dropzone
             accept="audio/wav"
             multiple={false}
