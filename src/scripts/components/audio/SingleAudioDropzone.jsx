@@ -1,4 +1,5 @@
 import React from "react";
+import autoBind from "react-autobind";
 import Dropzone from "react-dropzone";
 import DropstripActions from "../dropstrip/dropstrip-actions";
 import DropstripStore from "../dropstrip/dropstrip-store";
@@ -9,9 +10,7 @@ export default class SingleAudioDropzone extends React.Component {
     this.state = {
       file: DropstripStore.getQueue()
     };
-    this.onDrop = this.onDrop.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onUpload = this.onUpload.bind(this);
+    autoBind(this);
   }
 
   componentDidMount() {
