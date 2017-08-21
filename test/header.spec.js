@@ -24,23 +24,4 @@ describe("<Header />", function() {
     ReactDOM.unmountComponentAtNode(this.headerDOM.parentNode);
     this.auth0Stub.restore();
   });
-
-  it("shows log in button", () => {
-    const loginButton = TestUtils.findRenderedDOMComponentWithClass(
-      this.component,
-      "header__button"
-    );
-    expect(loginButton).to.exist;
-    expect(loginButton.innerHTML).to.equal("log in");
-  });
-
-  it("clicking login will try to authorize the user", () => {
-    const loginButton = TestUtils.findRenderedDOMComponentWithClass(
-      this.component,
-      "header__button"
-    );
-    TestUtils.Simulate.click(loginButton);
-
-    assert(this.auth0Stub.called, "auth0 has been called");
-  });
 });
