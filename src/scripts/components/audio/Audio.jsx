@@ -243,6 +243,9 @@ export default class Audio extends React.Component {
                   <SingleAudioDropzone
                     onCancelReplacing={() =>
                       this.setState({ replacing: false })}
+                    title={this.state.formTitle}
+                    contributors={this.state.formContributors}
+                    tags={this.state.formTags}
                   />}
                 {!this.state.replacing &&
                   <div className="row">
