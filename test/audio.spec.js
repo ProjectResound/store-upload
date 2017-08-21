@@ -116,45 +116,43 @@ describe("<Audio />", function() {
       expect(this.component.state.playing).to.be.false;
     });
 
-    it.only(
-      "shows replace audio button and disables uneditble elements",
-      () => {
-        AudioStore.toggleEditMode(true);
-        AudioStore.emitChange();
+    it("shows replace audio button and disables uneditble elements", () => {
+      AudioStore.toggleEditMode(true);
+      AudioStore.emitChange();
 
-        expect(
-          TestUtils.findRenderedDOMComponentWithClass(
-            this.component,
-            "replace__button"
-          )
-        ).to.exist;
+      expect(
+        TestUtils.findRenderedDOMComponentWithClass(
+          this.component,
+          "replace__button"
+        )
+      ).to.exist;
 
-        expect(
-          TestUtils.findRenderedDOMComponentWithClass(
-            this.component,
-            "audio__waveform--disabled"
-          )
-        ).to.exist;
+      expect(
+        TestUtils.findRenderedDOMComponentWithClass(
+          this.component,
+          "audio__waveform--disabled"
+        )
+      ).to.exist;
 
-        expect(
-          TestUtils.scryRenderedDOMComponentsWithClass(
-            this.component,
-            "md__row--disabled"
-          ).length
-        ).to.equal(3);
+      expect(
+        TestUtils.scryRenderedDOMComponentsWithClass(
+          this.component,
+          "md__row--disabled"
+        ).length
+      ).to.equal(3);
 
-        expect(
-          TestUtils.findRenderedDOMComponentWithClass(
-            this.component,
-            "copydownload__container--disabled"
-          )
-        ).to.exist;
-      }
-    );
+      expect(
+        TestUtils.findRenderedDOMComponentWithClass(
+          this.component,
+          "copydownload__container--disabled"
+        )
+      ).to.exist;
+    });
   });
 
   describe("CopyDownload", () => {
     it("has a copy button on hover", () => {
+      AudioActions.edit(false);
       AudioStore.emitChange();
       const urlContainer = TestUtils.findRenderedDOMComponentWithClass(
         this.component,
