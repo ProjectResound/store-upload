@@ -1,4 +1,6 @@
 .audio-page__container
+  $secondary-button-background: rgba(15, 179, 204, 0.5)
+
   margin: 40px 100px
   .audio-page__title
     font-weight: normal
@@ -38,7 +40,7 @@
     cursor: not-allowed
 
   .edit__cancel
-    background-color: rgba(15, 179, 204, 0.5)
+    background-color: $secondary-button-background
     margin-top: 10px
 
   .metadata__container .row
@@ -139,6 +141,12 @@
   .playpause__container--disabled
     opacity: 0.5
 
+  .success__message
+    color: $primary-color
+
+  .error__message
+    color: $error-color
+
   =waveform_button
     width: 75px
     cursor: pointer
@@ -169,6 +177,9 @@
   .dropzone__container
     height: 80px
 
+  .dropzone__container .col
+    padding: 0
+
   .upload__border--hover
     border: 2px $primary-color dashed
     height: 100%
@@ -194,8 +205,22 @@
     display: inline-block
     margin-top: 1em
 
+  .exists__container
+    text-align: center
+
+  .exists__button
+    +primary_button
+    margin: 0 10px
+    text-decoration: none
+
+  .different__link
+    background-color: $secondary-button-background
+
   .filename
     margin: 5px 0
+
+  .file__actions
+    text-align: right
 
   .file__buttons
     +primary_button
@@ -206,6 +231,14 @@
 
   .valign
     text-align: center
+
+  .cancel-upload__link
+    cursor: pointer
+    color: $error-color
+    text-align: right
+
+  .uploading__container .row
+    margin-bottom: 0
 
 =delete_button
   width: 55px

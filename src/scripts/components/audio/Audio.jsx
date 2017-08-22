@@ -10,21 +10,32 @@ import autoBind from "react-autobind";
 import { isValidLength } from "../../services/audio-tools";
 import ContributorStore from "../../components/contributor/contributor-store";
 import SingleAudioDropzone from "./SingleAudioDropzone";
+import DropstripStore from "../dropstrip/dropstrip-store";
+
+const initialState = {
+  inEditMode: false,
+  validTitle: true,
+  validContributors: true,
+  playing: false,
+  pos: 0
+};
 
 export default class Audio extends React.Component {
   constructor(props) {
     super(props);
     this.MAX_CHAR_LENGTH = 4;
-    this.state = {
-      inEditMode: false,
-      validTitle: true,
-      validContributors: true,
-      playing: false,
-      pos: 0
-    };
+    this.state = initialState;
+    this.baseState = this.state;
     this.wavesurfer = Wavesurfer;
     this.audioId = props.match.params.id.split("-")[0];
     autoBind(this);
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setState(initialState);
+    DropstripStore.clearQueue();
+    this.audioId = newProps.match.params.id.split("-")[0];
+    AudioStore.fetch(this.audioId);
   }
 
   componentDidMount() {
@@ -36,10 +47,11 @@ export default class Audio extends React.Component {
   componentWillUnmount() {
     AudioStore.removeChangeListener(this.onChange);
     ContributorStore.removeChangeListener(this.populateContributorsSuggestions);
+    this.setState(this.baseState);
   }
 
   onChange(changeType) {
-    const inEditMode = AudioStore.inEditMode();
+    const inEditMode = this.state.inEditMode;
     if (changeType === "saved") {
       this.setState({
         audio: AudioStore.get(),
@@ -65,6 +77,12 @@ export default class Audio extends React.Component {
         formContributors: audio.contributors,
         formTags: audio.tags
       });
+      if (!inEditMode) {
+        this.setState({
+          replacing: false,
+          uploadError: false
+        });
+      }
     }
   }
 
@@ -89,6 +107,33 @@ export default class Audio extends React.Component {
     this.setState({
       formTags: e.target.value
     });
+  }
+
+  onCompletedUpload() {
+    AudioStore.fetch(this.audioId);
+    this.setState({ completed: true, replacing: false });
+  }
+
+  onUploadError() {
+    this.setState({ replacing: false, uploadError: true, completed: false });
+  }
+
+  onReplacing() {
+    this.setState({ replacing: true, completed: false, uploadError: false });
+  }
+
+  onCancelReplacing() {
+    DropstripStore.clearQueue();
+    this.setState({ replacing: false, completed: false, uploadError: false });
+  }
+
+  toggleEditMode(bool) {
+    if (!bool) {
+      DropstripStore.clearQueue();
+      this.setState({ inEditMode: bool, replacing: false });
+    } else {
+      this.setState({ inEditMode: bool });
+    }
   }
 
   handleCloseModal() {
@@ -126,6 +171,7 @@ export default class Audio extends React.Component {
         contributors: this.state.formContributors,
         tags: this.state.formTags
       });
+      this.toggleEditMode(false);
     }
   }
 
@@ -221,7 +267,8 @@ export default class Audio extends React.Component {
                 <div className="row">
                   <EditFile
                     audio={audio}
-                    editMode={this.state.inEditMode}
+                    inEditMode={this.state.inEditMode}
+                    onEdit={this.toggleEditMode}
                     validForm={validForm}
                     save={this.save}
                   />
@@ -241,11 +288,14 @@ export default class Audio extends React.Component {
               <div className="col s10">
                 {this.state.replacing &&
                   <SingleAudioDropzone
-                    onCancelReplacing={() =>
-                      this.setState({ replacing: false })}
+                    onCancelReplacing={this.onCancelReplacing}
+                    onCompleted={this.onCompletedUpload}
+                    onUploadError={this.onUploadError}
+                    onEdit={this.toggleEditMode}
                     title={this.state.formTitle}
                     contributors={this.state.formContributors}
                     tags={this.state.formTags}
+                    filename={audio.filename}
                   />}
                 {!this.state.replacing &&
                   <div className="row">
@@ -283,10 +333,19 @@ export default class Audio extends React.Component {
                       </div>
                       <button
                         className={replaceButtonClass}
-                        onClick={() => this.setState({ replacing: true })}
+                        onClick={this.onReplacing}
                       >
                         Replace audio
                       </button>
+                      {this.state.completed &&
+                        <div className="success__message">
+                          Success! Your audio has been replaced
+                        </div>}
+                      {this.state.uploadError &&
+                        <div className="error__message">
+                          We couldn't replace your audio. Try uploading new
+                          audio again.
+                        </div>}
                     </div>
                   </div>}
                 <Metadata

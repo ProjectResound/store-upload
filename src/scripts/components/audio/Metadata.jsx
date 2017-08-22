@@ -76,6 +76,13 @@ export default class Metadata extends React.Component {
         >
           Length: {getDuration(audio)}
         </div>
+        <div
+          className={
+            this.props.editing ? "row md__row md__row--disabled" : "row md__row"
+          }
+        >
+          Original file: {audio.filename}
+        </div>
       </div>
     );
   }
