@@ -132,7 +132,7 @@ export default class Audio extends React.Component {
       DropstripStore.clearQueue();
       this.setState({ inEditMode: bool, replacing: false });
     } else {
-      this.setState({ inEditMode: bool });
+      this.setState({ inEditMode: bool, playing: false });
     }
   }
 

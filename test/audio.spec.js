@@ -11,6 +11,18 @@ import AudioStore from "../src/scripts/components/audio/audio-store";
 
 sinonStubPromise(sinon);
 
+const enterEditMode = component => {
+  TestUtils.Simulate.click(
+    TestUtils.scryRenderedDOMComponentsWithClass(component, "edit__button")[0]
+  );
+};
+
+const leaveEditMode = component => {
+  TestUtils.Simulate.click(
+    TestUtils.findRenderedDOMComponentWithClass(component, "edit__cancel")
+  );
+};
+
 describe("<Audio />", function() {
   beforeEach(() => {
     this.title = "madeline says boohoo";
@@ -45,6 +57,7 @@ describe("<Audio />", function() {
 
   it("renders a CopyDownload component", () => {
     AudioStore.emitChange();
+    enterEditMode(this.component);
     expect(
       TestUtils.scryRenderedDOMComponentsWithClass(
         this.component,
@@ -53,106 +66,89 @@ describe("<Audio />", function() {
     ).to.equal(1);
   });
 
-  describe("edit", () => {
-    it("shows title input field", () => {
-      AudioActions.edit(true);
-      expect(
-        TestUtils.findRenderedDOMComponentWithClass(
-          this.component,
-          "title__input"
-        )
-      ).to.exist;
-    });
-
-    it("shows contributor input field", () => {
-      AudioActions.edit(true);
-      expect(
-        TestUtils.findRenderedDOMComponentWithClass(
-          this.component,
-          "contributors__input"
-        )
-      ).to.exist;
-    });
-
-    it("shows tags input field", () => {
-      AudioActions.edit(true);
-      expect(
-        TestUtils.findRenderedDOMComponentWithClass(
-          this.component,
-          "tags__input"
-        )
-      ).to.exist;
-    });
-
-    it("validates title field", () => {
-      AudioActions.edit(true);
-
-      const titleField = TestUtils.findRenderedDOMComponentWithClass(
+  it("shows input fields", () => {
+    AudioStore.emitChange();
+    enterEditMode(this.component);
+    expect(
+      TestUtils.findRenderedDOMComponentWithClass(
         this.component,
         "title__input"
-      );
-      titleField.value = "y";
-      TestUtils.Simulate.change(titleField);
+      )
+    ).to.exist;
+    expect(
+      TestUtils.findRenderedDOMComponentWithClass(
+        this.component,
+        "contributors__input"
+      )
+    ).to.exist;
+    expect(
+      TestUtils.findRenderedDOMComponentWithClass(this.component, "tags__input")
+    ).to.exist;
 
-      expect(
-        TestUtils.findRenderedDOMComponentWithClass(
-          this.component,
-          "title__input--error"
-        )
-      ).to.exist;
-      expect(
-        TestUtils.findRenderedDOMComponentWithClass(
-          this.component,
-          "edit__button--disabled"
-        )
-      ).to.exist;
-    });
+    expect(
+      TestUtils.findRenderedDOMComponentWithClass(
+        this.component,
+        "replace__button"
+      )
+    ).to.exist;
 
-    it("pauses play if audio is playing", () => {
-      this.component.setState({ playing: true });
-      expect(this.component.state.playing).to.be.truthy;
-      AudioStore.toggleEditMode(true);
-      AudioStore.emitChange();
-      expect(this.component.state.playing).to.be.false;
-    });
+    expect(
+      TestUtils.findRenderedDOMComponentWithClass(
+        this.component,
+        "audio__waveform--disabled"
+      )
+    ).to.exist;
 
-    it("shows replace audio button and disables uneditble elements", () => {
-      AudioStore.toggleEditMode(true);
-      AudioStore.emitChange();
+    expect(
+      TestUtils.scryRenderedDOMComponentsWithClass(
+        this.component,
+        "md__row--disabled"
+      ).length
+    ).to.equal(4);
 
-      expect(
-        TestUtils.findRenderedDOMComponentWithClass(
-          this.component,
-          "replace__button"
-        )
-      ).to.exist;
+    expect(
+      TestUtils.findRenderedDOMComponentWithClass(
+        this.component,
+        "copydownload__container--disabled"
+      )
+    ).to.exist;
+  });
 
-      expect(
-        TestUtils.findRenderedDOMComponentWithClass(
-          this.component,
-          "audio__waveform--disabled"
-        )
-      ).to.exist;
+  it("validates title field", () => {
+    AudioStore.emitChange();
+    enterEditMode(this.component);
 
-      expect(
-        TestUtils.scryRenderedDOMComponentsWithClass(
-          this.component,
-          "md__row--disabled"
-        ).length
-      ).to.equal(3);
+    const titleField = TestUtils.findRenderedDOMComponentWithClass(
+      this.component,
+      "title__input"
+    );
+    titleField.value = "y";
+    TestUtils.Simulate.change(titleField);
 
-      expect(
-        TestUtils.findRenderedDOMComponentWithClass(
-          this.component,
-          "copydownload__container--disabled"
-        )
-      ).to.exist;
-    });
+    expect(
+      TestUtils.findRenderedDOMComponentWithClass(
+        this.component,
+        "title__input--error"
+      )
+    ).to.exist;
+    expect(
+      TestUtils.findRenderedDOMComponentWithClass(
+        this.component,
+        "edit__button--disabled"
+      )
+    ).to.exist;
+  });
+
+  it("pauses play if audio is playing", () => {
+    this.component.setState({ playing: true });
+    AudioStore.emitChange();
+    expect(this.component.state.playing).to.be.truthy;
+    enterEditMode(this.component);
+    expect(this.component.state.playing).to.be.false;
   });
 
   describe("CopyDownload", () => {
     it("has a copy button on hover", () => {
-      AudioActions.edit(false);
       AudioStore.emitChange();
       const urlContainer = TestUtils.findRenderedDOMComponentWithClass(
         this.component,
