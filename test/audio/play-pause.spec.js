@@ -7,12 +7,7 @@ import AudioPlayPause from "../../src/scripts/components/audio/AudioPlayPause";
 
 describe("<AudioPlayPause />", function() {
   beforeEach(() => {
-    this.component = TestUtils.renderIntoDocument(
-      <SfcWrapper>
-        <AudioPlayPause editing={false} playing={false} />
-      </SfcWrapper>
-    );
-    this.componentDOM = ReactDOM.findDOMNode(this.component);
+    this.componentDOM = {};
   });
 
   afterEach(() => {
@@ -20,6 +15,13 @@ describe("<AudioPlayPause />", function() {
   });
 
   it("shows play button by default", () => {
+    this.component = TestUtils.renderIntoDocument(
+      <SfcWrapper>
+        <AudioPlayPause editing={false} playing={false} />
+      </SfcWrapper>
+    );
+    this.componentDOM = ReactDOM.findDOMNode(this.component);
+
     expect(
       TestUtils.findRenderedDOMComponentWithClass(
         this.component,
@@ -34,6 +36,8 @@ describe("<AudioPlayPause />", function() {
         <AudioPlayPause editing={false} playing={true} />
       </SfcWrapper>
     );
+    this.componentDOM = ReactDOM.findDOMNode(this.component);
+
     expect(
       TestUtils.findRenderedDOMComponentWithClass(
         this.component,
