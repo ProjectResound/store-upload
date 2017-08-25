@@ -1,12 +1,15 @@
 import React from "react";
-import Modal from "react-modal";
 import Wavesurfer from "react-wavesurfer";
+import autoBind from "react-autobind";
 import AudioStore from "./audio-store";
 import AudioActions from "./audio-actions";
-import EditFile from "./EditFile";
 import Metadata from "./Metadata";
+import DeleteModal from "./DeleteModal";
+import AudioPageTitleForm from "./AudioPageTitleForm";
+import ModifyAudioFile from "./ModifyAudioFile";
+import AudioPlayPause from "./AudioPlayPause";
+import AudioUploadMessages from "./AudioUploadMessages";
 import CopyDownload from "./CopyDownload";
-import autoBind from "react-autobind";
 import { isValidLength } from "../../services/audio-tools";
 import ContributorStore from "../../components/contributor/contributor-store";
 import SingleAudioDropzone from "./SingleAudioDropzone";
@@ -212,79 +215,29 @@ export default class Audio extends React.Component {
       <div>
         {audio &&
           <div className="audio-page__container">
-            <Modal
-              isOpen={this.state.showModal}
-              contentLabel="Delete Modal"
-              onRequestClose={this.handleCloseModal}
-              className="modal"
-              overlayClassName="modal__overlay"
-            >
-              Are you sure you want to permanently delete these files?
-              <div className="row">
-                <ul>
-                  {fileItems}
-                </ul>
-              </div>
-              <div className="row">
-                <div className="delete__yes" onClick={this.handleDeleteAudio}>
-                  Delete
-                </div>
-                <div className="delete__no" onClick={this.handleCloseModal}>
-                  No
-                </div>
-              </div>
-            </Modal>
-
+            <DeleteModal
+              fileItems={fileItems}
+              handleDeleteAudio={this.handleDeleteAudio}
+              handleCloseModal={this.handleCloseModal}
+              showModal={this.state.showModal}
+            />
+            <AudioPageTitleForm
+              editing={editing}
+              validTitle={this.state.validTitle}
+              title={audio.title}
+              value={this.state.formTitle}
+              onTitleChange={this.onTitleChange}
+              maxCharLength={this.MAX_CHAR_LENGTH}
+            />
             <div className="row">
-              {!editing &&
-                <h1 className="audio-page__title">
-                  {audio.title}
-                </h1>}
-              {editing &&
-                <div>
-                  <input
-                    className={
-                      this.state.validTitle
-                        ? "title__input"
-                        : "title__input title__input--error"
-                    }
-                    type="text"
-                    name="title"
-                    value={this.state.formTitle}
-                    onChange={this.onTitleChange}
-                  />
-                  <div
-                    className={
-                      this.state.validTitle ? "hidden" : "audio__alert"
-                    }
-                  >
-                    Minimum length should be {this.MAX_CHAR_LENGTH} characters.
-                  </div>
-                </div>}
-            </div>
-            <div className="row">
-              <div className="col s2 audio-actions__container">
-                <div className="row">
-                  <EditFile
-                    audio={audio}
-                    inEditMode={this.state.inEditMode}
-                    onEdit={this.toggleEditMode}
-                    validForm={validForm}
-                    save={this.save}
-                  />
-                </div>
-                <div
-                  className="row delete__container"
-                  onClick={() => this.setState({ showModal: true })}
-                >
-                  <img
-                    src="/assets/images/icon-delete.png"
-                    className="trash__icon"
-                    alt="delete icon"
-                  />
-                  Delete this file
-                </div>
-              </div>
+              <ModifyAudioFile
+                audio={audio}
+                inEditMode={this.state.inEditMode}
+                onEdit={this.toggleEditMode}
+                save={this.save}
+                validForm={validForm}
+                onDelete={() => this.setState({ showModal: true })}
+              />
               <div className="col s10">
                 {this.state.replacing &&
                   <SingleAudioDropzone
@@ -299,26 +252,11 @@ export default class Audio extends React.Component {
                   />}
                 {!this.state.replacing &&
                   <div className="row">
-                    <div
-                      className={
-                        editing
-                          ? "playpause__container playpause__container--disabled"
-                          : "playpause__container"
-                      }
-                    >
-                      {this.state.playing &&
-                        <img
-                          src="/assets/images/button-pause_audio.png"
-                          className="waveform__button__pause"
-                          onClick={this.handleTogglePlay}
-                        />}
-                      {!this.state.playing &&
-                        <img
-                          src="/assets/images/button-play_audio.png"
-                          className="waveform__button__play"
-                          onClick={this.handleTogglePlay}
-                        />}
-                    </div>
+                    <AudioPlayPause
+                      editing={editing}
+                      playing={this.state.playing}
+                      handleTogglePlay={this.handleTogglePlay}
+                    />
                     <div className="waveform__container">
                       <div
                         className={editing ? "audio__waveform--disabled" : ""}
@@ -337,15 +275,10 @@ export default class Audio extends React.Component {
                       >
                         Replace audio
                       </button>
-                      {this.state.completed &&
-                        <div className="success__message">
-                          Success! Your audio has been replaced
-                        </div>}
-                      {this.state.uploadError &&
-                        <div className="error__message">
-                          We couldn't replace your audio. Try uploading new
-                          audio again.
-                        </div>}
+                      <AudioUploadMessages
+                        completed={this.state.completed}
+                        error={this.state.uploadError}
+                      />
                     </div>
                   </div>}
                 <Metadata
