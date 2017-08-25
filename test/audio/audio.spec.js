@@ -1,25 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { MemoryRouter } from "react-router-dom";
 import TestUtils from "react-dom/test-utils";
 import { expect, assert } from "chai";
 import sinon from "sinon";
 import sinonStubPromise from "sinon-stub-promise";
-import Audio from "../src/scripts/components/audio/Audio";
-import AudioActions from "../src/scripts/components/audio/audio-actions";
-import AudioStore from "../src/scripts/components/audio/audio-store";
+import Audio from "../../src/scripts/components/audio/Audio";
+import AudioStore from "../../src/scripts/components/audio/audio-store";
 
 sinonStubPromise(sinon);
 
 const enterEditMode = component => {
   TestUtils.Simulate.click(
     TestUtils.scryRenderedDOMComponentsWithClass(component, "edit__button")[0]
-  );
-};
-
-const leaveEditMode = component => {
-  TestUtils.Simulate.click(
-    TestUtils.findRenderedDOMComponentWithClass(component, "edit__cancel")
   );
 };
 
