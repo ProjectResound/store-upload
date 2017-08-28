@@ -1,6 +1,5 @@
 import React from "react";
 import Wavesurfer from "react-wavesurfer";
-import autoBind from "react-autobind";
 import AudioStore from "./audio-store";
 import AudioActions from "./audio-actions";
 import Metadata from "./Metadata";
@@ -10,7 +9,8 @@ import ModifyAudioFile from "./ModifyAudioFile";
 import AudioPlayPause from "./AudioPlayPause";
 import AudioUploadMessages from "./AudioUploadMessages";
 import CopyDownload from "./CopyDownload";
-import { isValidLength } from "../../services/audio-tools";
+import autoBind from "react-autobind";
+import { getDuration, isValidLength } from "../../services/audio-tools";
 import ContributorStore from "../../components/contributor/contributor-store";
 import SingleAudioDropzone from "./SingleAudioDropzone";
 import DropstripStore from "../dropstrip/dropstrip-store";
@@ -158,8 +158,10 @@ export default class Audio extends React.Component {
   }
 
   handlePosChange(e) {
+    const pos = e.originalArgs[0];
     this.setState({
-      pos: e.originalArgs[0]
+      pos,
+      timestamp: getDuration({ duration: pos })
     });
   }
 
@@ -251,7 +253,7 @@ export default class Audio extends React.Component {
                     filename={audio.filename}
                   />}
                 {!this.state.replacing &&
-                  <div className="row">
+                  <div className="row playwave__container">
                     <AudioPlayPause
                       editing={editing}
                       playing={this.state.playing}
@@ -281,6 +283,9 @@ export default class Audio extends React.Component {
                       />
                     </div>
                   </div>}
+                <div className="row waveform__timestamp">
+                  {this.state.timestamp}
+                </div>
                 <Metadata
                   audio={audio}
                   editing={editing}
