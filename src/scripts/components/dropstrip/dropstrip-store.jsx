@@ -70,6 +70,7 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
     dropzoneQueue[args.file.name].title = args.title;
     dropzoneQueue[args.file.name].contributors = args.contributors;
     dropzoneQueue[args.file.name].tags = args.tags;
+    dropzoneQueue[args.file.name].originalFilename = args.originalFilename;
     this.flow.addFile(file);
     this.flow.upload();
   },
@@ -154,7 +155,8 @@ DropstripStore.flow = new Flow({
   query: flowFile => ({
     title: dropzoneQueue[flowFile.name].title,
     contributors: dropzoneQueue[flowFile.name].contributors,
-    tags: dropzoneQueue[flowFile.name].tags
+    tags: dropzoneQueue[flowFile.name].tags,
+    originalFilename: dropzoneQueue[flowFile.name].originalFilename
   })
 });
 

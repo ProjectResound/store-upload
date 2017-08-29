@@ -29,7 +29,6 @@ export default class Audio extends React.Component {
     this.MAX_CHAR_LENGTH = 4;
     this.state = initialState;
     this.baseState = this.state;
-    this.wavesurfer = Wavesurfer;
     this.audioId = props.match.params.id.split("-")[0];
     autoBind(this);
   }
@@ -114,7 +113,14 @@ export default class Audio extends React.Component {
 
   onCompletedUpload() {
     AudioStore.fetch(this.audioId);
-    this.setState({ completed: true, replacing: false });
+    this.setState({
+      completed: true,
+      replacing: false
+    });
+    if (this.waveNode) {
+      const mp3Url = this.state.audio.files["mp3_128"];
+      this.waveNode._loadAudio(mp3Url);
+    }
   }
 
   onUploadError() {
@@ -269,6 +275,7 @@ export default class Audio extends React.Component {
                           onPosChange={this.handlePosChange}
                           playing={this.state.playing}
                           options={waveSurferOptions}
+                          ref={ref => (this.waveNode = ref)}
                         />
                       </div>
                       <button

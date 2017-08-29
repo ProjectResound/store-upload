@@ -62,7 +62,8 @@ export default class SingleAudioDropzone extends React.Component {
       title: this.props.title,
       contributors: this.props.contributors,
       tags: this.props.tags,
-      name: this.file.name
+      name: this.file.name,
+      originalFilename: this.props.filename
     });
     this.setState({
       progress: "uploading"
