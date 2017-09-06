@@ -6,8 +6,9 @@ import ActionCable from "actioncable";
 import DropstripActions from "../dropstrip/dropstrip-actions";
 import DropstripStore from "../dropstrip/dropstrip-store";
 import { generateUrl } from "../../services/audio-tools";
+import { WS_URL } from "../../constants/api-urls";
 
-const cable = ActionCable.createConsumer("ws://localhost:3000/cable");
+const cable = ActionCable.createConsumer(WS_URL);
 
 export default class SingleAudioDropzone extends React.Component {
   constructor(props) {

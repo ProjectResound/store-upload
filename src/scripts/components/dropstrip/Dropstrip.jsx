@@ -8,8 +8,9 @@ import DropstripStore from "./dropstrip-store";
 import QueuedItem from "./QueuedItem";
 import ContributorStore from "../contributor/contributor-store";
 import ContributorActions from "../contributor/contributor-actions";
+import { WS_URL } from "../../constants/api-urls";
 
-const cable = ActionCable.createConsumer("ws://localhost:3000/cable");
+const cable = ActionCable.createConsumer(WS_URL);
 const getStateFromStore = () => DropstripStore.getQueue();
 const getContributorsFromStore = () => ContributorStore.getList();
 

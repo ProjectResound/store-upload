@@ -1,7 +1,7 @@
 import Auth from "./auth";
+import { API_URL } from "../constants/api-urls";
 
 const auth = new Auth();
-const apiRoot = "http://localhost:3000/api/v1";
 const accessToken = auth.getAccessToken();
 const headers = {
   Authorization: `Bearer ${accessToken}`
@@ -9,27 +9,27 @@ const headers = {
 
 module.exports = {
   get: filename => {
-    let uri = `${apiRoot}/audios`;
+    let uri = `${API_URL}/audios`;
     if (filename) {
       uri = `${uri}?filename=${filename}`;
     }
     return fetch(uri, { headers }).then(response => response.json());
   },
   getAudioById: id =>
-    fetch(`${apiRoot}/audios/${id}`, { headers }).then(response =>
+    fetch(`${API_URL}/audios/${id}`, { headers }).then(response =>
       response.json()
     ),
   getPage: page => {
-    const uri = `${apiRoot}/audios?page=${page}`;
+    const uri = `${API_URL}/audios?page=${page}`;
     return fetch(uri, { headers }).then(response => response.json());
   },
   search: query => {
-    const uri = `${apiRoot}/audios/search?q=${query}`;
+    const uri = `${API_URL}/audios/search?q=${query}`;
     return fetch(uri, { headers }).then(response => response.json());
   },
   users: {
     create: (authToken, idToken) => {
-      const uri = `${apiRoot}/users`;
+      const uri = `${API_URL}/users`;
       return fetch(uri, {
         method: "POST",
         headers: {
@@ -40,15 +40,15 @@ module.exports = {
     }
   },
   getWorkingOn: () => {
-    const uri = `${apiRoot}/audios?working_on=true`;
+    const uri = `${API_URL}/audios?working_on=true`;
     return fetch(uri, { headers }).then(response => response.json());
   },
   populateContributors: () => {
-    const uri = `${apiRoot}/contributors`;
+    const uri = `${API_URL}/contributors`;
     return fetch(uri, { headers }).then(response => response.json());
   },
   updateAudio: audio => {
-    const uri = `${apiRoot}/audios/${audio.id}`;
+    const uri = `${API_URL}/audios/${audio.id}`;
     return fetch(uri, {
       method: "PATCH",
       headers,
@@ -60,7 +60,7 @@ module.exports = {
     }).then(response => response.json());
   },
   deleteAudio: audioId => {
-    const uri = `${apiRoot}/audios/${audioId}`;
+    const uri = `${API_URL}/audios/${audioId}`;
     return fetch(uri, {
       method: "DELETE",
       headers
