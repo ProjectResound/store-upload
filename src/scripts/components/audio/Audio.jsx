@@ -273,6 +273,7 @@ export default class Audio extends React.Component {
                           audioFile={audio.files["mp3_128"]}
                           pos={this.state.pos}
                           onPosChange={this.handlePosChange}
+                          onFinish={this.handleTogglePlay}
                           playing={this.state.playing}
                           options={waveSurferOptions}
                           ref={ref => (this.waveNode = ref)}
