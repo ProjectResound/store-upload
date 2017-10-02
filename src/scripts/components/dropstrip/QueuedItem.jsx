@@ -340,7 +340,10 @@ class QueuedItem extends React.Component {
               {fileSize}MB
             </div>
             <div className="col s6 completed__edit">
-              <Link to={generateUrl({ id: completed, title: form.title })}>
+              <Link
+                to={generateUrl({ id: completed, title: form.title })}
+                className="edit__link"
+              >
                 Edit this file
               </Link>
             </div>
