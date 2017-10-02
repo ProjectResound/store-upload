@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { MemoryRouter } from "react-router-dom";
 import TestUtils from "react-dom/test-utils";
 import { expect, assert } from "chai";
 import sinon from "sinon";
@@ -23,7 +24,9 @@ describe("<Audio />", function() {
       params: { id: this.audioId }
     };
     this.component = TestUtils.renderIntoDocument(
-      <Audio match={fakeMatchObj} />
+      <MemoryRouter>
+        <Audio match={fakeMatchObj} />
+      </MemoryRouter>
     );
     this.componentDOM = ReactDOM.findDOMNode(this.component);
     this.audioStub = sinon.stub(AudioStore, "get").returns({
@@ -132,11 +135,15 @@ describe("<Audio />", function() {
   });
 
   it("pauses play if audio is playing", () => {
-    this.component.setState({ playing: true });
+    const audioComponent = TestUtils.findRenderedComponentWithType(
+      this.component,
+      Audio
+    );
+    audioComponent.setState({ playing: true });
     AudioStore.emitChange();
-    expect(this.component.state.playing).to.be.truthy;
-    enterEditMode(this.component);
-    expect(this.component.state.playing).to.be.false;
+    expect(audioComponent.state.playing).to.be.truthy;
+    enterEditMode(audioComponent);
+    expect(audioComponent.state.playing).to.be.false;
   });
 
   describe("CopyDownload", () => {

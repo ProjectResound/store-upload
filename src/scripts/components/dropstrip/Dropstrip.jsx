@@ -1,4 +1,5 @@
 import React from "react";
+import { Prompt } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import ActionCable from "actioncable";
 import autoBind from "react-autobind";
@@ -17,7 +18,8 @@ export default class Dropstrip extends React.Component {
     super(props);
     this.state = {
       queue: getStateFromStore(),
-      contributors: getContributorsFromStore()
+      contributors: getContributorsFromStore(),
+      isBlocking: false
     };
     autoBind(this);
   }
@@ -34,8 +36,11 @@ export default class Dropstrip extends React.Component {
   }
 
   onChange() {
+    const queue = getStateFromStore();
+    const queueLength = Object.keys(queue).length > 0;
     this.setState({
-      queue: getStateFromStore()
+      queue,
+      isBlocking: queueLength
     });
   }
 
@@ -46,6 +51,7 @@ export default class Dropstrip extends React.Component {
   }
 
   onDrop(files) {
+    this.setState({ isBlocking: true });
     this.onDragLeave();
     files.forEach(file => {
       DropstripActions.queueFile(file);
@@ -100,7 +106,7 @@ export default class Dropstrip extends React.Component {
       >
         <div className="upload__queue">
           <div className={queueHasItems ? "queue__header" : "hidden"}>
-            Files You&apos;re Uploading {this.state.isDragActive}
+            Files You're Uploading {this.state.isDragActive}
           </div>
           <div className="queueItems">
             {files}
@@ -115,6 +121,11 @@ export default class Dropstrip extends React.Component {
             Drag & drop more files to add them to your queue
           </div>
         </div>
+        <Prompt
+          when={this.state.isBlocking}
+          message={() =>
+            `There is still audio in the dropzone. Is it okay to leave this page?`}
+        />
       </Dropzone>
     );
   }
