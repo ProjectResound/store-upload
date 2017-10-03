@@ -1,4 +1,5 @@
 import React from "react";
+import { Prompt } from "react-router-dom";
 import Wavesurfer from "react-wavesurfer";
 import AudioStore from "./audio-store";
 import AudioActions from "./audio-actions";
@@ -221,6 +222,11 @@ export default class Audio extends React.Component {
 
     return (
       <div>
+        <Prompt
+          when={this.state.inEditMode}
+          message={() =>
+            `You are still in edit mode. Is it okay to leave this page?`}
+        />
         {audio &&
           <div className="audio-page__container">
             <DeleteModal
