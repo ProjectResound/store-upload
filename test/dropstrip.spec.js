@@ -342,7 +342,6 @@ describe("<Dropstrip />", function() {
         this.component,
         Dropstrip
       );
-      console.log(dropstrip.state);
       expect(dropstrip.state.isBlocking).to.eq(false);
 
       queueStub.restore();
