@@ -14,7 +14,6 @@ export default class Header extends React.Component {
 
   componentWillMount() {
     this._redirect = this._redirect.bind(this);
-    this.props.auth.handleAuthentication();
     if (this.props.auth.isAuthenticated) {
       this.setState({
         loggedIn: true
