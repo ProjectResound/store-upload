@@ -159,6 +159,10 @@ export default class Audio extends React.Component {
     if (this.state.inEditMode) {
       return;
     }
+    // Load the mp3 the first time user presses 'play'
+    if (!this.state.playing && !this.state.waveState) {
+      this.setState({ waveState: "loading" });
+    }
     this.setState({
       playing: !this.state.playing
     });
@@ -275,15 +279,23 @@ export default class Audio extends React.Component {
                       <div
                         className={editing ? "audio__waveform--disabled" : ""}
                       >
-                        <Wavesurfer
-                          audioFile={audio.files["mp3_128"]}
-                          pos={this.state.pos}
-                          onPosChange={this.handlePosChange}
-                          onFinish={this.handleTogglePlay}
-                          playing={this.state.playing}
-                          options={waveSurferOptions}
-                          ref={ref => (this.waveNode = ref)}
-                        />
+                        {this.state.waveState === "loading" &&
+                          <div className="audio__loading-msg">
+                            loading audio...
+                          </div>}
+                        {this.state.waveState &&
+                          <Wavesurfer
+                            audioFile={audio.files["mp3_128"]}
+                            pos={this.state.pos}
+                            onPosChange={this.handlePosChange}
+                            onFinish={this.handleTogglePlay}
+                            onReady={() => {
+                              this.setState({ waveState: "ready" });
+                            }}
+                            playing={this.state.playing}
+                            options={waveSurferOptions}
+                            ref={ref => (this.waveNode = ref)}
+                          />}
                       </div>
                       <button
                         className={replaceButtonClass}
