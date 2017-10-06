@@ -14,8 +14,7 @@ const auth = resoundAPI.auth;
 class Root extends React.Component {
   redirectIfLoggedOut() {
     if (!auth.isAuthenticated) {
-      console.log("LOGGED OUT");
-      auth.login();
+      auth.handleAuthentication();
     }
   }
 
