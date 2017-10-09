@@ -206,7 +206,7 @@ export default class Audio extends React.Component {
       replaceButtonClass = "replace__button";
     }
     let fileItems;
-    if (audio) {
+    if (audio && audio.files) {
       fileItems = Object.keys(audio.files).map(type =>
         <div key={type} className="file-list__item">
           {audio.files[type]}
@@ -268,7 +268,19 @@ export default class Audio extends React.Component {
                     tags={this.state.formTags}
                     filename={audio.filename}
                   />}
+                {!audio.files &&
+                  <div className="player__error">
+                    Could not find an mp3 file to load the audio player with.
+                    {!this.state.replacing &&
+                      <button
+                        className={replaceButtonClass}
+                        onClick={this.onReplacing}
+                      >
+                        Replace audio
+                      </button>}
+                  </div>}
                 {!this.state.replacing &&
+                  audio.files &&
                   <div className="row playwave__container">
                     <AudioPlayPause
                       editing={editing}
