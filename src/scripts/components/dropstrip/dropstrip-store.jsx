@@ -106,6 +106,18 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
   }
 });
 
+const buildFlowQuery = flowFile => {
+  const queryObj = {
+    title: dropzoneQueue[flowFile.name].title,
+    contributors: dropzoneQueue[flowFile.name].contributors,
+    tags: dropzoneQueue[flowFile.name].tags
+  };
+  if (dropzoneQueue[flowFile.name].originalFilename) {
+    queryObj.originalFilename = dropzoneQueue[flowFile.name].originalFilename;
+  }
+  return queryObj;
+};
+
 AppDispatcher.register(action => {
   let successFlag;
   switch (action.actionType) {
@@ -152,12 +164,7 @@ DropstripStore.flow = new Flow({
   testChunks: false,
   headers: resoundAPI.headers,
   simultaneousUploads: 6,
-  query: flowFile => ({
-    title: dropzoneQueue[flowFile.name].title,
-    contributors: dropzoneQueue[flowFile.name].contributors,
-    tags: dropzoneQueue[flowFile.name].tags,
-    originalFilename: dropzoneQueue[flowFile.name].originalFilename
-  })
+  query: buildFlowQuery
 });
 
 DropstripStore.flow.on("fileProgress", flowFile => {

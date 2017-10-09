@@ -1,10 +1,14 @@
 import React from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
+import ErrorActions from "../../components/errors/errors-actions";
 
 export default class CopyDownload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    if (!this.props.audio.files) {
+      ErrorsActions.error("Could not find audio files.");
+    }
   }
 
   render() {
