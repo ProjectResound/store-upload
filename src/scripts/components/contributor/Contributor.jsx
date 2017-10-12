@@ -2,10 +2,7 @@ import React from "react";
 import Autosuggest from "react-autosuggest";
 import autoBind from "react-autobind";
 
-const renderSuggestion = suggestion =>
-  <div>
-    {suggestion}
-  </div>;
+const renderSuggestion = suggestion => <div>{suggestion}</div>;
 
 export default class Contributor extends React.Component {
   constructor(props) {
@@ -47,7 +44,11 @@ export default class Contributor extends React.Component {
   }
 
   getSuggestions(value) {
-    const inputValue = value.split(",").pop().trim().toLowerCase();
+    const inputValue = value
+      .split(",")
+      .pop()
+      .trim()
+      .toLowerCase();
     const inputLength = inputValue.length;
     if (inputLength === 0 || !this.props.contributorsSuggestions) {
       return [];

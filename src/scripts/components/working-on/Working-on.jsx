@@ -28,7 +28,7 @@ export default class WorkingOn extends React.Component {
   }
 
   render() {
-    const audios = this.state.audios.map(audio =>
+    const audios = this.state.audios.map(audio => (
       <div className="working-on__audio col s4" key={audio.filename}>
         <div className="audio__title">
           <Link to={generateUrl({ id: audio.id, title: audio.title })}>
@@ -39,7 +39,7 @@ export default class WorkingOn extends React.Component {
           {new Date(audio.created_at).toLocaleDateString()}
         </div>
       </div>
-    );
+    ));
 
     return (
       <div className="working-on col s12">
@@ -51,9 +51,7 @@ export default class WorkingOn extends React.Component {
             <a href="brokenfornow">See all your activity</a>
           </div>
         </div>
-        <div className="working-on__audios">
-          {audios}
-        </div>
+        <div className="working-on__audios">{audios}</div>
       </div>
     );
   }

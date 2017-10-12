@@ -22,18 +22,20 @@ class Root extends React.Component {
     return (
       <div>
         <Route
-          render={history =>
+          render={history => (
             <Header
               auth={auth}
               history={history}
               onEnter={this.redirectIfLoggedOut(this)}
-            />}
+            />
+          )}
         />
-        {auth.isAuthenticated &&
+        {auth.isAuthenticated && (
           <div>
             <Route exact path="/" component={StoreManageApp} />
             <Route path="/audio/:id" component={Audio} />
-          </div>}
+          </div>
+        )}
       </div>
     );
   }

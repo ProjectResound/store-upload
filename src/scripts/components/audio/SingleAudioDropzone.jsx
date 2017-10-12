@@ -119,75 +119,74 @@ export default class SingleAudioDropzone extends React.Component {
       <div className="row dropzone__container">
         {fileName &&
           !this.state.progress &&
-          (file.status && !exists) &&
-          <div className="row">
-            <div className="col s8 filename">
-              {fileName}
-            </div>
-            <div className="col s4 file__actions">
-              <button className="file__buttons" onClick={this.onUpload}>
-                Upload this file
-              </button>
-              <button
-                className="file__buttons file__buttons--faded"
-                onClick={this.props.onCancelReplacing}
-              >
-                Use previous file
-              </button>
-            </div>
-          </div>}
-        {!this.state.progress &&
-          !file &&
-          <Dropzone
-            accept="audio/wav"
-            multiple={false}
-            className={`upload__dz ${dragActiveClass}`}
-            onDragEnter={() => {
-              this.setState({ isDragActive: true });
-            }}
-            onDragLeave={() => {
-              this.setState({ isDragActive: false });
-            }}
-            onDrop={e => this.onDrop(e)}
-          >
-            <div className="queue__text">
-              Drag & drop your replacement WAV file here
-            </div>
-            <div className="upload__btn">Or, browse for your audio</div>
-          </Dropzone>}
-        {file &&
-          exists &&
-          <div className="exists__container">
-            <div className="prompt__text row">
-              A file already exists with the filename{" "}
-              <strong>{file.name}</strong>. Do you want to go to that audio page
-              or upload a different file?
-            </div>
+          (file.status && !exists) && (
             <div className="row">
-              <Link
-                to={generateUrl({
-                  id: file.status.exists.id,
-                  title: file.status.exists.title
-                })}
-                className="exists__button audio__link"
-              >
-                Other audio page
-              </Link>
-              <button
-                className="exists__button different__link"
-                onClick={this.onUploadDifferent}
-              >
-                Upload a different file
-              </button>
+              <div className="col s8 filename">{fileName}</div>
+              <div className="col s4 file__actions">
+                <button className="file__buttons" onClick={this.onUpload}>
+                  Upload this file
+                </button>
+                <button
+                  className="file__buttons file__buttons--faded"
+                  onClick={this.props.onCancelReplacing}
+                >
+                  Use previous file
+                </button>
+              </div>
             </div>
-          </div>}
+          )}
+        {!this.state.progress &&
+          !file && (
+            <Dropzone
+              accept="audio/wav"
+              multiple={false}
+              className={`upload__dz ${dragActiveClass}`}
+              onDragEnter={() => {
+                this.setState({ isDragActive: true });
+              }}
+              onDragLeave={() => {
+                this.setState({ isDragActive: false });
+              }}
+              onDrop={e => this.onDrop(e)}
+            >
+              <div className="queue__text">
+                Drag & drop your replacement WAV file here
+              </div>
+              <div className="upload__btn">Or, browse for your audio</div>
+            </Dropzone>
+          )}
+        {file &&
+          exists && (
+            <div className="exists__container">
+              <div className="prompt__text row">
+                A file already exists with the filename{" "}
+                <strong>{file.name}</strong>. Do you want to go to that audio
+                page or upload a different file?
+              </div>
+              <div className="row">
+                <Link
+                  to={generateUrl({
+                    id: file.status.exists.id,
+                    title: file.status.exists.title
+                  })}
+                  className="exists__button audio__link"
+                >
+                  Other audio page
+                </Link>
+                <button
+                  className="exists__button different__link"
+                  onClick={this.onUploadDifferent}
+                >
+                  Upload a different file
+                </button>
+              </div>
+            </div>
+          )}
         {(this.state.progress === "uploading" ||
-          this.state.progress === "paused") &&
+          this.state.progress === "paused") && (
           <div className="uploading__container">
             <div className="row">
-              <div className="col s10 filename">
-                {fileName}
-              </div>
+              <div className="col s10 filename">{fileName}</div>
               <div className="col s2 file__actions">
                 <button
                   className="cancel-upload__link"
@@ -197,7 +196,7 @@ export default class SingleAudioDropzone extends React.Component {
                 </button>
               </div>
             </div>
-            {this.state.progress === "uploading" &&
+            {this.state.progress === "uploading" && (
               <div className="row progress-container">
                 <button
                   className="progress-container__button--pause"
@@ -215,8 +214,9 @@ export default class SingleAudioDropzone extends React.Component {
                 >
                   Loading ({fileStatus.progress}%)
                 </div>
-              </div>}
-            {this.state.progress === "paused" &&
+              </div>
+            )}
+            {this.state.progress === "paused" && (
               <div className="progress-container paused">
                 <button
                   className="progress-container__button--resume"
@@ -234,8 +234,10 @@ export default class SingleAudioDropzone extends React.Component {
                 >
                   Paused at at {fileStatus.progress}%
                 </div>
-              </div>}
-          </div>}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     );
   }

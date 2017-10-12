@@ -196,9 +196,7 @@ class QueuedItem extends React.Component {
           className={showForm ? "form__queuedItem" : "hidden"}
         >
           <div className="dz-details">
-            <div className="queued-item__filename">
-              {file.name}
-            </div>
+            <div className="queued-item__filename">{file.name}</div>
             <div className="row">
               <label htmlFor="title">Title</label>
               <input
@@ -249,9 +247,7 @@ class QueuedItem extends React.Component {
               : "hidden"
           }
         >
-          <div className="file-title">
-            {form.title}
-          </div>
+          <div className="file-title">{form.title}</div>
           <div className="progress-container">
             <button
               className="progress-container__button--pause"
@@ -273,9 +269,7 @@ class QueuedItem extends React.Component {
             this.state.progress === "paused" ? "paused-container" : "hidden"
           }
         >
-          <div className="file-title">
-            {form.title}
-          </div>
+          <div className="file-title">{form.title}</div>
           <div className="progress-container paused">
             <button
               className="progress-container__button--resume"
@@ -305,9 +299,7 @@ class QueuedItem extends React.Component {
           <div className="prompt__text">
             Are you sure you want to remove this file?
           </div>
-          <div className="file-title">
-            {file.name}
-          </div>
+          <div className="file-title">{file.name}</div>
           <a
             className="queued-item__button--yes"
             onClick={() => this.onCancelConfirmed(true)}
@@ -336,9 +328,7 @@ class QueuedItem extends React.Component {
             {form.title}
           </div>
           <div className="row">
-            <div className="col s6 completed__metadata">
-              {fileSize}MB
-            </div>
+            <div className="col s6 completed__metadata">{fileSize}MB</div>
             <div className="col s6 completed__edit">
               <Link
                 to={generateUrl({ id: completed, title: form.title })}
@@ -379,9 +369,7 @@ class QueuedItem extends React.Component {
             A file already exists by that name. Do you want to overwrite it?
           </div>
           <br />
-          <div className="file-title">
-            {file.name}
-          </div>
+          <div className="file-title">{file.name}</div>
           <a
             className="queued-item__button--yes"
             onClick={() => this.onOverwrite(true)}

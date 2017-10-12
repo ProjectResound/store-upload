@@ -207,11 +207,11 @@ export default class Audio extends React.Component {
     }
     let fileItems;
     if (audio && audio.files) {
-      fileItems = Object.keys(audio.files).map(type =>
+      fileItems = Object.keys(audio.files).map(type => (
         <div key={type} className="file-list__item">
           {audio.files[type]}
         </div>
-      );
+      ));
     }
 
     const waveSurferOptions = {
@@ -231,7 +231,7 @@ export default class Audio extends React.Component {
           message={() =>
             `You are still in edit mode. Is it okay to leave this page?`}
         />
-        {audio &&
+        {audio && (
           <div className="audio-page__container">
             <DeleteModal
               fileItems={fileItems}
@@ -257,7 +257,7 @@ export default class Audio extends React.Component {
                 onDelete={() => this.setState({ showModal: true })}
               />
               <div className="col s10">
-                {this.state.replacing &&
+                {this.state.replacing && (
                   <SingleAudioDropzone
                     onCancelReplacing={this.onCancelReplacing}
                     onCompleted={this.onCompletedUpload}
@@ -267,60 +267,66 @@ export default class Audio extends React.Component {
                     contributors={this.state.formContributors}
                     tags={this.state.formTags}
                     filename={audio.filename}
-                  />}
-                {!audio.files &&
+                  />
+                )}
+                {!audio.files && (
                   <div className="player__error">
                     Could not find an mp3 file to load the audio player with.
-                    {!this.state.replacing &&
-                      <button
-                        className={replaceButtonClass}
-                        onClick={this.onReplacing}
-                      >
-                        Replace audio
-                      </button>}
-                  </div>}
-                {!this.state.replacing &&
-                  audio.files &&
-                  <div className="row playwave__container">
-                    <AudioPlayPause
-                      editing={editing}
-                      playing={this.state.playing}
-                      handleTogglePlay={this.handleTogglePlay}
-                    />
-                    <div className="waveform__container">
-                      <div
-                        className={editing ? "audio__waveform--disabled" : ""}
-                      >
-                        {this.state.waveState === "loading" &&
-                          <div className="audio__loading-msg">
-                            loading audio...
-                          </div>}
-                        {this.state.waveState &&
-                          <Wavesurfer
-                            audioFile={audio.files["mp3_128"]}
-                            pos={this.state.pos}
-                            onPosChange={this.handlePosChange}
-                            onFinish={this.handleTogglePlay}
-                            onReady={() => {
-                              this.setState({ waveState: "ready" });
-                            }}
-                            playing={this.state.playing}
-                            options={waveSurferOptions}
-                            ref={ref => (this.waveNode = ref)}
-                          />}
-                      </div>
+                    {!this.state.replacing && (
                       <button
                         className={replaceButtonClass}
                         onClick={this.onReplacing}
                       >
                         Replace audio
                       </button>
-                      <AudioUploadMessages
-                        completed={this.state.completed}
-                        error={this.state.uploadError}
+                    )}
+                  </div>
+                )}
+                {!this.state.replacing &&
+                  audio.files && (
+                    <div className="row playwave__container">
+                      <AudioPlayPause
+                        editing={editing}
+                        playing={this.state.playing}
+                        handleTogglePlay={this.handleTogglePlay}
                       />
+                      <div className="waveform__container">
+                        <div
+                          className={editing ? "audio__waveform--disabled" : ""}
+                        >
+                          {this.state.waveState === "loading" && (
+                            <div className="audio__loading-msg">
+                              loading audio...
+                            </div>
+                          )}
+                          {this.state.waveState && (
+                            <Wavesurfer
+                              audioFile={audio.files["mp3_128"]}
+                              pos={this.state.pos}
+                              onPosChange={this.handlePosChange}
+                              onFinish={this.handleTogglePlay}
+                              onReady={() => {
+                                this.setState({ waveState: "ready" });
+                              }}
+                              playing={this.state.playing}
+                              options={waveSurferOptions}
+                              ref={ref => (this.waveNode = ref)}
+                            />
+                          )}
+                        </div>
+                        <button
+                          className={replaceButtonClass}
+                          onClick={this.onReplacing}
+                        >
+                          Replace audio
+                        </button>
+                        <AudioUploadMessages
+                          completed={this.state.completed}
+                          error={this.state.uploadError}
+                        />
+                      </div>
                     </div>
-                  </div>}
+                  )}
                 <div className="row waveform__timestamp">
                   {this.state.timestamp}
                 </div>
@@ -335,11 +341,13 @@ export default class Audio extends React.Component {
                   onTagsChange={this.onTagsChange}
                   contributorsSuggestions={this.state.contributorsSuggestions}
                 />
-                {audio.files &&
-                  <CopyDownload audio={audio} editing={editing} />}
+                {audio.files && (
+                  <CopyDownload audio={audio} editing={editing} />
+                )}
               </div>
             </div>
-          </div>}
+          </div>
+        )}
       </div>
     );
   }
