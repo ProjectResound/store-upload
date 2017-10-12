@@ -61,7 +61,7 @@ export default class Explorer extends React.Component {
         <div className="explorer__table">
           <div className="row">
             <div className="col s12">
-              {audioList.totalCount &&
+              {audioList.totalCount && (
                 <Pagination
                   activePage={audioList.currentPage}
                   itemsCountPerPage={audioList.perPage}
@@ -72,7 +72,8 @@ export default class Explorer extends React.Component {
                   firstPageText="first"
                   lastPageText="last"
                   nextPageText="next"
-                />}
+                />
+              )}
             </div>
           </div>
           <div className="row">
@@ -82,16 +83,17 @@ export default class Explorer extends React.Component {
             <div className="explorer__table-header col s3">Length</div>
           </div>
           {audioList.audios &&
-            audioList.audios.map((audioItem, index) =>
+            audioList.audios.map((audioItem, index) => (
               <AudioItem
                 index={index}
                 isAppending={this.state.isAppending}
                 key={audioItem.filename + audioItem.updated_at}
                 audioItem={audioItem}
               />
-            )}
-          {!audioList.totalCount &&
-            <div className="explorer__loading">loading audio files</div>}
+            ))}
+          {!audioList.totalCount && (
+            <div className="explorer__loading">loading audio files</div>
+          )}
         </div>
       </div>
     );

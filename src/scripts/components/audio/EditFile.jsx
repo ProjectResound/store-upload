@@ -15,16 +15,18 @@ export default class EditFile extends React.Component {
     const editing = this.props.inEditMode;
     return (
       <div className="edit__container">
-        {editing &&
+        {editing && (
           <div>
-            {this.props.validForm &&
+            {this.props.validForm && (
               <button className="edit__button" onClick={this.props.save}>
                 save changes
-              </button>}
-            {!this.props.validForm &&
+              </button>
+            )}
+            {!this.props.validForm && (
               <button className="edit__button edit__button--disabled">
                 save changes
-              </button>}
+              </button>
+            )}
             <button
               className="edit__button edit__cancel"
               onClick={() => {
@@ -33,8 +35,9 @@ export default class EditFile extends React.Component {
             >
               cancel
             </button>
-          </div>}
-        {!editing &&
+          </div>
+        )}
+        {!editing && (
           <button
             className="edit__button"
             onClick={() => {
@@ -42,7 +45,8 @@ export default class EditFile extends React.Component {
             }}
           >
             edit file
-          </button>}
+          </button>
+        )}
       </div>
     );
   }

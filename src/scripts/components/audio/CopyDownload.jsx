@@ -15,14 +15,12 @@ export default class CopyDownload extends React.Component {
     const audio = this.props.audio;
     const editing = this.props.editing;
     const files = audio.files;
-    const fileRows = Object.keys(audio.files).map(type =>
+    const fileRows = Object.keys(audio.files).map(type => (
       <div className="row" key={type.toString()}>
-        <div className="col s2 filetype__cell">
-          {type}
-        </div>
+        <div className="col s2 filetype__cell">{type}</div>
         <div className="col s8 url__cell">
           {editing && files[type]}
-          {!editing &&
+          {!editing && (
             <CopyToClipboard
               text={files[type]}
               onCopy={() => this.setState({ copied: type })}
@@ -33,33 +31,38 @@ export default class CopyDownload extends React.Component {
               >
                 {files[type]}
                 {this.state.copied &&
-                  this.state.copied === type &&
-                  <span className="copied">copied!</span>}
+                  this.state.copied === type && (
+                    <span className="copied">copied!</span>
+                  )}
                 {this.state.hover &&
                   this.state.hover === type &&
-                  this.state.copied !== type &&
-                  <span className="hover">copy</span>}
+                  this.state.copied !== type && (
+                    <span className="hover">copy</span>
+                  )}
               </div>
-            </CopyToClipboard>}
+            </CopyToClipboard>
+          )}
         </div>
         <div className="col s2 download__col">
-          {editing &&
+          {editing && (
             <img
               src="/assets/images/icon-download.png"
               alt="download icon"
               className="download__icon"
-            />}
-          {!editing &&
+            />
+          )}
+          {!editing && (
             <a href={files[type]}>
               <img
                 src="/assets/images/icon-download.png"
                 alt="download icon"
                 className="download__icon"
               />
-            </a>}
+            </a>
+          )}
         </div>
       </div>
-    );
+    ));
 
     return (
       <div

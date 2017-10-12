@@ -3,11 +3,8 @@ import React from "react";
 export default props => {
   return (
     <div className="row">
-      {!props.editing &&
-        <h1 className="audio-page__title">
-          {props.title}
-        </h1>}
-      {props.editing &&
+      {!props.editing && <h1 className="audio-page__title">{props.title}</h1>}
+      {props.editing && (
         <div>
           <input
             className={
@@ -23,7 +20,8 @@ export default props => {
           <div className={props.validTitle ? "hidden" : "audio__alert"}>
             Minimum length should be {props.MAX_CHAR_LENGTH} characters.
           </div>
-        </div>}
+        </div>
+      )}
     </div>
   );
 };

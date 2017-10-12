@@ -17,16 +17,15 @@ export default class Metadata extends React.Component {
 
     return (
       <div className="metadata__container">
-        {!editing &&
+        {!editing && (
           <div>
             <div className="row md__row--large">
               Contributors: {audio.contributors}
             </div>
-            <div className="row md__row--large">
-              Tags: {audio.tags}
-            </div>
-          </div>}
-        {editing &&
+            <div className="row md__row--large">Tags: {audio.tags}</div>
+          </div>
+        )}
+        {editing && (
           <div>
             <div className="row metadata__inputs">
               <Contributor
@@ -52,7 +51,8 @@ export default class Metadata extends React.Component {
               />
               <label htmlFor="tags">Tags:</label>
             </div>
-          </div>}
+          </div>
+        )}
         <div
           className={
             this.props.editing

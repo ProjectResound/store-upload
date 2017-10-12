@@ -60,7 +60,7 @@ export default class Header extends React.Component {
     return (
       <div className="row header__row">
         <Errors />
-        {this.state.loggedIn &&
+        {this.state.loggedIn && (
           <div>
             <h1 className="header__h1 col s11">
               <img
@@ -77,7 +77,8 @@ export default class Header extends React.Component {
                 log out
               </button>
             </div>
-          </div>}
+          </div>
+        )}
       </div>
     );
   }

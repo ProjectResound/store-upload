@@ -89,13 +89,13 @@ export default class Dropstrip extends React.Component {
       ? "upload__border--hover"
       : "";
     const queueHasItems = Object.keys(this.state.queue).length > 0;
-    const files = Object.keys(this.state.queue).map(queuedItem =>
+    const files = Object.keys(this.state.queue).map(queuedItem => (
       <QueuedItem
         key={this.state.queue[queuedItem].name}
         file={this.state.queue[queuedItem].fileObject}
         contributors={this.state.contributors}
       />
-    );
+    ));
 
     return (
       <Dropzone
@@ -109,9 +109,7 @@ export default class Dropstrip extends React.Component {
           <div className={queueHasItems ? "queue__header" : "hidden"}>
             Files You're Uploading {this.state.isDragActive}
           </div>
-          <div className="queueItems">
-            {files}
-          </div>
+          <div className="queueItems">{files}</div>
           <div className="queue__valigner">
             <div className={queueHasItems ? "hidden" : "valign"}>
               <div className="queue__text">Drag & drop your WAV files here</div>

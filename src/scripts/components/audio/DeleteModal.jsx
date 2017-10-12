@@ -12,9 +12,7 @@ export default props => {
     >
       Are you sure you want to permanently delete these files?
       <div className="row">
-        <ul>
-          {props.fileItems}
-        </ul>
+        <ul>{props.fileItems}</ul>
       </div>
       <div className="row">
         <div className="delete__yes" onClick={props.handleDeleteAudio}>
