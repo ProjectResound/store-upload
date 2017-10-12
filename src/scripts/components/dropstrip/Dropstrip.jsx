@@ -114,7 +114,7 @@ export default class Dropstrip extends React.Component {
           </div>
           <div className="queue__valigner">
             <div className={queueHasItems ? "hidden" : "valign"}>
-              <div className="queue__text">Drag & drop your files here</div>
+              <div className="queue__text">Drag & drop your WAV files here</div>
               <div className="upload__btn">Or, browse for files</div>
             </div>
           </div>

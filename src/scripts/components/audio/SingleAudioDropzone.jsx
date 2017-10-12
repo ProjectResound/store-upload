@@ -150,7 +150,9 @@ export default class SingleAudioDropzone extends React.Component {
             }}
             onDrop={e => this.onDrop(e)}
           >
-            <div className="queue__text">Drag & drop your new audio here</div>
+            <div className="queue__text">
+              Drag & drop your replacement WAV file here
+            </div>
             <div className="upload__btn">Or, browse for your audio</div>
           </Dropzone>}
         {file &&
