@@ -9,6 +9,12 @@ import resoundAPI from "./services/resound-api";
 import Audio from "./components/audio/Audio";
 import "../styles/main.sass";
 
+const Honeybadger = require("honeybadger-js");
+Honeybadger.configure({
+  apiKey: process.env.HONEYBADGER_CLIENT_KEY,
+  environment: process.env.NODE_ENV
+});
+
 const auth = resoundAPI.auth;
 
 class Root extends React.Component {

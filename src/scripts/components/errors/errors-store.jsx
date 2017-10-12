@@ -19,9 +19,6 @@ const ErrorsStore = assign({}, EventEmitter.prototype, {
     if (action.err && action.err.message === "Failed to fetch") {
       ErrorsStore.emitChange("There was an error contacting the server.");
     }
-    if (process.env.NODE_ENV === "development") {
-      console.dir(action);
-    }
   }
 });
 
