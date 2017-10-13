@@ -12,7 +12,7 @@ export default class Auth {
       redirectUri: AUTH_CONFIG.callbackUrl,
       audience: AUTH_CONFIG.audience,
       responseType: "token id_token",
-      scope: "openid"
+      scope: "openid profile"
     });
     autoBind(this);
   }
