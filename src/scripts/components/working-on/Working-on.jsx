@@ -55,9 +55,7 @@ export default class WorkingOn extends React.Component {
         </div>
       );
     } else {
-      return (
-        <div className="working-on col s12" />
-      );
+      return <div />;
     }
   }
 }
