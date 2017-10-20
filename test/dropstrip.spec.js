@@ -311,7 +311,7 @@ describe("<Dropstrip />", function() {
   });
 
   describe("blocking navigation", () => {
-    it("blocks when there is something in the queue", () => {
+    it("blocks when there is something unfinished in the queue", () => {
       const fileName = "fakeFile_0.wav";
       const queueStub = sinon.stub(DropstripStore, "getQueue").returns({
         "fakeFile_0.wav": {
@@ -346,5 +346,72 @@ describe("<Dropstrip />", function() {
 
       queueStub.restore();
     });
+    it("does not block when queue is full of successful uploads", () => {
+      const queueStub = sinon.stub(DropstripStore, "getQueue").returns({
+        "fakeFile_0.wav": {
+          status: {
+            checked: true
+          },
+          completed: 123,
+          name: "fakeFile_0.wav",
+          fileObject: {
+            size: "123",
+            name: "fakeFile_0.wav"
+          }
+        },
+        "fakeFile_1.wav": {
+          status: {
+            checked: true
+          },
+          completed: 1234,
+          name: 'fakeFile_1.wav',
+          fileObject: {
+            size: "1234",
+            name: 'fakeFile_1.wav'
+          }
+        }
+      });
+      _dropInMockFiles();
+      const dropstrip = TestUtils.findRenderedComponentWithType(
+        this.component,
+        Dropstrip
+      );
+      queueStub.restore();
+
+      expect(dropstrip.state.isBlocking).to.eq(false);
+    });
+    it("blocks when queue is not all of successful uploads", () => {
+      const queueStub = sinon.stub(DropstripStore, "getQueue").returns({
+        "fakeFile_0.wav": {
+          status: {
+            checked: true
+          },
+          completed: 123,
+          name: "fakeFile_0.wav",
+          fileObject: {
+            size: "123",
+            name: "fakeFile_0.wav"
+          }
+        },
+        "fakeFile_1.wav": {
+          status: {
+            checked: true
+          },
+          name: 'fakeFile_1.wav',
+          fileObject: {
+            size: "1234",
+            name: 'fakeFile_1.wav'
+          }
+        }
+      });
+      _dropInMockFiles();
+      const dropstrip = TestUtils.findRenderedComponentWithType(
+        this.component,
+        Dropstrip
+      );
+      queueStub.restore();
+
+      expect(dropstrip.state.isBlocking).to.eq(true);
+    })
   });
 });

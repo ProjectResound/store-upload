@@ -38,10 +38,9 @@ export default class Dropstrip extends React.Component {
 
   onChange() {
     const queue = getStateFromStore();
-    const queueLength = Object.keys(queue).length > 0;
     this.setState({
       queue,
-      isBlocking: queueLength
+      isBlocking: this._shouldBlock(queue)
     });
   }
 
@@ -69,6 +68,14 @@ export default class Dropstrip extends React.Component {
     this.setState({
       isDragActive: false
     });
+  }
+
+  _shouldBlock(queue) {
+    let successfulQueue = true;
+    Object.keys(queue).forEach(filename => {
+      successfulQueue = successfulQueue && queue[filename].completed;
+    });
+    return !successfulQueue;
   }
 
   _initCable() {

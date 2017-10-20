@@ -43,6 +43,10 @@ export default class Header extends React.Component {
     });
   }
 
+  goHome() {
+    window.location.assign("/");
+  }
+
   _redirect() {
     if (this.props.auth.isAuthenticated) {
       this.setState({
@@ -68,9 +72,9 @@ export default class Header extends React.Component {
                 className="header__stamp"
                 alt="Resound Store logo"
               />
-              <Link to="/" className="header__link">
+              <span className="header__link" onClick={this.goHome}>
                 store
-              </Link>
+              </span>
             </h1>
             <div className="header__actions col s1">
               <button className="header__button" onClick={this.logout}>
