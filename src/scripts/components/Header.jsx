@@ -44,7 +44,7 @@ export default class Header extends React.Component {
   }
 
   goHome() {
-    window.location.replace("/");
+    window.location.assign("/");
   }
 
   _redirect() {
