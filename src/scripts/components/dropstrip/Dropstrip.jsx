@@ -29,6 +29,7 @@ export default class Dropstrip extends React.Component {
     this._initCable();
     DropstripStore.addChangeListener(this.onChange);
     ContributorStore.addChangeListener(this.onContributorsChange);
+    ContributorStore.get();
   }
 
   componentWillUnmount() {

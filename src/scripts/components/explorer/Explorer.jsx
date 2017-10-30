@@ -22,8 +22,14 @@ export default class Explorer extends React.Component {
 
   componentDidMount() {
     ExplorerStore.addChangeListener(this.onChange);
-    resoundAPI
-      .get()
+    let getAudios;
+    if (this.props.byUser) {
+      getAudios = resoundAPI.getByLoggedInUser;
+    } else {
+      getAudios = resoundAPI.get;
+    }
+
+    getAudios()
       .then(audioList => ExplorerActions.parseAudioList(audioList))
       .catch(err => {
         ErrorsActions.error(err);

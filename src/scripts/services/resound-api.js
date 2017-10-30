@@ -15,6 +15,11 @@ module.exports = {
     }
     return fetch(uri, { headers }).then(response => response.json());
   },
+  getByLoggedInUser: () => {
+    return fetch(`${API_URL}/audios?by_user=true`, { headers }).then(response =>
+      response.json()
+    );
+  },
   getAudioById: id =>
     fetch(`${API_URL}/audios/${id}`, { headers }).then(response =>
       response.json()

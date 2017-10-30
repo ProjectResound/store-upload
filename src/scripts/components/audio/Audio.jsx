@@ -45,6 +45,7 @@ export default class Audio extends React.Component {
     AudioStore.addChangeListener(this.onChange);
     AudioStore.fetch(this.audioId);
     ContributorStore.addChangeListener(this.populateContributorsSuggestions);
+    ContributorStore.get();
   }
 
   componentWillUnmount() {

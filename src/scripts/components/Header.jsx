@@ -1,9 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import autoBind from "react-autobind";
 import Errors from "../components/errors/Errors";
 import UserStore from "../stores/user-store";
-import ContributorStore from "../components/contributor/contributor-store";
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -26,10 +24,7 @@ export default class Header extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      UserStore.addChangeListener(this._redirect);
-      ContributorStore.get();
-    }
+    UserStore.addChangeListener(this._redirect);
   }
 
   login() {
