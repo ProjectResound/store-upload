@@ -40,9 +40,10 @@ export default class CopyDownload extends React.Component {
         {window.opener && (
           <div className="col s1">
             <img
-              src="/assets/images/icon-link.png"
+              src="/assets/images/icon-launch.png"
               className={cmsClassname(type)}
               onClick={this.postUrlToOpener(files[type])}
+              alt="send to CMS"
             />
           </div>
         )}
