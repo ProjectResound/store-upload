@@ -5,5 +5,6 @@ sed -i "s#MAGICSTRING_AUTH0_CALLBACK_URL#$AUTH0_CALLBACK_URL#g" /usr/share/nginx
 sed -i "s#MAGICSTRING_AUTH0_AUDIENCE#$AUTH0_AUDIENCE#g" /usr/share/nginx/html/scripts/bundle.js
 sed -i "s|http://localhost:3000|http://$RESOUND_API_URL|g" /usr/share/nginx/html/scripts/bundle.js
 sed -i "s|ws://localhost:3000|ws://$RESOUND_API_URL|g" /usr/share/nginx/html/scripts/bundle.js
+sed -i "s|http://localhost:3001|$CMS_URL|g" /usr/share/nginx/html/scripts/bundle.js
 
 nginx -g 'daemon off;' -c /usr/share/nginx/nginx.conf -p /usr/share/nginx/html

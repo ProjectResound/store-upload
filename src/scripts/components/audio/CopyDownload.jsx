@@ -1,6 +1,7 @@
 import React from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import ErrorActions from "../../components/errors/errors-actions";
+import CONSTANTS from "../../../config/constants";
 
 export default class CopyDownload extends React.Component {
   constructor(props) {
@@ -12,8 +13,8 @@ export default class CopyDownload extends React.Component {
   }
 
   postUrlToOpener(url) {
-    if (!window.opener || !process.env.CMS_URL) return;
-    window.opener.postMessage({ type: "url", value: url }, process.env.CMS_URL);
+    if (!window.opener || !CONSTANTS.cmsUrl) return;
+    window.opener.postMessage({ type: "url", value: url }, CONSTANTS.cmsUrl);
   }
 
   render() {
