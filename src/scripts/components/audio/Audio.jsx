@@ -188,6 +188,12 @@ export default class Audio extends React.Component {
         contributors: this.state.formContributors,
         tags: this.state.formTags
       });
+      const newAudio = this.state.audio;
+      newAudio.title = this.state.formTitle;
+      newAudio.contributors = this.state.formContributors;
+      this.setState({
+        audio: newAudio
+      });
       this.toggleEditMode(false);
     }
   }
