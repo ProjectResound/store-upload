@@ -15,6 +15,7 @@ export default class CopyDownload extends React.Component {
   postUrlToOpener(url) {
     if (!window.opener || !CONSTANTS.cmsUrl) return;
     window.opener.postMessage({ type: "url", value: url }, CONSTANTS.cmsUrl);
+    this.setState({ sentToCms: true });
   }
 
   render() {
@@ -42,9 +43,18 @@ export default class CopyDownload extends React.Component {
             <img
               src="/assets/images/icon-launch.png"
               className={cmsClassname(type)}
-              onClick={this.postUrlToOpener(files[type])}
+              onClick={this.postUrlToOpener.bind(this, files[type])}
               alt="send to CMS"
             />
+            <span
+              className={
+                this.state.sentToCms
+                  ? "cms_sent__msg cms_sent__msg__visible"
+                  : "hidden"
+              }
+            >
+              ✓
+            </span>
           </div>
         )}
         <div className="col s8 url__cell">
