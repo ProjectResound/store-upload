@@ -15,6 +15,10 @@ export default class CopyDownload extends React.Component {
   postUrlToOpener(url) {
     if (!window.opener || !CONSTANTS.cmsUrl) return;
     window.opener.postMessage({ type: "url", value: url }, CONSTANTS.cmsUrl);
+    window.opener.postMessage(
+      { type: "url", value: url },
+      CONSTANTS.cmsUrl.replace(/https:/i, "http:")
+    );
     this.setState({ sentToCms: true });
   }
 
