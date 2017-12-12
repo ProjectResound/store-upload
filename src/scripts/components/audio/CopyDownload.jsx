@@ -52,12 +52,12 @@ export default class CopyDownload extends React.Component {
             />
             <span
               className={
-                this.state.sentToCms
+                this.state.sentToCms && type.match(/mp3/)
                   ? "cms_sent__msg cms_sent__msg__visible"
                   : "hidden"
               }
             >
-              ✓
+              &#10003;
             </span>
           </div>
         )}
