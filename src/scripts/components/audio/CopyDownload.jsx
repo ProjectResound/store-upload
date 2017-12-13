@@ -57,7 +57,7 @@ export default class CopyDownload extends React.Component {
                   : "hidden"
               }
             >
-              &#10003;
+              ✓
             </span>
           </div>
         )}
