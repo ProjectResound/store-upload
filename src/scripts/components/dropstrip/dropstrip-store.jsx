@@ -90,6 +90,9 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
 
   success(msg) {
     const filename = msg.filename;
+    if (!dropzoneQueue[filename]) {
+      dropzoneQueue[filename] = {};
+    }
     dropzoneQueue[filename].completed = msg.audio_id;
     resoundAPI
       .get(filename)
