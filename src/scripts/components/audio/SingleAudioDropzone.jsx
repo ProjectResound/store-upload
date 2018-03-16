@@ -114,7 +114,6 @@ export default class SingleAudioDropzone extends React.Component {
     const progressBarStyle = {
       width: `${fileStatus.progress}%`
     };
-
     return (
       <div className="row dropzone__container">
         {fileName &&

@@ -7,6 +7,7 @@ import sinon from "sinon";
 import sinonStubPromise from "sinon-stub-promise";
 import Audio from "../../src/scripts/components/audio/Audio";
 import AudioStore from "../../src/scripts/components/audio/audio-store";
+import DropstripStore from "../../src/scripts/components/dropstrip/dropstrip-store";
 
 sinonStubPromise(sinon);
 
@@ -162,6 +163,32 @@ describe("<Audio />", function() {
         TestUtils.scryRenderedDOMComponentsWithClass(this.component, "copied")
           .length
       ).to.equal(0);
+    });
+  });
+
+  describe("Replacing audio", () => {
+    it("displays Dropzone", () => {
+      DropstripStore.addToQueue(
+        {
+          name: 'somedummyfile.wav',
+        }
+      );
+      DropstripStore.flow.fire('fileProgress', {name: 'somedummyfile.wav', progress: () => { return 1 }});
+      AudioStore.emitChange();
+      enterEditMode(this.component);
+      const audioComponent = TestUtils.findRenderedDOMComponentWithClass(
+        this.component,
+        "audio-page__container"
+      );
+      TestUtils.Simulate.click(
+        TestUtils.findRenderedDOMComponentWithClass(this.component, "replace__button")
+      );
+
+      expect(
+        TestUtils.findRenderedDOMComponentWithClass(
+          this.component, "upload__dz"
+        )
+      );
     });
   });
 });

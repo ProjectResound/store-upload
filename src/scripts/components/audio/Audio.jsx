@@ -130,6 +130,7 @@ export default class Audio extends React.Component {
   }
 
   onReplacing() {
+    DropstripStore.clearQueue();
     this.setState({ replacing: true, completed: false, uploadError: false });
   }
 
