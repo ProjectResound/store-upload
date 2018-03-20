@@ -1,6 +1,0 @@
-machine:
-  timezone:
-    America/Los_Angeles
-
-  node:
-    version: '7.8.0'

@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:9-browsers
+    timezone:
+      America/Los_Angeles
+    node:
+      version: '7.8.0'
+    steps:
+      - checkout
+      - run: "yarn install"
+      - run: "yarn test"
