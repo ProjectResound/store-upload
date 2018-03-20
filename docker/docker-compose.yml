@@ -34,6 +34,7 @@ services:
       DB_USER: $DB_USER
       DB_PW: $DB_PW
       DB_HOST: $DB_HOST
+      RESOUND_API_CDN: $RESOUND_API_CDN
     volumes:
       - 'api:/app/'
     command: foreman start
@@ -46,6 +47,7 @@ services:
       AUTH0_CALLBACK_URL: $AUTH0_CALLBACK_URL
       AUTH0_AUDIENCE: $AUTH0_AUDIENCE
       RESOUND_API_URL: $RESOUND_API_URL
+      CMS_URL: $CMS_URL
 volumes:
   redis:
   db:
