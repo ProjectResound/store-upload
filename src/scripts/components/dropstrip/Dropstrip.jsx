@@ -131,7 +131,8 @@ export default class Dropstrip extends React.Component {
         <Prompt
           when={this.state.isBlocking}
           message={() =>
-            `There is still audio in the dropzone. Is it okay to leave this page?`}
+            `There is still audio in the dropzone. Is it okay to leave this page?`
+          }
         />
       </Dropzone>
     );

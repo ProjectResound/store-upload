@@ -8,7 +8,7 @@
   "dependencies": {
     "@flowjs/flow.js": "^2.11.2",
     "actioncable": "5.0.2",
-    "auth0-js": "^8.7.0",
+    "auth0-js": "^9.3.0",
     "expose-loader": "^0.7.3",
     "flux": "^3.1.2",
     "honeybadger-js": "^0.5.1",
