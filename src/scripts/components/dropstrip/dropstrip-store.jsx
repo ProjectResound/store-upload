@@ -47,11 +47,7 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
       .catch(err => {
         ErrorsActions.error(err);
       });
-    dropzoneQueue[file.name] = {};
-    dropzoneQueue[file.name].name = file.name;
-    dropzoneQueue[file.name].fileObject = file;
-    dropzoneQueue[file.name].size = Math.round(file.size / 10000) / 100;
-    dropzoneQueue[file.name].status = {};
+    buildQueueItem(file);
   },
 
   removeFromQueue: file => {
@@ -92,6 +88,7 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
     const filename = msg.filename;
     if (!dropzoneQueue[filename]) {
       dropzoneQueue[filename] = {};
+      dropzoneQueue[filename].name = filename;
     }
     dropzoneQueue[filename].completed = msg.audio_id;
     resoundAPI
@@ -108,6 +105,14 @@ const DropstripStore = assign({}, EventEmitter.prototype, {
     this.emitChange("failed");
   }
 });
+
+const buildQueueItem = file => {
+  dropzoneQueue[file.name] = {};
+  dropzoneQueue[file.name].name = file.name;
+  dropzoneQueue[file.name].fileObject = file;
+  dropzoneQueue[file.name].size = Math.round(file.size / 10000) / 100;
+  dropzoneQueue[file.name].status = {};
+};
 
 const buildFlowQuery = flowFile => {
   const queryObj = {
@@ -154,7 +159,6 @@ AppDispatcher.register(action => {
       break;
     default:
   }
-
   DropstripStore.emitChange(successFlag);
   return true;
 });

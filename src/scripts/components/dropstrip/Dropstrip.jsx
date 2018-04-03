@@ -96,14 +96,19 @@ export default class Dropstrip extends React.Component {
     const dragActiveClass = this.state.isDragActive
       ? "upload__border--hover"
       : "";
-    const queueHasItems = Object.keys(this.state.queue).length > 0;
-    const files = Object.keys(this.state.queue).map(queuedItem => (
-      <QueuedItem
-        key={this.state.queue[queuedItem].name}
-        file={this.state.queue[queuedItem].fileObject}
-        contributors={this.state.contributors}
-      />
-    ));
+    let queueHasItems = false;
+    const files = Object.keys(this.state.queue).map(queuedItem => {
+      if (this.state.queue[queuedItem].fileObject) {
+        queueHasItems = true;
+        return (
+          <QueuedItem
+            key={this.state.queue[queuedItem].name}
+            file={this.state.queue[queuedItem].fileObject}
+            contributors={this.state.contributors}
+          />
+        );
+      }
+    });
 
     return (
       <Dropzone
