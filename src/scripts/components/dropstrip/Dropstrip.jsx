@@ -112,7 +112,7 @@ export default class Dropstrip extends React.Component {
 
     return (
       <Dropzone
-        accept="audio/wav"
+        accept="audio/wav, audio/mp3"
         className={`upload__dz ${dragActiveClass}`}
         onDragEnter={e => this.onDragEnter(e)}
         onDragLeave={e => this.onDragLeave(e)}
@@ -125,7 +125,9 @@ export default class Dropstrip extends React.Component {
           <div className="queueItems">{files}</div>
           <div className="queue__valigner">
             <div className={queueHasItems ? "hidden" : "valign"}>
-              <div className="queue__text">Drag & drop your WAV files here</div>
+              <div className="queue__text">
+                Drag & drop your WAV/MP3 files here
+              </div>
               <div className="upload__btn">Or, browse for files</div>
             </div>
           </div>

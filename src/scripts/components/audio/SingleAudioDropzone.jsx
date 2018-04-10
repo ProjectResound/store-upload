@@ -137,7 +137,7 @@ export default class SingleAudioDropzone extends React.Component {
         {!this.state.progress &&
           !file && (
             <Dropzone
-              accept="audio/wav"
+              accept="audio/wav, audio/mp3"
               multiple={false}
               className={`upload__dz ${dragActiveClass}`}
               onDragEnter={() => {
@@ -149,7 +149,7 @@ export default class SingleAudioDropzone extends React.Component {
               onDrop={e => this.onDrop(e)}
             >
               <div className="queue__text">
-                Drag & drop your replacement WAV file here
+                Drag & drop your replacement WAV/MP3 file here
               </div>
               <div className="upload__btn">Or, browse for your audio</div>
             </Dropzone>
