@@ -34,13 +34,6 @@ export default class Audio extends React.Component {
     autoBind(this);
   }
 
-  componentWillReceiveProps(newProps) {
-    this.setState(initialState);
-    DropstripStore.clearQueue();
-    this.audioId = newProps.match.params.id.split("-")[0];
-    AudioStore.fetch(this.audioId);
-  }
-
   componentDidMount() {
     AudioStore.addChangeListener(this.onChange);
     AudioStore.fetch(this.audioId);

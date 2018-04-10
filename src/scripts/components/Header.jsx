@@ -8,18 +8,11 @@ export default class Header extends React.Component {
     super(props);
     this.state = {};
     autoBind(this);
-  }
-
-  componentWillMount() {
     this._redirect = this._redirect.bind(this);
-    if (this.props.auth.isAuthenticated) {
-      this.setState({
-        loggedIn: true
-      });
+    if (props.auth.isAuthenticated) {
+      this.state.loggedIn = true;
     } else {
-      this.setState({
-        loggedIn: false
-      });
+      this.state.loggedIn = false;
     }
   }
 
