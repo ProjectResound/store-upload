@@ -54,7 +54,7 @@ export default class Header extends React.Component {
         <Errors />
         {this.state.loggedIn && (
           <div>
-            <h1 className="header__h1 col s11">
+            <h1 className="header__h1 col s9">
               <img
                 src="/assets/images/stamp.png"
                 className="header__stamp"
@@ -64,7 +64,7 @@ export default class Header extends React.Component {
                 store
               </span>
             </h1>
-            <div className="header__actions col s1">
+            <div className="header__actions col s3">
               <button className="header__button" onClick={this.logout}>
                 log out
               </button>

@@ -83,10 +83,10 @@ export default class Explorer extends React.Component {
             </div>
           </div>
           <div className="row">
-            <div className="explorer__table-header col s3">Title</div>
-            <div className="explorer__table-header col s3">File Name</div>
-            <div className="explorer__table-header col s3">Date</div>
-            <div className="explorer__table-header col s3">Length</div>
+            <div className="explorer__table-header col s4">Title</div>
+            <div className="explorer__table-header col s4">File Name</div>
+            <div className="explorer__table-header col s2">Date</div>
+            <div className="explorer__table-header col s2">Length</div>
           </div>
           {audioList.audios &&
             audioList.audios.map((audioItem, index) => (
