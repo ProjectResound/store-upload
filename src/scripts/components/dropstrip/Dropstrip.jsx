@@ -109,10 +109,9 @@ export default class Dropstrip extends React.Component {
         );
       }
     });
-
     return (
       <Dropzone
-        accept="audio/wav, audio/mp3"
+        accept="audio/wav, audio/mp3, audio/mpeg, audio/x-wav"
         className={`upload__dz ${dragActiveClass}`}
         onDragEnter={e => this.onDragEnter(e)}
         onDragLeave={e => this.onDragLeave(e)}
