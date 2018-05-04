@@ -222,7 +222,8 @@ export default class Audio extends React.Component {
       progressColor: "#0fb3cc",
       scrollParent: true,
       waveColor: "#a2e0e3",
-      height: 75
+      height: 75,
+      backend: "MediaElement"
     };
 
     return (
