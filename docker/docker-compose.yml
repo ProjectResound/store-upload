@@ -36,8 +36,35 @@ services:
       DB_HOST: $DB_HOST
       RESOUND_API_CDN: $RESOUND_API_CDN
     volumes:
-      - 'api:/app/'
-    command: foreman start
+      - audio:/home/resound/app/tmp
+    command: puma
+  backend_workers:
+    image: 'scprdev/resound-api'
+    ports: ['3001:3001']
+    depends_on:
+      - 'redis'
+      - 'db'
+    environment:
+      RAILS_ENV: $RAILS_ENV
+      AWS_REGION: $AWS_REGION
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      AWS_BUCKET: $AWS_BUCKET
+      SECRET_KEY_BASE: $SECRET_KEY_BASE
+      AUTH0_CLIENT_ID: $AUTH0_CLIENT_ID
+      AUTH0_DOMAIN: $AUTH0_DOMAIN
+      AUTH0_CALLBACK_URL: $AUTH0_CALLBACK_URL
+      AUTH0_AUDIENCE: $AUTH0_AUDIENCE
+      ALLOWED_CORS_URL: $ALLOWED_CORS_URL
+      REDIS_URL: 'redis://redis:6379'
+      DB_NAME: $DB_NAME
+      DB_USER: $DB_USER
+      DB_PW: $DB_PW
+      DB_HOST: $DB_HOST
+      RESOUND_API_CDN: $RESOUND_API_CDN
+    volumes:
+      - audio:/home/resound/app/tmp
+    command: bundle exec rake resque:work QUEUE=*
   web:
     image: 'scprdev/resound-store-manage'
     ports: ['80:8000']
@@ -52,4 +79,4 @@ services:
 volumes:
   redis:
   db:
-  api:
+  audio:
