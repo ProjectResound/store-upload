@@ -4,12 +4,15 @@ import AUTH_CONFIG from "../../config/auth0-variables";
 import UserActions from "../actions/user-actions";
 import ErrorsActions from "../components/errors/errors-actions";
 
+const tenantNameSpace = "https://myauth0.com/tenant";
+const returnTo = window.location.protocol + "//" + window.location.host;
+
 export default class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({
       domain: AUTH_CONFIG.domain,
       clientID: AUTH_CONFIG.clientId,
-      redirectUri: AUTH_CONFIG.callbackUrl,
+      redirectUri: returnTo,
       audience: AUTH_CONFIG.audience,
       responseType: "token id_token",
       scope: "openid profile"
@@ -22,12 +25,11 @@ export default class Auth {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
         window.location.reload();
-      }
-      if (err) {
+      } else if (err) {
+        this.logout();
         ErrorsActions.error(err);
-      }
-      if (!authResult) {
-        this.auth0.authorize();
+      } else {
+        this.login();
       }
     });
   }
