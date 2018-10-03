@@ -67,7 +67,8 @@
     "ws": "^2.3.1"
   },
   "scripts": {
-    "start": "npm run webpack & npm run serve",
+    "start": "webpack-dev-server",
+    "start:dev": "webpack-dev-server",
     "stop": "pkill -9 -f npm & pkill -9 node & nginx -s stop",
     "webpack": "webpack -w --config webpack.config.dev.js",
     "serve": "nginx  -g 'daemon off;' -c `pwd`/nginx.conf -p `pwd`",
