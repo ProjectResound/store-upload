@@ -61,4 +61,4 @@ AppDispatcher.register(action => {
   return true;
 });
 
-module.exports = ContributorStore;
+export default ContributorStore;

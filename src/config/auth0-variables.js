@@ -1,7 +1,8 @@
 const AUTH_CONFIG = {
-  domain: process.env.AUTH0_DOMAIN,
-  clientId: process.env.AUTH0_CLIENT_ID,
-  callbackUrl: process.env.AUTH0_CALLBACK_URL,
-  audience: process.env.AUTH0_AUDIENCE
+  domain: process.env.AUTH0_DOMAIN || "dummydomain",
+  clientId: process.env.AUTH0_CLIENT_ID || "dummyclient",
+  callbackUrl: process.env.AUTH0_CALLBACK_URL || "localhost",
+  audience: process.env.AUTH0_AUDIENCE || "dummyaudience"
 };
-module.exports = AUTH_CONFIG;
+
+export default AUTH_CONFIG;

@@ -1,6 +1,6 @@
 import AppDispatcher from "../../dispatcher/app-dispatcher";
 
-module.exports = {
+export default {
   queueFile: file => {
     AppDispatcher.dispatch({
       actionType: "ENQUEUE_FILE",

@@ -7,7 +7,7 @@ const headers = {
   Authorization: `Bearer ${accessToken}`
 };
 
-module.exports = {
+export default {
   get: filename => {
     let uri = `${API_URL}/audios`;
     if (filename) {

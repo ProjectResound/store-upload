@@ -1,12 +1,15 @@
 const webpack = require("webpack");
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
+  mode: "production",
+  devtool: "source-map",
   entry: "./src/scripts/app.jsx",
   output: {
-    filename: "./dist/scripts/bundle.js"
+    filename: "scripts/bundle.js"
   },
   module: {
-    loaders: [
+    rules: [
       {
         enforce: "pre",
         test: /\.jsx?$/,
@@ -18,7 +21,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: "babel-loader",
         query: {
-          presets: ["react", "es2015"]
+          presets: ["@babel/preset-react", "@babel/preset-env"]
         }
       },
       {
@@ -42,11 +45,6 @@ module.exports = {
         AUTH0_CALLBACK_URL: JSON.stringify("MAGICSTRING_AUTH0_CALLBACK_URL"),
         AUTH0_AUDIENCE: JSON.stringify("MAGICSTRING_AUTH0_AUDIENCE"),
         CMS_URL: JSON.stringify(process.env.CMS_URL)
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: true
       }
     })
   ]

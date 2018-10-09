@@ -194,4 +194,4 @@ DropstripStore.flow.on("fileError", flowFile => {
   DropstripStore.failed(flowFile.name);
 });
 
-module.exports = DropstripStore;
+export default DropstripStore;

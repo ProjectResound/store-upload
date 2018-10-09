@@ -37,4 +37,4 @@ AppDispatcher.register(action => {
   return true;
 });
 
-module.exports = SearchStore;
+export default SearchStore;

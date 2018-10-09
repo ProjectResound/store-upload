@@ -1,6 +1,6 @@
 import AppDispatcher from "../../dispatcher/app-dispatcher";
 
-module.exports = {
+export default {
   search: query => {
     AppDispatcher.dispatch({
       actionType: "SEARCH",

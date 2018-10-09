@@ -1,12 +1,14 @@
 const webpack = require("webpack");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
+  mode: "development",
   entry: "./src/scripts/app.jsx",
   output: {
-    filename: "./dist/scripts/bundle.js"
+    filename: "scripts/bundle.js"
   },
   module: {
-    loaders: [
+    rules: [
       {
         enforce: "pre",
         test: /\.jsx?$/,
@@ -18,7 +20,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: "babel-loader",
         query: {
-          presets: ["react", "es2015", "stage-0"]
+          presets: ["@babel/preset-react", "@babel/preset-env"]
         }
       },
       {
@@ -46,15 +48,8 @@ module.exports = {
     "react/lib/ReactContext": true
   },
   plugins: [
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("development"),
-        AUTH0_DOMAIN: JSON.stringify(process.env.AUTH0_DOMAIN),
-        AUTH0_CLIENT_ID: JSON.stringify(process.env.AUTH0_CLIENT_ID),
-        AUTH0_CALLBACK_URL: JSON.stringify(process.env.AUTH0_CALLBACK_URL),
-        AUTH0_AUDIENCE: JSON.stringify(process.env.AUTH0_AUDIENCE),
-        CMS_URL: JSON.stringify(process.env.CMS_URL)
-      }
+    new Dotenv({
+      systemvars: true
     })
   ]
 };

@@ -35,4 +35,4 @@ AppDispatcher.register(action => {
   }
 });
 
-module.exports = UserStore;
+export default UserStore;

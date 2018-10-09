@@ -5,8 +5,17 @@ The client-facing part of audio uploading. For quick setup, see [Docker](https:/
 The javascript takes a large audio file and uploads it in chunks to the server.  The uploading process can be paused
 and resumed.
 
+[More info in the wiki](https://github.com/ProjectResound/planning/wiki)
+
+
 ## Requirements
 * node
 * nginx
 
-[More info in the wiki](https://github.com/ProjectResound/planning/wiki)
+## Development
+* copy `.env.example` to `.env` and add in the relevant environment variables
+* `yarn start` to start webpack and watch for file changes
+
+## Docker deployment
+* run `yarn build` to build with production configs
+* `docker build -f docker/Dockerfile . -t scprdev/resound-store-manage`

@@ -1,6 +1,6 @@
-const AppDispatcher = require("../../dispatcher/app-dispatcher");
+const AppDispatcher = require("../../dispatcher/app-dispatcher").default;
 
-module.exports = {
+export default {
   parseAudioList: response => {
     AppDispatcher.dispatch({
       actionType: "PARSE_AUDIO_LIST",

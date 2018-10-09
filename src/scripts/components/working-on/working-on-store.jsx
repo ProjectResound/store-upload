@@ -28,4 +28,4 @@ const WorkingOnStore = assign({}, EventEmitter.prototype, {
   }
 });
 
-module.exports = WorkingOnStore;
+export default WorkingOnStore;

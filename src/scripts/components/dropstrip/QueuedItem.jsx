@@ -388,4 +388,4 @@ class QueuedItem extends React.Component {
   }
 }
 
-module.exports = QueuedItem;
+export default QueuedItem;
