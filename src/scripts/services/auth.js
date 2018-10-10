@@ -47,9 +47,16 @@ export default class Auth {
         localStorage.setItem("access_token", authResult.accessToken);
         localStorage.setItem("id_token", authResult.idToken);
         localStorage.setItem("expires_at", expiresAt);
-        localStorage.setItem("tenant", authResult.idTokenPayload[tenantNameSpace])
+        localStorage.setItem(
+          "tenant",
+          authResult.idTokenPayload[tenantNameSpace]
+        );
       }
-      UserActions.loggedIn(authResult.accessToken, authResult.idToken);
+      UserActions.loggedIn(
+        authResult.accessToken,
+        authResult.idToken,
+        authResult.idTokenPayload[tenantNameSpace]
+      );
     }
   }
 

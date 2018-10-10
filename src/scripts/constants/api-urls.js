@@ -1,2 +1,2 @@
-export const API_URL = "http://localhost:3000/api/v1";
-export const WS_URL = "ws://localhost:3000/cable";
+export const API_URL = process.env.API_URL;
+export const WS_URL = process.env.WS_URL;

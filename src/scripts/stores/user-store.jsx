@@ -16,8 +16,8 @@ const UserStore = assign({}, EventEmitter.prototype, {
     this.removeListener("change", cb);
   },
 
-  handleIdToken(accessToken, idToken) {
-    resoundAPI.users.create(accessToken, idToken);
+  handleIdToken(accessToken, idToken, tenant) {
+    resoundAPI.users.create(accessToken, idToken, tenant);
   }
 });
 
@@ -25,7 +25,11 @@ AppDispatcher.register(action => {
   switch (action.actionType) {
     case "USER_LOGGED_IN":
       UserStore.emitChange();
-      UserStore.handleIdToken(action.accessToken, action.idToken);
+      UserStore.handleIdToken(
+        action.accessToken,
+        action.idToken,
+        action.tenant
+      );
       break;
     case "USER_LOGGED_OUT":
       UserStore.emitChange();
