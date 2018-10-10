@@ -168,12 +168,15 @@ describe("<Audio />", function() {
 
   describe("Replacing audio", () => {
     it("displays Dropzone", () => {
-      DropstripStore.addToQueue(
-        {
-          name: 'somedummyfile.wav',
+      DropstripStore.addToQueue({
+        name: "somedummyfile.wav"
+      });
+      DropstripStore.flow.fire("fileProgress", {
+        name: "somedummyfile.wav",
+        progress: () => {
+          return 1;
         }
-      );
-      DropstripStore.flow.fire('fileProgress', {name: 'somedummyfile.wav', progress: () => { return 1 }});
+      });
       AudioStore.emitChange();
       enterEditMode(this.component);
       const audioComponent = TestUtils.findRenderedDOMComponentWithClass(
@@ -181,12 +184,16 @@ describe("<Audio />", function() {
         "audio-page__container"
       );
       TestUtils.Simulate.click(
-        TestUtils.findRenderedDOMComponentWithClass(this.component, "replace__button")
+        TestUtils.findRenderedDOMComponentWithClass(
+          this.component,
+          "replace__button"
+        )
       );
 
       expect(
         TestUtils.findRenderedDOMComponentWithClass(
-          this.component, "upload__dz"
+          this.component,
+          "upload__dz"
         )
       );
     });
