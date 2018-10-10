@@ -3,8 +3,10 @@ import { API_URL } from "../constants/api-urls";
 
 const auth = new Auth();
 const accessToken = auth.getAccessToken();
+const tenant = auth.getTenantName();
 const headers = {
-  Authorization: `Bearer ${accessToken}`
+  Authorization: `Bearer ${accessToken}`,
+  'X-tenant': tenant
 };
 
 export default {
@@ -38,7 +40,8 @@ export default {
       return fetch(uri, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${authToken}`
+          Authorization: `Bearer ${authToken}`,
+          'X-tenant': tenant
         },
         body: JSON.stringify({ idToken })
       });

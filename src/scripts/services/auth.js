@@ -47,6 +47,7 @@ export default class Auth {
         localStorage.setItem("access_token", authResult.accessToken);
         localStorage.setItem("id_token", authResult.idToken);
         localStorage.setItem("expires_at", expiresAt);
+        localStorage.setItem("tenant", authResult.idTokenPayload[tenantNameSpace])
       }
       UserActions.loggedIn(authResult.accessToken, authResult.idToken);
     }
@@ -57,6 +58,7 @@ export default class Auth {
       localStorage.removeItem("access_token");
       localStorage.removeItem("id_token");
       localStorage.removeItem("expires_at");
+      localStorage.removeItem("tenant");
     }
 
     // Clear the SSO cookie in Auth0
@@ -83,6 +85,17 @@ export default class Auth {
         ErrorsActions.error("No access token found");
       }
       return accessToken;
+    }
+    return undefined;
+  }
+
+  getTenantName() {
+    if (window.localStorage) {
+      const tenantName = localStorage.getItem("tenant");
+      if (!tenantName) {
+        ErrorsActions.error("No tenant found");
+      }
+      return tenantName;
     }
     return undefined;
   }
