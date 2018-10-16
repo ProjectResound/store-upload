@@ -56,6 +56,9 @@ export default class Auth {
       localStorage.removeItem("id_token");
       localStorage.removeItem("expires_at");
     }
+
+    // Clear the SSO cookie in Auth0
+    fetch(`https://${AUTH_CONFIG.domain}/v2/logout`, { mode: "no-cors" });
     UserActions.loggedOut();
   }
 
