@@ -11,6 +11,7 @@
     "auth0-js": "^9.3.0",
     "dotenv-webpack": "^1.5.7",
     "expose-loader": "^0.7.3",
+    "express": "^4.16.3",
     "flux": "^3.1.2",
     "honeybadger-js": "^0.5.1",
     "moment": "^2.18.1",
@@ -83,9 +84,11 @@
     "ws": "^6.1.0"
   },
   "scripts": {
+    "heroku-start": "node server.js",
     "start": "npm run webpack & npm run serve",
     "stop": "pkill -9 -f npm & pkill -9 node & nginx -s stop",
     "webpack": "webpack -w --config webpack.config.dev.js",
+    "heroku-postbuild": "webpack -p --config webpack.config.heroku.js",
     "serve": "nginx  -g 'daemon off;' -c `pwd`/nginx.conf -p `pwd`",
     "build": "webpack --config webpack.config.prod.js",
     "lint": "eslint src test",
