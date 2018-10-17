@@ -1,42 +1,13 @@
-const webpack = require("webpack");
 const Dotenv = require('dotenv-webpack');
+const commonConfig = require("./webpack.config.common");
 
-module.exports = {
-  mode: "production",
-  devtool: "source-map",
-  entry: "./src/scripts/app.jsx",
-  output: {
-    filename: "scripts/bundle.js"
-  },
-  module: {
-    rules: [
-      {
-        enforce: "pre",
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: "eslint-loader"
-      },
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: "babel-loader",
-        query: {
-          presets: ["@babel/preset-react", "@babel/preset-env"]
-        }
-      },
-      {
-        test: /\.s[c|a]ss$/,
-        loader: "style-loader!css-loader!sass-loader"
-      }
-    ]
-  },
-  resolve: {
-    extensions: [".jsx", ".js"]
-  },
-  plugins: [
-    new Dotenv({
-      systemvars: true,
-      path: '.env.production'
-    })
-  ]
-};
+commonConfig.mode = "production";
+commonConfig.devtool = "source-map";
+commonConfig.plugins = [
+  new Dotenv({
+    systemvars: true,
+    path: '.env.production'
+  })
+];
+
+module.exports = commonConfig
