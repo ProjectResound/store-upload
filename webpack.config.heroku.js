@@ -1,11 +1,11 @@
 const webpack = require("webpack");
+const path = require('path');
 const Dotenv = require("dotenv-webpack");
-
-module.exports = {
+ module.exports = {
   mode: "development",
   entry: "./src/scripts/app.jsx",
   output: {
-    filename: "scripts/bundle.js"
+    filename: "./scripts/bundle.js"
   },
   module: {
     rules: [
@@ -37,9 +37,10 @@ module.exports = {
     extensions: [".jsx", ".js"]
   },
   devServer: {
+    contentBase: path.join(__dirname, './dist'),
     hot: true,
     inline: true,
-    port: 7700,
+    port: 8000,
     historyApiFallback: true
   },
   externals: {
