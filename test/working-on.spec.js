@@ -14,7 +14,6 @@ describe("<WorkingOn />", function() {
       </Router>
     );
     this.componentDOM = ReactDOM.findDOMNode(this.component);
-
   });
 
   afterEach(() => {
@@ -22,7 +21,14 @@ describe("<WorkingOn />", function() {
   });
 
   it("shows audios if it exists", () => {
-    WorkingOnStore.emitChange([{filename: 'wav.wav', id: '123', title: 'title mcTitle', createdAt: '2017-10-01'}]);
+    WorkingOnStore.emitChange([
+      {
+        filename: "wav.wav",
+        id: "123",
+        title: "title mcTitle",
+        createdAt: "2017-10-01"
+      }
+    ]);
     expect(
       TestUtils.findRenderedDOMComponentWithClass(
         this.component,

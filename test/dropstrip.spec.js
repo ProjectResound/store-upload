@@ -171,7 +171,10 @@ describe("<Dropstrip />", function() {
   });
 
   it("queries the server on fileDrop to check for existing file", () => {
-    const stub = sinon.stub(global, "fetch").returnsPromise().resolves();
+    const stub = sinon
+      .stub(global, "fetch")
+      .returnsPromise()
+      .resolves();
 
     _dropInMockFiles();
 
@@ -278,7 +281,10 @@ describe("<Dropstrip />", function() {
     });
 
     it("shows success", () => {
-      const stub = sinon.stub(global, "fetch").returnsPromise().resolves();
+      const stub = sinon
+        .stub(global, "fetch")
+        .returnsPromise()
+        .resolves();
 
       DropstripActions.uploadSuccess({
         filename: "fakeFile_0.wav",
@@ -364,10 +370,10 @@ describe("<Dropstrip />", function() {
             checked: true
           },
           completed: 1234,
-          name: 'fakeFile_1.wav',
+          name: "fakeFile_1.wav",
           fileObject: {
             size: "1234",
-            name: 'fakeFile_1.wav'
+            name: "fakeFile_1.wav"
           }
         }
       });
@@ -397,10 +403,10 @@ describe("<Dropstrip />", function() {
           status: {
             checked: true
           },
-          name: 'fakeFile_1.wav',
+          name: "fakeFile_1.wav",
           fileObject: {
             size: "1234",
-            name: 'fakeFile_1.wav'
+            name: "fakeFile_1.wav"
           }
         }
       });
@@ -412,6 +418,6 @@ describe("<Dropstrip />", function() {
       queueStub.restore();
 
       expect(dropstrip.state.isBlocking).to.eq(true);
-    })
+    });
   });
 });

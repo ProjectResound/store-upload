@@ -14,7 +14,7 @@
     "flux": "^3.1.2",
     "honeybadger-js": "^0.5.1",
     "moment": "^2.18.1",
-    "node-sass": "^4.5.2",
+    "node-sass": "^4.9.3",
     "object-assign": "^4.1.1",
     "react": "^16.3.1",
     "react-autobind": "^1.0.6",
@@ -69,7 +69,7 @@
     "jsdom": "9.12.0",
     "jsdom-global": "^2.1.1",
     "jsx-loader": "^0.13.2",
-    "mocha": "^3.3.0",
+    "mocha": "^5.2.0",
     "mocha-webpack": "^0.7.0",
     "prettier": "^1.5.3",
     "react-test-renderer": "^15.5.4",
@@ -77,9 +77,10 @@
     "sinon": "^2.2.0",
     "sinon-stub-promise": "^4.0.0",
     "style-loader": "^0.16.1",
+    "synp": "^1.3.1",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2",
-    "ws": "^2.3.1"
+    "ws": "^6.1.0"
   },
   "scripts": {
     "start": "npm run webpack & npm run serve",
@@ -87,6 +88,7 @@
     "webpack": "webpack -w --config webpack.config.dev.js",
     "serve": "nginx  -g 'daemon off;' -c `pwd`/nginx.conf -p `pwd`",
     "build": "webpack --config webpack.config.prod.js",
-    "test": "mocha -r jsdom-global/register --compilers js:@babel/register test/**/*.spec.js 'test'"
+    "lint": "eslint src test",
+    "test": "mocha -r jsdom-global/register --compilers js:@babel/register test/**/*.spec.js 'test' --exit"
   }
 }
