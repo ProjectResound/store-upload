@@ -1,5 +1,4 @@
-import { Selector, Role } from 'testcafe';
-
+import { Selector, Role } from "testcafe";
 
 const indexPage = "http://localhost:8000";
 
@@ -10,13 +9,13 @@ const louise = Role(indexPage, async t => {
     .click('[type="submit"]');
 });
 
-fixture("Logged In")
-  .page(indexPage);
+fixture("Logged In").page(indexPage);
 
 test("Logging out", async t => {
   await t
     .useRole(louise)
     .navigateTo(indexPage)
     .click(".header__button")
-    .expect(Selector(".auth0-lock-input").exists).ok()
+    .expect(Selector(".auth0-lock-input").exists)
+    .ok();
 });
