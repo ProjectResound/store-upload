@@ -25,7 +25,7 @@ export default class Auth {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
       } else if (err) {
-        this.logout();
+        this.logout(true);
         ErrorsActions.error(err);
       } else {
         this.login();
@@ -33,8 +33,8 @@ export default class Auth {
     });
   }
 
-  login() {
-    this.auth0.authorize();
+  login(options = {}) {
+    this.auth0.authorize(options);
   }
 
   setSession(authResult) {
@@ -59,7 +59,7 @@ export default class Auth {
     }
   }
 
-  logout() {
+  logout(wrongTenant = false) {
     if (window.localStorage) {
       localStorage.removeItem("access_token");
       localStorage.removeItem("id_token");
@@ -72,7 +72,15 @@ export default class Auth {
       credentials: "include",
       mode: "no-cors"
     })
-      .then(res => UserActions.loggedOut())
+      .then(response => {
+        if (wrongTenant) {
+          this.login({
+            errorDescription: "Your account does not belogs to this domain."
+          });
+        } else {
+          UserActions.loggedOut();
+        }
+      })
       .catch(err => ErrorsActions.error(err));
   }
 
