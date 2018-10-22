@@ -34,18 +34,8 @@ module.exports = {
     extensions: [".jsx", ".js"]
   },
   plugins: [
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("production"),
-        HONEYBADGER_CLIENT_KEY: JSON.stringify(
-          process.env.HONEYBADGER_CLIENT_KEY
-        ),
-        AUTH0_DOMAIN: JSON.stringify("MAGICSTRING_AUTH0_DOMAIN"),
-        AUTH0_CLIENT_ID: JSON.stringify("MAGICSTRING_AUTH0_CLIENT_ID"),
-        AUTH0_CALLBACK_URL: JSON.stringify("MAGICSTRING_AUTH0_CALLBACK_URL"),
-        AUTH0_AUDIENCE: JSON.stringify("MAGICSTRING_AUTH0_AUDIENCE"),
-        CMS_URL: JSON.stringify(process.env.CMS_URL)
-      }
+    new Dotenv({
+      systemvars: true
     })
   ]
 };
