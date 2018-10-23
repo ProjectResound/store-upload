@@ -16,6 +16,9 @@ and resumed.
 * copy `.env.example` to `.env` and add in the relevant environment variables
 * `yarn start` to start webpack and watch for file changes
 
+## Multi Tenant
+You need to setup a custom rule on your Auth0 account, check the file `/src/auth_rule.js` for more informations.
+
 ## Docker deployment
 * run `yarn build` to build with production configs
 * `docker build -f docker/Dockerfile . -t scprdev/resound-store-manage`

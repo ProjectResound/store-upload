@@ -260,7 +260,8 @@ class QueuedItem extends React.Component {
               />
             </button>
             <div className="progress-container__bar" style={progressBarStyle}>
-              Loading ({fileStatus.progress}%)
+              Loading ({fileStatus.progress}
+              %)
             </div>
           </div>
         </div>
@@ -328,7 +329,10 @@ class QueuedItem extends React.Component {
             {form.title}
           </div>
           <div className="row">
-            <div className="col s6 completed__metadata">{fileSize}MB</div>
+            <div className="col s6 completed__metadata">
+              {fileSize}
+              MB
+            </div>
             <div className="col s6 completed__edit">
               <Link
                 to={generateUrl({ id: completed, title: form.title })}

@@ -1,11 +1,12 @@
 import AppDispatcher from "../dispatcher/app-dispatcher";
 
 export default {
-  loggedIn: (accessToken, idToken) => {
+  loggedIn: (accessToken, idToken, tenant) => {
     AppDispatcher.dispatch({
       actionType: "USER_LOGGED_IN",
       idToken,
-      accessToken
+      accessToken,
+      tenant
     });
   },
 

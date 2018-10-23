@@ -211,7 +211,8 @@ export default class SingleAudioDropzone extends React.Component {
                   className="progress-container__bar"
                   style={progressBarStyle}
                 >
-                  Loading ({fileStatus.progress}%)
+                  Loading ({fileStatus.progress}
+                  %)
                 </div>
               </div>
             )}

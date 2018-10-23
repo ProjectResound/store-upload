@@ -5,6 +5,7 @@ import AppDispatcher from "../../dispatcher/app-dispatcher";
 import resoundAPI from "../../services/resound-api";
 import ExplorerActions from "../explorer/explorer-actions";
 import ErrorsActions from "../errors/errors-actions";
+import { API_URL } from "../../constants/api-urls";
 
 // Allows a lot of QueuedItems in the dropzone queue to register
 // their handlers.
@@ -164,7 +165,7 @@ AppDispatcher.register(action => {
 });
 
 DropstripStore.flow = new Flow({
-  target: "http://localhost:3000/api/v1/audios",
+  target: API_URL + "/audios",
   chunkSize: 1024 * 1024,
   forceChunkSize: true,
   allowDuplicateUploads: true,
