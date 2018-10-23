@@ -3,6 +3,7 @@ sed -i "s#MAGICSTRING_AUTH0_DOMAIN#$AUTH0_DOMAIN#g" /usr/share/nginx/html/script
 sed -i "s#MAGICSTRING_AUTH0_CLIENT_ID#$AUTH0_CLIENT_ID#g" /usr/share/nginx/html/scripts/bundle.js
 sed -i "s#MAGICSTRING_AUTH0_CALLBACK_URL#$AUTH0_CALLBACK_URL#g" /usr/share/nginx/html/scripts/bundle.js
 sed -i "s#MAGICSTRING_AUTH0_AUDIENCE#$AUTH0_AUDIENCE#g" /usr/share/nginx/html/scripts/bundle.js
+sed -i "s#MAGICSTRING_HONEYBADGER_KEY#$HONEYBADGER_CLIENT_KEY#g" /usr/share/nginx/html/scripts/bundle.js
 sed -i "s|http://localhost:3000|$RESOUND_API_URL|g" /usr/share/nginx/html/scripts/bundle.js
 sed -i "s|ws://localhost:3000|$RESOUND_WS_URL|g" /usr/share/nginx/html/scripts/bundle.js
 sed -i "s|http://localhost:3001|$CMS_URL|g" /usr/share/nginx/html/scripts/bundle.js
