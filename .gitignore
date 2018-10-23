@@ -1,4 +1,5 @@
 /dist/scripts/bundle.js
+/dist/scripts/bundle.js.map
 /node_modules
 .tmp
 .env
