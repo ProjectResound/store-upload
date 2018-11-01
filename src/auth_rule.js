@@ -33,7 +33,7 @@ function (user, context, callback) {
       }
       return callback(null, user, context);
     } else {
-      return callback(new UnauthorizedError('Your account does not belogs to this domain.'));
+      return callback(new UnauthorizedError('Your account does not belongs to this domain.'));
     }
   }
 }
