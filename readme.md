@@ -17,7 +17,7 @@ and resumed.
 * `yarn start` to start webpack and watch for file changes
 
 ## Multi Tenant
-You need to setup a custom rule on your Auth0 account, check the file `/src/auth_rule.js` for more informations.
+You'll need a custom rule for this. Check out the [auth0-scripts repo](https://github.com/ProjectResound/auth0-scripts) for instructions
 
 ## Docker deployment
 * run `yarn build` to build with production configs
