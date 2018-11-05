@@ -48,7 +48,7 @@ export default class WorkingOn extends React.Component {
               What You&apos;ve Been Working On
             </div>
             <div className="working-on__more-link col s4">
-              <a href="activity">See all your activity</a>
+              <Link to="/activity">See all your activity</Link>
             </div>
           </div>
           <div className="working-on__audios">{audios}</div>
