@@ -12,6 +12,7 @@
     "dotenv-webpack": "^1.5.7",
     "expose-loader": "^0.7.3",
     "express": "^4.16.3",
+    "express-sslify": "^1.2.0",
     "flux": "^3.1.2",
     "honeybadger-js": "^0.5.1",
     "moment": "^2.18.1",
