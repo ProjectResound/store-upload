@@ -7,6 +7,7 @@ import StoreManageApp from "./StoreManageApp";
 import resoundAPI from "./services/resound-api";
 import Audio from "./components/audio/Audio";
 import Activity from "./components/activity/Activity";
+import Embed from "./components/embed/Embed";
 import "../styles/main.sass";
 
 const Honeybadger = require("honeybadger-js");
@@ -41,6 +42,7 @@ class Root extends React.Component {
             <Route exact path="/" component={StoreManageApp} />
             <Route path="/audio/:id" component={Audio} />
             <Route path="/activity" component={Activity} />
+            <Route path="/embed" component={Embed} />
           </div>
         )}
       </div>
