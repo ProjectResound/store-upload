@@ -30,7 +30,7 @@ class Embed extends Component {
           id="embed__play-pause"
           onClick={this.handleTogglePlay}
         >
-          Play | Pause
+          {this.state.playing ? 'Pause' : 'Play'}
         </div>
       </div>
 	  );
