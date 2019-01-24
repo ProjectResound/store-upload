@@ -10,6 +10,7 @@ import ModifyAudioFile from "./ModifyAudioFile";
 import AudioPlayPause from "./AudioPlayPause";
 import AudioUploadMessages from "./AudioUploadMessages";
 import CopyDownload from "./CopyDownload";
+import EmbedConfig from "../embed/EmbedConfig";
 import autoBind from "react-autobind";
 import { getDuration, isValidLength } from "../../services/audio-tools";
 import ContributorStore from "../../components/contributor/contributor-store";
@@ -17,7 +18,9 @@ import SingleAudioDropzone from "./SingleAudioDropzone";
 import DropstripStore from "../dropstrip/dropstrip-store";
 
 const initialState = {
+  imageUrl: "",
   inEditMode: false,
+  showEmbedConfig: false,
   validTitle: true,
   validContributors: true,
   playing: false,
@@ -112,10 +115,16 @@ export default class Audio extends React.Component {
       completed: true,
       replacing: false
     });
+
     if (this.waveNode) {
       const mp3Url = this.state.audio.files["mp3_128"];
       this.waveNode._loadAudio(mp3Url);
     }
+
+    AudioActions.save({
+      id: this.audioId,
+      peaks: ""
+    });
   }
 
   onUploadError() {
@@ -198,8 +207,13 @@ export default class Audio extends React.Component {
     });
   }
 
+  toggleEmbedConfig() {
+    this.setState({ showEmbedConfig: !this.state.showEmbedConfig });
+  }
+
   render() {
-    const audio = this.state.audio;
+    const { audio, replacing, showEmbedConfig } = this.state;
+
     const editing = this.state.inEditMode;
     const validForm = this.state.validTitle && this.state.validContributors;
     let replaceButtonClass = "hidden";
@@ -349,6 +363,26 @@ export default class Audio extends React.Component {
                 )}
               </div>
             </div>
+            {audio && (
+              <div className="expanded-embed__container row">
+                <div className="col s10 offset-s2">
+                  {showEmbedConfig ? (
+                    <EmbedConfig
+                      audio={audio}
+                      replacing={replacing}
+                      toggleEmbedConfig={this.toggleEmbedConfig}
+                    />
+                  ) : (
+                    <div
+                      className="expanded-embed__embed-button"
+                      onClick={this.toggleEmbedConfig}
+                    >
+                      <span>{"</> Embed"}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
