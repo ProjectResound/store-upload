@@ -351,6 +351,7 @@ export default class Audio extends React.Component {
             </div>
           </div>
         )}
+        <iframe id="embeddable-audio-player" src="/embed" />
       </div>
     );
   }
