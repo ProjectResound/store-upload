@@ -17,6 +17,7 @@ import SingleAudioDropzone from "./SingleAudioDropzone";
 import DropstripStore from "../dropstrip/dropstrip-store";
 
 const initialState = {
+  encodedImageUrl: "",
   inEditMode: false,
   validTitle: true,
   validContributors: true,
@@ -198,6 +199,13 @@ export default class Audio extends React.Component {
     });
   }
 
+  updateImage(e) {
+    const imageUrl = e.target.value;
+    var encodedImageUrl = encodeURIComponent(imageUrl);
+
+    this.setState({ encodedImageUrl });
+  }
+
   render() {
     const audio = this.state.audio;
     const editing = this.state.inEditMode;
@@ -351,7 +359,16 @@ export default class Audio extends React.Component {
             </div>
           </div>
         )}
-        <iframe id="embeddable-audio-player" src="/embed" />
+        <input
+          id="image-url"
+          onChange={this.updateImage}
+          placeholder="Insert Image URL here"
+          type="text"
+        />
+        <iframe
+          id="embeddable-audio-player"
+          src={`/embed?image=${this.state.encodedImageUrl}`}
+        />
       </div>
     );
   }
