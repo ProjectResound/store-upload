@@ -34,9 +34,7 @@ class Embed extends Component {
         <p>{song.contributors}</p>
         {song.image && <img id="embed__image" src={song.image} />}
         <Wavesurfer
-          audioFile={
-            "https://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3"
-          }
+          audioFile={song.audio}
           playing={this.state.playing}
         />
         <div id="embed__play-pause" onClick={this.handleTogglePlay}>

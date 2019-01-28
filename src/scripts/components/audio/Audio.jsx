@@ -15,6 +15,7 @@ import { getDuration, isValidLength } from "../../services/audio-tools";
 import ContributorStore from "../../components/contributor/contributor-store";
 import SingleAudioDropzone from "./SingleAudioDropzone";
 import DropstripStore from "../dropstrip/dropstrip-store";
+import queryString from "query-string";
 
 const initialState = {
   encodedImageUrl: "",
@@ -199,6 +200,25 @@ export default class Audio extends React.Component {
     });
   }
 
+  updateIframeSrc(audio) {
+    const { encodedImageUrl } = this.state;
+    const { contributors, files, title } = audio;
+
+    const iframeSrcObj = {
+      audio: files["mp3_128"],
+      contributors,
+      title
+    };
+
+    if (encodedImageUrl) {
+      iframeSrcObj.image = encodedImageUrl;
+    }
+
+    const iframeSrc = `/embed?${queryString.stringify(iframeSrcObj)}`;
+
+    return iframeSrc;
+  }
+
   updateImage(e) {
     const imageUrl = e.target.value;
     var encodedImageUrl = encodeURIComponent(imageUrl);
@@ -365,12 +385,12 @@ export default class Audio extends React.Component {
           placeholder="Insert Image URL here"
           type="text"
         />
-        <iframe
-          id="embeddable-audio-player"
-          src={`/embed?title=${audio ? audio.title : ""}
-          &contributors=${audio ? audio.contributors : ""}
-          ${this.state.encodedImageUrl ? `&image=${this.state.encodedImageUrl}` : ""}`}
-        />
+        {audio && (
+          <iframe
+            id="embeddable-audio-player"
+            src={this.updateIframeSrc(audio)}
+          />
+        )}
       </div>
     );
   }
