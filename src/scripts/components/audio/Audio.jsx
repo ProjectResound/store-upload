@@ -367,7 +367,9 @@ export default class Audio extends React.Component {
         />
         <iframe
           id="embeddable-audio-player"
-          src={`/embed?image=${this.state.encodedImageUrl}`}
+          src={`/embed?title=${audio ? audio.title : ""}
+          &contributors=${audio ? audio.contributors : ""}
+          ${this.state.encodedImageUrl ? `&image=${this.state.encodedImageUrl}` : ""}`}
         />
       </div>
     );

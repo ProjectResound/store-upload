@@ -8,16 +8,16 @@ class Embed extends Component {
     super(props);
 
     this.state = {
-      imageUrl: null,
-      playing: false
+      playing: false,
+      song: {}
     };
 
     autoBind(this);
   }
 
   componentDidMount() {
-    const values = queryString.parse(this.props.location.search);
-    this.setState({ imageUrl: values.image });
+    const song = queryString.parse(this.props.location.search);
+    this.setState({ song });
   }
 
   handleTogglePlay() {
@@ -26,11 +26,13 @@ class Embed extends Component {
   }
 
   render() {
+    const { song } = this.state;
+
     return (
       <div id="embed">
-        {this.state.imageUrl && (
-          <img id="embed__image" src={this.state.imageUrl} />
-        )}
+        <h3>{song.title}</h3>
+        <p>{song.contributors}</p>
+        {song.image && <img id="embed__image" src={song.image} />}
         <Wavesurfer
           audioFile={
             "https://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3"
