@@ -332,7 +332,7 @@ export default class Audio extends React.Component {
                           )}
                           {this.state.waveState && (
                             <Wavesurfer
-                              audioFile={audio.files["mp3_128"]}
+                              audioFile={`http://localhost:3000${audio.files["mp3_128"]}`}
                               pos={this.state.pos}
                               onPosChange={this.handlePosChange}
                               onFinish={this.handleTogglePlay}
