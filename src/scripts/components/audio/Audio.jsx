@@ -205,7 +205,7 @@ export default class Audio extends React.Component {
     const { contributors, files, title } = audio;
 
     const iframeSrcObj = {
-      audio: files["mp3_128"],
+      url: files["mp3_128"],
       contributors,
       title
     };

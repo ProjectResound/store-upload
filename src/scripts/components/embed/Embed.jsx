@@ -10,15 +10,15 @@ class Embed extends Component {
 
     this.state = {
       playing: false,
-      song: {}
+      audio: {}
     };
 
     autoBind(this);
   }
 
   componentDidMount() {
-    const song = queryString.parse(this.props.location.search);
-    this.setState({ song });
+    const audio = queryString.parse(this.props.location.search);
+    this.setState({ audio });
   }
 
   handlePosChange(e) {
@@ -35,15 +35,15 @@ class Embed extends Component {
   }
 
   render() {
-    const { song } = this.state;
+    const { audio } = this.state;
 
     return (
       <div id="embed">
-        <h3>{song.title}</h3>
-        <p>{song.contributors}</p>
-        {song.image && <img id="embed__image" src={song.image} />}
+        <h3>{audio.title}</h3>
+        <p>{audio.contributors}</p>
+        {audio.image && <img id="embed__image" src={audio.image} />}
         <Wavesurfer
-          audioFile={`http://localhost:3000/${song.audio}`}
+          audioFile={`http://localhost:3000/${audio.url}`}
           onPosChange={this.handlePosChange}
           playing={this.state.playing}
         />
