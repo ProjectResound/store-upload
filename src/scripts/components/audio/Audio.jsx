@@ -18,7 +18,7 @@ import DropstripStore from "../dropstrip/dropstrip-store";
 import queryString from "query-string";
 
 const initialState = {
-  encodedImageUrl: "",
+  imageUrl: "",
   inEditMode: false,
   validTitle: true,
   validContributors: true,
@@ -201,7 +201,7 @@ export default class Audio extends React.Component {
   }
 
   updateIframeSrc(audio) {
-    const { encodedImageUrl } = this.state;
+    const { imageUrl } = this.state;
     const { contributors, files, title } = audio;
 
     const iframeSrcObj = {
@@ -210,8 +210,8 @@ export default class Audio extends React.Component {
       title
     };
 
-    if (encodedImageUrl) {
-      iframeSrcObj.image = encodedImageUrl;
+    if (imageUrl) {
+      iframeSrcObj.image = imageUrl;
     }
 
     const iframeSrc = `/embed?${queryString.stringify(iframeSrcObj)}`;
@@ -221,9 +221,7 @@ export default class Audio extends React.Component {
 
   updateImage(e) {
     const imageUrl = e.target.value;
-    const encodedImageUrl = encodeURIComponent(imageUrl);
-
-    this.setState({ encodedImageUrl });
+    this.setState({ imageUrl });
   }
 
   render() {
