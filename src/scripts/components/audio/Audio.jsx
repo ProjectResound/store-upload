@@ -1,6 +1,7 @@
 import React from "react";
 import { Prompt } from "react-router-dom";
 import Wavesurfer from "react-wavesurfer";
+import { ChromePicker } from "react-color";
 import AudioStore from "./audio-store";
 import AudioActions from "./audio-actions";
 import Metadata from "./Metadata";
@@ -20,6 +21,7 @@ import queryString from "query-string";
 const initialState = {
   imageUrl: "",
   inEditMode: false,
+  playerColor: "white",
   validTitle: true,
   validContributors: true,
   playing: false,
@@ -47,6 +49,15 @@ export default class Audio extends React.Component {
     AudioStore.removeChangeListener(this.onChange);
     ContributorStore.removeChangeListener(this.populateContributorsSuggestions);
     this.setState(this.baseState);
+  }
+
+  changeColor(element, color) {
+    const { hex } = color;
+    const state = {};
+
+    state[`${element}Color`] = hex;
+
+    this.setState(state);
   }
 
   onChange(changeType) {
@@ -203,6 +214,7 @@ export default class Audio extends React.Component {
   updateIframeSrc(audio) {
     const { imageUrl } = this.state;
     const { contributors, files, title } = audio;
+    const audioElements = ["player"];
 
     const iframeSrcObj = {
       url: files["mp3_128"],
@@ -213,6 +225,14 @@ export default class Audio extends React.Component {
     if (imageUrl) {
       iframeSrcObj.image = imageUrl;
     }
+
+    audioElements.forEach(audioElement => {
+      const color = this.state[`${audioElement}Color`];
+
+      if (color) {
+        iframeSrcObj[`${audioElement}Color`] = color;
+      }
+    });
 
     const iframeSrc = `/embed?${queryString.stringify(iframeSrcObj)}`;
 
@@ -385,6 +405,15 @@ export default class Audio extends React.Component {
           placeholder="Insert Image URL here"
           type="text"
         />
+        <div id="color-pickers-container">
+          <div>
+            <p>Audio Player Color</p>
+            <ChromePicker
+              color={this.state.playerColor}
+              onChange={this.changeColor.bind(this, "player")}
+            />
+          </div>
+        </div>
         {audio && (
           <iframe
             id="embeddable-audio-player"

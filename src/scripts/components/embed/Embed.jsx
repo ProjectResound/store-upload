@@ -37,16 +37,35 @@ class Embed extends Component {
   render() {
     const { audio } = this.state;
 
+    const waveSurferOptions = {
+      backend: "MediaElement",
+      barWidth: 1,
+      cursorWidth: 0,
+      height: 75,
+      normalize: true,
+      progressColor: "#0fb3cc",
+      scrollParent: true,
+      waveColor: "#a2e0e3"
+    };
+
     return (
       <div id="embed">
         <h3>{audio.title}</h3>
         <p>{audio.contributors}</p>
         {audio.image && <img id="embed__image" src={audio.image} />}
-        <Wavesurfer
-          audioFile={`http://localhost:3000/${audio.url}`}
-          onPosChange={this.handlePosChange}
-          playing={this.state.playing}
-        />
+        <div
+          style={{
+            border: "1px solid #e5e5e5",
+            backgroundColor: audio.playerColor ? audio.playerColor : "white"
+          }}
+        >
+          <Wavesurfer
+            audioFile={`http://localhost:3000/${audio.url}`}
+            onPosChange={this.handlePosChange}
+            options={waveSurferOptions}
+            playing={this.state.playing}
+          />
+        </div>
         <div id="embed__timestamp">{this.state.timestamp}</div>
         <div id="embed__play-pause" onClick={this.handleTogglePlay}>
           {this.state.playing ? "Pause" : "Play"}
