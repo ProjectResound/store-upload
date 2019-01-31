@@ -221,7 +221,7 @@ export default class Audio extends React.Component {
 
   updateImage(e) {
     const imageUrl = e.target.value;
-    var encodedImageUrl = encodeURIComponent(imageUrl);
+    const encodedImageUrl = encodeURIComponent(imageUrl);
 
     this.setState({ encodedImageUrl });
   }
