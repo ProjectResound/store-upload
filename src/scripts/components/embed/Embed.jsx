@@ -43,7 +43,7 @@ class Embed extends Component {
       cursorWidth: 0,
       height: 150,
       normalize: true,
-      progressColor: "#0fb3cc",
+      progressColor: audio.progressColor ? audio.progressColor : "#0fb3cc",
       scrollParent: true,
       waveColor: audio.waveColor ? audio.waveColor : "#a2e0e3"
     };

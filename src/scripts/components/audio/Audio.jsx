@@ -23,6 +23,7 @@ const initialState = {
   imageUrl: "",
   inEditMode: false,
   playerColor: "white",
+  progressColor: "#0fb3cc",
   validTitle: true,
   validContributors: true,
   waveColor: "#a2e0e3",
@@ -216,7 +217,7 @@ export default class Audio extends React.Component {
   updateIframeSrc(audio) {
     const { imageUrl } = this.state;
     const { contributors, files, title } = audio;
-    const audioElements = ["player", "button", "wave"];
+    const audioElements = ["button", "player", "progress", "wave"];
 
     const iframeSrcObj = {
       url: files["mp3_128"],
@@ -427,6 +428,13 @@ export default class Audio extends React.Component {
             <ChromePicker
               color={this.state.waveColor}
               onChange={this.changeColor.bind(this, "wave")}
+            />
+          </div>
+          <div>
+            <p>Progress Color</p>
+            <ChromePicker
+              color={this.state.progressColor}
+              onChange={this.changeColor.bind(this, "progress")}
             />
           </div>
         </div>
