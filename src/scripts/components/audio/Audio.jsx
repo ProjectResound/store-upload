@@ -17,6 +17,7 @@ import ContributorStore from "../../components/contributor/contributor-store";
 import SingleAudioDropzone from "./SingleAudioDropzone";
 import DropstripStore from "../dropstrip/dropstrip-store";
 import queryString from "query-string";
+import ColorPicker from "../color-picker/ColorPicker";
 
 const initialState = {
   buttonColor: "#2db2cc",
@@ -275,6 +276,13 @@ export default class Audio extends React.Component {
       backend: "MediaElement"
     };
 
+    const colorElements = [
+      { color: this.state.playerColor, element: "player" },
+      { color: this.state.buttonColor, element: "button" },
+      { color: this.state.waveColor, element: "wave" },
+      { color: this.state.progressColor, element: "progress" }
+    ]
+
     return (
       <div>
         <Prompt
@@ -409,34 +417,21 @@ export default class Audio extends React.Component {
           type="text"
         />
         <div id="color-pickers-container">
-          <div>
-            <p>Audio Player Color</p>
-            <ChromePicker
-              color={this.state.playerColor}
-              onChange={this.changeColor.bind(this, "player")}
-            />
-          </div>
-          <div>
-            <p>Play/Pause Button Color</p>
-            <ChromePicker
-              color={this.state.buttonColor}
-              onChange={this.changeColor.bind(this, "button")}
-            />
-          </div>
-          <div>
-            <p>Wave Color</p>
-            <ChromePicker
-              color={this.state.waveColor}
-              onChange={this.changeColor.bind(this, "wave")}
-            />
-          </div>
-          <div>
-            <p>Progress Color</p>
-            <ChromePicker
-              color={this.state.progressColor}
-              onChange={this.changeColor.bind(this, "progress")}
-            />
-          </div>
+          {
+            colorElements
+            .map((colorElement) => {
+              const { color, element } = colorElement;
+
+              return (
+                <ColorPicker
+                  key={element}
+                  color={color}
+                  element={element}
+                  changeColor={this.changeColor.bind(this, element, color)}
+                />
+              )
+            })
+          }
         </div>
         {audio && (
           <iframe
