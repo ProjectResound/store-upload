@@ -41,7 +41,7 @@ class Embed extends Component {
       backend: "MediaElement",
       barWidth: 1,
       cursorWidth: 0,
-      height: 75,
+      height: 150,
       normalize: true,
       progressColor: "#0fb3cc",
       scrollParent: true,
@@ -53,23 +53,34 @@ class Embed extends Component {
         <h3>{audio.title}</h3>
         <p>{audio.contributors}</p>
         {audio.image && <img id="embed__image" src={audio.image} />}
-        <div
-          style={{
-            border: "1px solid #e5e5e5",
-            backgroundColor: audio.playerColor ? audio.playerColor : "white"
-          }}
-        >
-          <Wavesurfer
-            audioFile={`http://localhost:3000/${audio.url}`}
-            onPosChange={this.handlePosChange}
-            options={waveSurferOptions}
-            playing={this.state.playing}
-          />
-        </div>
+        {audio.url && (
+          <div
+            id="embed__audio-player"
+            style={{
+              border: "1px solid #e5e5e5",
+              backgroundColor: audio.playerColor ? audio.playerColor : "white"
+            }}
+          >
+            <div
+              id="embed__play-pause"
+              onClick={this.handleTogglePlay}
+              style={{
+                backgroundColor: audio.buttonColor
+                  ? audio.buttonColor
+                  : "#2db2cc"
+              }}
+            >
+              {this.state.playing ? "Pause" : "Play"}
+            </div>
+            <Wavesurfer
+              audioFile={`http://localhost:3000/${audio.url}`}
+              onPosChange={this.handlePosChange}
+              options={waveSurferOptions}
+              playing={this.state.playing}
+            />
+          </div>
+        )}
         <div id="embed__timestamp">{this.state.timestamp}</div>
-        <div id="embed__play-pause" onClick={this.handleTogglePlay}>
-          {this.state.playing ? "Pause" : "Play"}
-        </div>
       </div>
     );
   }

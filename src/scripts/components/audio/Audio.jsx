@@ -19,6 +19,7 @@ import DropstripStore from "../dropstrip/dropstrip-store";
 import queryString from "query-string";
 
 const initialState = {
+  buttonColor: "",
   imageUrl: "",
   inEditMode: false,
   playerColor: "white",
@@ -214,7 +215,7 @@ export default class Audio extends React.Component {
   updateIframeSrc(audio) {
     const { imageUrl } = this.state;
     const { contributors, files, title } = audio;
-    const audioElements = ["player"];
+    const audioElements = ["player", "button"];
 
     const iframeSrcObj = {
       url: files["mp3_128"],
@@ -411,6 +412,13 @@ export default class Audio extends React.Component {
             <ChromePicker
               color={this.state.playerColor}
               onChange={this.changeColor.bind(this, "player")}
+            />
+          </div>
+          <div>
+            <p>Play/Pause Button Color</p>
+            <ChromePicker
+              color={this.state.buttonColor}
+              onChange={this.changeColor.bind(this, "button")}
             />
           </div>
         </div>
