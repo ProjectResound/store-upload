@@ -44,7 +44,7 @@ class Embed extends Component {
       height: 150,
       normalize: true,
       progressColor: audio.progressColor ? audio.progressColor : "#0fb3cc",
-      scrollParent: true,
+      responsive: true,
       waveColor: audio.waveColor ? audio.waveColor : "#a2e0e3"
     };
 
