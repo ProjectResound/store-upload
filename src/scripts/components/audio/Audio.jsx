@@ -56,10 +56,11 @@ export default class Audio extends React.Component {
   }
 
   changeColor(element, color) {
-    const { hex } = color;
+    const { r, g, b, a } = color.rgb;
+    const rgba = `rgba(${r}, ${g}, ${b}, ${a})`;
     const state = {};
 
-    state[`${element}Color`] = hex;
+    state[`${element}Color`] = rgba;
 
     this.setState(state);
   }
@@ -281,7 +282,7 @@ export default class Audio extends React.Component {
       { color: this.state.buttonColor, element: "button" },
       { color: this.state.waveColor, element: "wave" },
       { color: this.state.progressColor, element: "progress" }
-    ]
+    ];
 
     return (
       <div>
@@ -417,21 +418,18 @@ export default class Audio extends React.Component {
           type="text"
         />
         <div id="color-pickers-container">
-          {
-            colorElements
-            .map((colorElement) => {
-              const { color, element } = colorElement;
+          {colorElements.map(colorElement => {
+            const { color, element } = colorElement;
 
-              return (
-                <ColorPicker
-                  key={element}
-                  color={color}
-                  element={element}
-                  changeColor={this.changeColor.bind(this, element)}
-                />
-              )
-            })
-          }
+            return (
+              <ColorPicker
+                changeColor={this.changeColor.bind(this, element)}
+                color={color}
+                element={element}
+                key={element}
+              />
+            );
+          })}
         </div>
         {audio && (
           <iframe
