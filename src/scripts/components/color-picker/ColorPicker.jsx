@@ -9,7 +9,7 @@ const ColorPicker = props => {
         <p>{element} color</p>
         <ChromePicker
           color={color}
-          onChange={changeColor.bind(this, element, color)}
+          onChange={changeColor}
         />
     </div>
   )

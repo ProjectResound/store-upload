@@ -427,7 +427,7 @@ export default class Audio extends React.Component {
                   key={element}
                   color={color}
                   element={element}
-                  changeColor={this.changeColor.bind(this, element, color)}
+                  changeColor={this.changeColor.bind(this, element)}
                 />
               )
             })
