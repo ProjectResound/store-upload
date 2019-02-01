@@ -417,6 +417,14 @@ export default class Audio extends React.Component {
           placeholder="Insert Image URL here"
           type="text"
         />
+        {audio && (
+          <input
+            id="embed-code"
+            readOnly
+            type="text"
+            value={`http://localhost:3000${this.updateIframeSrc(audio)}`}
+          />
+        )}
         <div id="color-pickers-container">
           {colorElements.map(colorElement => {
             const { color, element } = colorElement;
