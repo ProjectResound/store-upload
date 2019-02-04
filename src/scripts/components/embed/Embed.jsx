@@ -57,7 +57,6 @@ class Embed extends Component {
           <div
             id="embed__audio-player"
             style={{
-              border: "1px solid #e5e5e5",
               backgroundColor: audio.playerColor ? audio.playerColor : "white"
             }}
           >
