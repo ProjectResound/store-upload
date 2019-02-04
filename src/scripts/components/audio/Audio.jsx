@@ -424,11 +424,13 @@ export default class Audio extends React.Component {
                     id="embed-code"
                     readOnly
                     type="text"
-                    value={`http://localhost:3000${this.updateIframeSrc(audio)}`}
+                    value={`http://localhost:3000${this.updateIframeSrc(
+                      audio
+                    )}`}
                   />
                 </div>
               )}
-           </div>
+            </div>
           </div>
         )}
         <div id="color-pickers-container">
