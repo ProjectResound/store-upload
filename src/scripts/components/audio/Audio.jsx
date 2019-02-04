@@ -409,21 +409,27 @@ export default class Audio extends React.Component {
                 )}
               </div>
             </div>
+            <div id="image-embed-container" className="row">
+              <div className="col s10">
+                <input
+                  id="image-url"
+                  onChange={this.updateImage}
+                  placeholder="Insert Image URL here"
+                  type="text"
+                />
+              </div>
+              {audio && (
+                <div className="col s10">
+                  <input
+                    id="embed-code"
+                    readOnly
+                    type="text"
+                    value={`http://localhost:3000${this.updateIframeSrc(audio)}`}
+                  />
+                </div>
+              )}
+           </div>
           </div>
-        )}
-        <input
-          id="image-url"
-          onChange={this.updateImage}
-          placeholder="Insert Image URL here"
-          type="text"
-        />
-        {audio && (
-          <input
-            id="embed-code"
-            readOnly
-            type="text"
-            value={`http://localhost:3000${this.updateIframeSrc(audio)}`}
-          />
         )}
         <div id="color-pickers-container">
           {colorElements.map(colorElement => {
