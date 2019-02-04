@@ -424,7 +424,7 @@ export default class Audio extends React.Component {
                     id="embed-code"
                     readOnly
                     type="text"
-                    value={`http://localhost:3000${this.updateIframeSrc(
+                    value={`http://localhost:8000${this.updateIframeSrc(
                       audio
                     )}`}
                   />
