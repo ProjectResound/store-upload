@@ -29,13 +29,19 @@ class Root extends React.Component {
     return (
       <div>
         <Route
-          render={history => (
-            <Header
-              auth={auth}
-              history={history}
-              onEnter={this.redirectIfLoggedOut(this)}
-            />
-          )}
+          render={history => {
+            if (history.location.pathname === "/embed") {
+              return null;
+            } else {
+              return (
+                <Header
+                  auth={auth}
+                  history={history}
+                  onEnter={this.redirectIfLoggedOut(this)}
+                />
+              );
+            }
+          }}
         />
         {auth.isAuthenticated && (
           <div>
