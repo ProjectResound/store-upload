@@ -48,9 +48,10 @@ class Root extends React.Component {
             <Route exact path="/" component={StoreManageApp} />
             <Route path="/audio/:id" component={Audio} />
             <Route path="/activity" component={Activity} />
-            <Route path="/embed" component={Embed} />
           </div>
         )}
+
+        <Route path="/embed" component={Embed} />
       </div>
     );
   }
