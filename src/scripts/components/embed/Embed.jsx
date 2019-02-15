@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getDuration } from "../../services/audio-tools";
+import addFallbackIfNecessary from "../../services/audio-context";
 import autoBind from "react-autobind";
 import Wavesurfer from "react-wavesurfer";
 import qs from "qs";
@@ -9,8 +10,9 @@ class Embed extends Component {
     super(props);
 
     this.state = {
-      playing: false,
-      audio: {}
+      addFallbackAudioElement: false,
+      audio: {},
+      playing: false
     };
 
     autoBind(this);
@@ -21,13 +23,8 @@ class Embed extends Component {
     const audio = qs.parse(search);
     this.setState({ audio });
 
-    this.checkAudioContext();
-  }
-
-  checkAudioContext() {
-    if (!window.AudioContext && !window.webkitAudioContext) {
-      this.setState({ addFallbackAudioElement: true });
-    }
+    // Checks if browser has AudioContext and if not add HTML5 audio element as fallback
+    addFallbackIfNecessary(this);
   }
 
   handlePosChange(e) {

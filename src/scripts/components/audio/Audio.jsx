@@ -12,6 +12,7 @@ import AudioUploadMessages from "./AudioUploadMessages";
 import CopyDownload from "./CopyDownload";
 import autoBind from "react-autobind";
 import { getDuration, isValidLength } from "../../services/audio-tools";
+import addFallbackIfNecessary from "../../services/audio-context";
 import ContributorStore from "../../components/contributor/contributor-store";
 import SingleAudioDropzone from "./SingleAudioDropzone";
 import DropstripStore from "../dropstrip/dropstrip-store";
@@ -19,6 +20,7 @@ import queryString from "query-string";
 import ColorPicker from "../color-picker/ColorPicker";
 
 const initialState = {
+  addFallbackAudioElement: false,
   buttonColor: "#2db2cc",
   imageUrl: "",
   inEditMode: false,
@@ -46,7 +48,9 @@ export default class Audio extends React.Component {
     AudioStore.fetch(this.audioId);
     ContributorStore.addChangeListener(this.populateContributorsSuggestions);
     ContributorStore.get();
-    this.checkAudioContext();
+
+    // Checks if browser has AudioContext and if not add HTML5 audio element as fallback
+    addFallbackIfNecessary(this);
   }
 
   componentWillUnmount() {
@@ -63,12 +67,6 @@ export default class Audio extends React.Component {
     state[`${element}Color`] = rgba;
 
     this.setState(state);
-  }
-
-  checkAudioContext() {
-    if (!window.AudioContext && !window.webkitAudioContext) {
-      this.setState({ addFallbackAudioElement: true });
-    }
   }
 
   onChange(changeType) {
