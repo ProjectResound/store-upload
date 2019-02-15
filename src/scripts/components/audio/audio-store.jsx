@@ -3,6 +3,7 @@ import assign from "object-assign";
 import AppDispatcher from "../../dispatcher/app-dispatcher";
 import resoundAPI from "../../services/resound-api";
 import ErrorsActions from "../errors/errors-actions";
+import "isomorphic-fetch";
 
 let _store;
 let _audioId;
