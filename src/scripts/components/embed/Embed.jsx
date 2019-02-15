@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { getDuration } from "../../services/audio-tools";
 import autoBind from "react-autobind";
 import Wavesurfer from "react-wavesurfer";
-import queryString from "query-string";
+import qs from "qs";
 
 class Embed extends Component {
   constructor(props) {
@@ -17,8 +17,17 @@ class Embed extends Component {
   }
 
   componentDidMount() {
-    const audio = queryString.parse(this.props.location.search);
+    const search = this.props.location.search.slice(1);
+    const audio = qs.parse(search);
     this.setState({ audio });
+
+    this.checkAudioContext();
+  }
+
+  checkAudioContext() {
+    if (!window.AudioContext && !window.webkitAudioContext) {
+      this.setState({ addFallbackAudioElement: true });
+    }
   }
 
   handlePosChange(e) {
@@ -53,33 +62,39 @@ class Embed extends Component {
         <h3>{audio.title}</h3>
         <p>{audio.contributors}</p>
         {audio.image && <img id="embed__image" src={audio.image} />}
-        {audio.url && (
-          <div
-            id="embed__audio-player"
-            style={{
-              backgroundColor: audio.playerColor ? audio.playerColor : "white"
-            }}
-          >
+        {audio.url &&
+          !this.state.addFallbackAudioElement && (
             <div
-              id="embed__play-pause"
-              onClick={this.handleTogglePlay}
+              id="embed__audio-player"
               style={{
-                backgroundColor: audio.buttonColor
-                  ? audio.buttonColor
-                  : "#2db2cc"
+                backgroundColor: audio.playerColor ? audio.playerColor : "white"
               }}
             >
-              {this.state.playing ? "Pause" : "Play"}
+              <div
+                id="embed__play-pause"
+                onClick={this.handleTogglePlay}
+                style={{
+                  backgroundColor: audio.buttonColor
+                    ? audio.buttonColor
+                    : "#2db2cc"
+                }}
+              >
+                {this.state.playing ? "Pause" : "Play"}
+              </div>
+              <Wavesurfer
+                audioFile={`http://localhost:3000/${audio.url}`}
+                onPosChange={this.handlePosChange}
+                options={waveSurferOptions}
+                playing={this.state.playing}
+              />
+              <div id="embed__timestamp">{this.state.timestamp}</div>
             </div>
-            <Wavesurfer
-              audioFile={`http://localhost:3000/${audio.url}`}
-              onPosChange={this.handlePosChange}
-              options={waveSurferOptions}
-              playing={this.state.playing}
-            />
-          </div>
+          )}
+        {this.state.addFallbackAudioElement && (
+          <audio controls>
+            <source src={`http://localhost:3000/${audio.url}`} />
+          </audio>
         )}
-        <div id="embed__timestamp">{this.state.timestamp}</div>
       </div>
     );
   }
