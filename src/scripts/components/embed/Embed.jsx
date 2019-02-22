@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PlayPauseButton from "./PlayPauseButton";
 import { getDuration } from "../../services/audio-tools";
 import addFallbackIfNecessary from "../../services/audio-context";
 import autoBind from "react-autobind";
@@ -56,35 +57,33 @@ class Embed extends Component {
 
     return (
       <div id="embed">
-        <h3>{audio.title}</h3>
-        <p>{audio.contributors}</p>
-        {audio.image && <img id="embed__image" src={audio.image} />}
         {audio.url &&
           !this.state.addFallbackAudioElement && (
             <div
-              id="embed__audio-player"
+              className="embed__audio-player"
               style={{
                 backgroundColor: audio.playerColor ? audio.playerColor : "white"
               }}
             >
-              <div
-                id="embed__play-pause"
-                onClick={this.handleTogglePlay}
-                style={{
-                  backgroundColor: audio.buttonColor
-                    ? audio.buttonColor
-                    : "#2db2cc"
-                }}
-              >
-                {this.state.playing ? "Pause" : "Play"}
+              <div className="embed__audio-player-top">
+                <PlayPauseButton
+                  color={audio.buttonColor}
+                  handleTogglePlay={this.handleTogglePlay}
+                  playing={this.state.playing}
+                />
+                <div className="embed__audio-info">
+                  <h3>{audio.title}</h3>
+                  <p>{audio.contributors}</p>
+                </div>
               </div>
+              {audio.image && <img className="embed__image" src={audio.image} />}
               <Wavesurfer
                 audioFile={`http://localhost:3000/${audio.url}`}
                 onPosChange={this.handlePosChange}
                 options={waveSurferOptions}
                 playing={this.state.playing}
               />
-              <div id="embed__timestamp">{this.state.timestamp}</div>
+              <div className="embed__timestamp">{this.state.timestamp}</div>
             </div>
           )}
         {this.state.addFallbackAudioElement && (
