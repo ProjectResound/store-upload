@@ -46,9 +46,9 @@ class Embed extends Component {
 
     const waveSurferOptions = {
       backend: "MediaElement",
-      barWidth: 1,
+      barWidth: 3,
       cursorWidth: 0,
-      height: 150,
+      height: 75,
       normalize: true,
       progressColor: audio.progressColor ? audio.progressColor : "#0fb3cc",
       responsive: true,
@@ -62,7 +62,9 @@ class Embed extends Component {
             <div
               className="embed__audio-player"
               style={{
-                backgroundColor: audio.playerColor ? audio.playerColor : "white"
+                backgroundColor: audio.playerColor
+                  ? audio.playerColor
+                  : "rgb(246, 246, 246)"
               }}
             >
               <div className="embed__audio-player-top">
@@ -72,11 +74,15 @@ class Embed extends Component {
                   playing={this.state.playing}
                 />
                 <div className="embed__audio-info">
-                  <h3>{audio.title}</h3>
-                  <p>{audio.contributors}</p>
+                  <span className="embed__title">{audio.title}</span>
+                  <span className="embed__contributors">
+                    {audio.contributors}
+                  </span>
                 </div>
               </div>
-              {audio.image && <img className="embed__image" src={audio.image} />}
+              {audio.image && (
+                <img className="embed__image" src={audio.image} />
+              )}
               <Wavesurfer
                 audioFile={`http://localhost:3000/${audio.url}`}
                 onPosChange={this.handlePosChange}

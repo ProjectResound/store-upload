@@ -24,7 +24,7 @@ const initialState = {
   buttonColor: "#2db2cc",
   imageUrl: "",
   inEditMode: false,
-  playerColor: "white",
+  playerColor: "rgb(246, 246, 246)",
   progressColor: "#0fb3cc",
   validTitle: true,
   validContributors: true,
