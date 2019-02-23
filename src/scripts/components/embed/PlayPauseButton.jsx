@@ -8,7 +8,7 @@ const PlayPauseButton = ({
   if (!playing) {
     return (
       <svg
-        class="embed__play-pause"
+        className="embed__play-pause"
         onClick={handleTogglePlay}
         width="65px"
         height="65px"
