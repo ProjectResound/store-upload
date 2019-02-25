@@ -67,29 +67,34 @@ class Embed extends Component {
                   : "rgb(246, 246, 246)"
               }}
             >
-              <div className="embed__audio-player-top">
-                <PlayPauseButton
-                  color={audio.buttonColor}
-                  handleTogglePlay={this.handleTogglePlay}
+              {audio.image && (
+                <div
+                  className="embed__image"
+                  style={{ backgroundImage: `url(${audio.image})` }}
+                />
+              )}
+              <div className="embed__audio-container">
+                <div className="embed__audio-player-top">
+                  <PlayPauseButton
+                    color={audio.buttonColor}
+                    handleTogglePlay={this.handleTogglePlay}
+                    playing={this.state.playing}
+                  />
+                  <div className="embed__audio-info">
+                    <span className="embed__title">{audio.title}</span>
+                    <span className="embed__contributors">
+                      {audio.contributors}
+                    </span>
+                  </div>
+                </div>
+                <Wavesurfer
+                  audioFile={`http://localhost:3000/${audio.url}`}
+                  onPosChange={this.handlePosChange}
+                  options={waveSurferOptions}
                   playing={this.state.playing}
                 />
-                <div className="embed__audio-info">
-                  <span className="embed__title">{audio.title}</span>
-                  <span className="embed__contributors">
-                    {audio.contributors}
-                  </span>
-                </div>
+                <div className="embed__timestamp">{this.state.timestamp}</div>
               </div>
-              {audio.image && (
-                <img className="embed__image" src={audio.image} />
-              )}
-              <Wavesurfer
-                audioFile={`http://localhost:3000/${audio.url}`}
-                onPosChange={this.handlePosChange}
-                options={waveSurferOptions}
-                playing={this.state.playing}
-              />
-              <div className="embed__timestamp">{this.state.timestamp}</div>
             </div>
           )}
         {this.state.addFallbackAudioElement && (

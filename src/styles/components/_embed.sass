@@ -1,32 +1,39 @@
 .embed__audio-player
-	height: 211px
-	padding-left: 29px
-	padding-right: 28.1px
-	padding-top: 21px
-
-.embed__audio-player-top
-	align-items: center
 	display: flex
-	margin-bottom: 25px
-
-.embed__play-pause:hover
-	cursor: pointer
+	height: 211px
+	overflow: auto
+	padding-right: 28.1px
 
 .embed__image
-	height: 100px
-	width: 100px
+	background-position: center
+	background-size: cover
+	height: 100%
+	min-width: 210px
 
-.embed__audio-info
-	display: flex
-	flex-direction: column
-	margin-left: 26px
+.embed__audio-container
+	margin-left: 29px
+	margin-top: 21px
+	width: 100%
 
-	.embed__title
-		font-size: 22px
-		font-weight: 600
+	.embed__audio-player-top
+		align-items: center
+		display: flex
+		margin-bottom: 25px
 
-	.embed__contributors
-		font-size: 20px
+	.embed__play-pause:hover
+		cursor: pointer
+
+	.embed__audio-info
+		display: flex
+		flex-direction: column
+		margin-left: 26px
+
+		.embed__title
+			font-size: 22px
+			font-weight: 600
+
+		.embed__contributors
+			font-size: 20px
 
 .embed__timestamp
 	float: right
