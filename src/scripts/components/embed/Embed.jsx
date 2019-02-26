@@ -29,10 +29,10 @@ class Embed extends Component {
   }
 
   handlePosChange(e) {
-    const pos = e.originalArgs[0];
+    const currentTimeInSeconds = e.originalArgs[0];
 
     this.setState({
-      timestamp: getDuration({ duration: pos })
+      currentTime: getDuration({ duration: currentTimeInSeconds })
     });
   }
 
@@ -41,8 +41,16 @@ class Embed extends Component {
     this.setState({ playing: !playing });
   }
 
+  setDuration(e) {
+    const durationInSeconds = e.wavesurfer.backend.media.duration;
+
+    this.setState({
+      duration: getDuration({ duration: durationInSeconds })
+    });
+  }
+
   render() {
-    const { audio } = this.state;
+    const { audio, currentTime, duration } = this.state;
 
     const waveSurferOptions = {
       backend: "MediaElement",
@@ -90,10 +98,16 @@ class Embed extends Component {
                 <Wavesurfer
                   audioFile={`http://localhost:3000/${audio.url}`}
                   onPosChange={this.handlePosChange}
+                  onReady={this.setDuration}
                   options={waveSurferOptions}
                   playing={this.state.playing}
                 />
-                <div className="embed__timestamp">{this.state.timestamp}</div>
+                {currentTime &&
+                  duration && (
+                    <div className="embed__timestamp">
+                      {this.state.currentTime} / {this.state.duration}
+                    </div>
+                  )}
               </div>
             </div>
           )}
