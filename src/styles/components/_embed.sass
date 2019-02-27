@@ -2,7 +2,9 @@
 	display: flex
 	height: 211px
 	overflow: hidden
-	padding-right: 28.1px
+
+	wave:hover
+		cursor: pointer
 
 .embed__image
 	background-position: center
@@ -11,8 +13,10 @@
 	min-width: 210px
 
 .embed__audio-container
-	margin-left: 29px
-	margin-top: 21px
+	box-sizing: border-box
+	padding-left: 29px
+	padding-right: 28.1px
+	padding-top: 21px
 	width: 100%
 
 	.embed__audio-player-top
@@ -27,6 +31,7 @@
 		display: flex
 		flex-direction: column
 		margin-left: 26px
+		width: 80%
 
 		.embed__title
 			font-size: 22px
@@ -35,8 +40,24 @@
 		.embed__contributors
 			font-size: 20px
 
+.embed__audio-container--with-image
+  width: calc(100% - 210px)
+
 .embed__timestamp
 	float: right
 	font-size: 14px
 	margin-right: 5px
 	margin-top: 10px
+
+.overflow-ellipsis
+	overflow: hidden
+	text-overflow: ellipsis
+	white-space: nowrap
+	word-break: normal
+
+@media only screen and (max-width: 675px)
+	.embed__image
+		display: none
+
+	.embed__audio-container--with-image
+		width: 100%

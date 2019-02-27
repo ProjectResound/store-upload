@@ -13,6 +13,7 @@ class Embed extends Component {
     this.state = {
       addFallbackAudioElement: false,
       audio: {},
+      currentTime: "00:00",
       playing: false
     };
 
@@ -81,7 +82,11 @@ class Embed extends Component {
                   style={{ backgroundImage: `url(${audio.image})` }}
                 />
               )}
-              <div className="embed__audio-container">
+              <div
+                className={`embed__audio-container ${
+                  audio.image ? "embed__audio-container--with-image" : ""
+                }`}
+              >
                 <div className="embed__audio-player-top">
                   <PlayPauseButton
                     color={audio.buttonColor}
@@ -89,14 +94,17 @@ class Embed extends Component {
                     playing={this.state.playing}
                   />
                   <div className="embed__audio-info">
-                    <span className="embed__title">{audio.title}</span>
-                    <span className="embed__contributors">
+                    <div className="embed__title overflow-ellipsis">
+                      {audio.title}
+                    </div>
+                    <div className="embed__contributors overflow-ellipsis">
                       {audio.contributors}
-                    </span>
+                    </div>
                   </div>
                 </div>
                 <Wavesurfer
                   audioFile={`http://localhost:3000/${audio.url}`}
+                  className="embed__waveform"
                   onPosChange={this.handlePosChange}
                   onReady={this.setDuration}
                   options={waveSurferOptions}
