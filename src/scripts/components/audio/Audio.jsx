@@ -21,14 +21,14 @@ import ColorPicker from "../color-picker/ColorPicker";
 
 const initialState = {
   addFallbackAudioElement: false,
-  buttonColor: "#2db2cc",
+  buttonColor: "rgb(41, 213, 239)",
   imageUrl: "",
   inEditMode: false,
   playerColor: "rgb(246, 246, 246)",
-  progressColor: "#0fb3cc",
+  progressColor: "rgb(41, 213, 239)",
   validTitle: true,
   validContributors: true,
-  waveColor: "#a2e0e3",
+  waveColor: "rgba(0, 0, 0, 0.1)",
   playing: false,
   pos: 0
 };
@@ -274,9 +274,9 @@ export default class Audio extends React.Component {
       normalize: true,
       barWidth: 1,
       cursorWidth: 0,
-      progressColor: "#0fb3cc",
+      progressColor: "rgb(41, 213, 239)",
       scrollParent: true,
-      waveColor: "#a2e0e3",
+      waveColor: "rgba(0, 0, 0, 0.1)",
       height: 75,
       backend: "MediaElement"
     };
