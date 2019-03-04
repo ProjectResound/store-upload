@@ -134,6 +134,7 @@ class Embed extends Component {
                         ? "hide"
                         : ""
                     }`}
+                    onFinish={this.handleTogglePlay}
                     onPosChange={this.handlePosChange}
                     onReady={this.setDuration}
                     options={waveSurferOptions}
