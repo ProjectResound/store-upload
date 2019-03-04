@@ -220,15 +220,23 @@ export default class Audio extends React.Component {
     });
   }
 
+  updateEmbedCode(audio) {
+    const embedCode = `<iframe height="210" width="100%" scrolling="no" frameborder="0" src="${this.updateIframeSrc(
+      audio
+    )}"/>`;
+
+    return embedCode;
+  }
+
   updateIframeSrc(audio) {
     const { imageUrl } = this.state;
     const { contributors, files, title } = audio;
     const audioElements = ["button", "player", "progress", "wave"];
 
     const iframeSrcObj = {
-      url: files["mp3_128"],
       contributors,
-      title
+      title,
+      url: files["mp3_128"]
     };
 
     if (imageUrl) {
@@ -243,7 +251,9 @@ export default class Audio extends React.Component {
       }
     });
 
-    const iframeSrc = `/embed?${queryString.stringify(iframeSrcObj)}`;
+    const iframeSrc = `http://localhost:8000/embed?${queryString.stringify(
+      iframeSrcObj
+    )}`;
 
     return iframeSrc;
   }
@@ -436,9 +446,7 @@ export default class Audio extends React.Component {
                     id="embed-code"
                     readOnly
                     type="text"
-                    value={`http://localhost:8000${this.updateIframeSrc(
-                      audio
-                    )}`}
+                    value={this.updateEmbedCode(audio)}
                   />
                 </div>
               )}
@@ -462,6 +470,7 @@ export default class Audio extends React.Component {
         {audio && (
           <iframe
             id="embeddable-audio-player"
+            scrolling="no"
             src={this.updateIframeSrc(audio)}
           />
         )}
