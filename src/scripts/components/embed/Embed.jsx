@@ -17,6 +17,7 @@ class Embed extends Component {
       audioState: "loading",
       currentTime: "00:00",
       playing: false,
+      pos: 0,
       waveState: "loading"
     };
 
@@ -43,7 +44,8 @@ class Embed extends Component {
     const currentTimeInSeconds = e.originalArgs[0];
 
     this.setState({
-      currentTime: getDuration({ duration: currentTimeInSeconds })
+      currentTime: getDuration({ duration: currentTimeInSeconds }),
+      pos: currentTimeInSeconds
     });
   }
 
@@ -62,7 +64,14 @@ class Embed extends Component {
   }
 
   render() {
-    const { audio, audioState, currentTime, duration, waveState } = this.state;
+    const {
+      audio,
+      audioState,
+      currentTime,
+      duration,
+      pos,
+      waveState
+    } = this.state;
 
     const waveSurferOptions = {
       backend: "MediaElement",
@@ -139,6 +148,7 @@ class Embed extends Component {
                     onReady={this.setDuration}
                     options={waveSurferOptions}
                     playing={this.state.playing}
+                    pos={pos}
                   />
                   {currentTime &&
                     duration && (
