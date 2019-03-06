@@ -67,6 +67,10 @@ class IEEmbedPlayer extends Component {
           onMouseUp={this.handleSeek.bind(this, "onMouseUp")}
           max={progressMax}
           onMouseMove={this.handleSeek.bind(this, "onMouseMove")}
+          style={{
+            backgroundColor: audio.waveColor ? audio.waveColor : "rgba(0, 0, 0, 0.1)",
+            color: audio.progressColor ? audio.progressColor : "rgb(41, 213, 239)"
+          }}
           value={progressValue}
         />
         <audio

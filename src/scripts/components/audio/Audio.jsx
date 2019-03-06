@@ -228,7 +228,7 @@ export default class Audio extends React.Component {
   }
 
   updateIframeSrc(audio) {
-    const { imageUrl } = this.state;
+    const { addFallbackAudioElement, imageUrl } = this.state;
     const { contributors, files, title } = audio;
     const audioElements = ["button", "player", "progress", "wave"];
 
@@ -247,11 +247,15 @@ export default class Audio extends React.Component {
       const { r, g, b, a } = color;
 
       if (color) {
-        if (audioElement === "wave" || audioElement === "progress") {
-          iframeSrcObj[`${audioElement}Color`] = `rgb(${r}, ${g}, ${b})`;
-          iframeSrcObj[`${audioElement}Opacity`] = a;
-        } else {
+        if (addFallbackAudioElement) {
           iframeSrcObj[`${audioElement}Color`] = `rgba(${r}, ${g}, ${b}, ${a})`;
+        } else {
+          if (audioElement === "wave" || audioElement === "progress") {
+            iframeSrcObj[`${audioElement}Color`] = `rgb(${r}, ${g}, ${b})`;
+            iframeSrcObj[`${audioElement}Opacity`] = a;
+          } else {
+            iframeSrcObj[`${audioElement}Color`] = `rgba(${r}, ${g}, ${b}, ${a})`;
+          }
         }
       }
     });
