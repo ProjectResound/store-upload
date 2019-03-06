@@ -72,6 +72,7 @@ class Embed extends Component {
 
   initIEAudioPlayer(duration) {
     this.setState({
+      audioState: "ready",
       duration: getDuration({ duration })
     });
   }
@@ -138,12 +139,11 @@ class Embed extends Component {
                 </div>
               </div>
               <div className="embed__waveform-container">
-                {audioState === "loading" &&
-                  !addFallbackAudioElement && (
-                    <div className="embed__loading-msg pulsate">
-                      <span>loading audio...</span>
-                    </div>
-                  )}
+                {audioState === "loading" && (
+                  <div className="embed__loading-msg pulsate">
+                    <span>loading audio...</span>
+                  </div>
+                )}
                 {audioState === "ready" &&
                   waveState === "loading" &&
                   !addFallbackAudioElement && (
@@ -154,6 +154,7 @@ class Embed extends Component {
                 {addFallbackAudioElement ? (
                   <IEEmbedPlayer
                     audio={audio}
+                    audioState={audioState}
                     initIEAudioPlayer={this.initIEAudioPlayer}
                     onPosChange={this.handlePosChange}
                     playing={this.state.playing}
@@ -161,11 +162,7 @@ class Embed extends Component {
                 ) : (
                   <Wavesurfer
                     audioFile={`http://localhost:3000/${audio.url}`}
-                    className={`embed__waveform ${
-                      audioState === "loading" || waveState === "loading"
-                        ? "hide"
-                        : ""
-                    }`}
+                    className={"embed__waveform"}
                     onFinish={this.handleTogglePlay}
                     onPosChange={this.handlePosChange}
                     onReady={this.initAudioPlayer}

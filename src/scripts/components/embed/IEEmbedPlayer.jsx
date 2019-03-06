@@ -56,11 +56,13 @@ class IEEmbedPlayer extends Component {
 
   render() {
     const { progressMax, progressValue } = this.state;
+    const { audio, audioState } = this.props;
 
     return (
       <div id="ie-embed-player">
         <progress
           id="embed__progress"
+          className={audioState === "loading" ? "hide" : ""}
           onMouseDown={this.handleSeek.bind(this, "onMouseDown")}
           onMouseUp={this.handleSeek.bind(this, "onMouseUp")}
           max={progressMax}
@@ -74,7 +76,7 @@ class IEEmbedPlayer extends Component {
           onTimeUpdate={this.updateProgress}
           ref={audio => (this.audio = audio)}
         >
-          <source src={`http://localhost:3000/${this.props.audio.url}`} />
+          <source src={`http://localhost:3000/${audio.url}`} />
         </audio>
       </div>
     );
