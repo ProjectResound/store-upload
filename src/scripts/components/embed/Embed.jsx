@@ -140,14 +140,28 @@ class Embed extends Component {
               </div>
               <div className="embed__waveform-container">
                 {audioState === "loading" && (
-                  <div className="embed__loading-msg pulsate">
+                  <div
+                    className="embed__loading-msg pulsate"
+                    style={{
+                      color: audio.buttonColor
+                        ? audio.buttonColor
+                        : "rgb(41, 213, 239)"
+                    }}
+                  >
                     <span>loading audio...</span>
                   </div>
                 )}
                 {audioState === "ready" &&
                   waveState === "loading" &&
                   !addFallbackAudioElement && (
-                    <div className="embed__loading-msg pulsate">
+                    <div
+                      className="embed__loading-msg pulsate"
+                      style={{
+                        color: audio.buttonColor
+                          ? audio.buttonColor
+                          : "rgb(41, 213, 239)"
+                      }}
+                    >
                       <span>loading waveform...</span>
                     </div>
                   )}

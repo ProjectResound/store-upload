@@ -23,7 +23,7 @@ class IEEmbedPlayer extends Component {
   }
 
   handleSeek(eventName, e) {
-    const { seeking } = this.state;
+    const { progressMax, seeking } = this.state;
 
     if (eventName === "onMouseDown") {
       this.setState({ seeking: true });
@@ -35,7 +35,7 @@ class IEEmbedPlayer extends Component {
       const { offsetX } = e.nativeEvent;
       const { offsetWidth } = e.target;
       const percent = offsetX / offsetWidth;
-      const progressValue = this.state.progressMax * percent;
+      const progressValue = progressMax * percent;
       this.audio.currentTime = progressValue;
     }
   }
