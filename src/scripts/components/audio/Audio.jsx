@@ -254,7 +254,9 @@ export default class Audio extends React.Component {
             iframeSrcObj[`${audioElement}Color`] = `rgb(${r}, ${g}, ${b})`;
             iframeSrcObj[`${audioElement}Opacity`] = a;
           } else {
-            iframeSrcObj[`${audioElement}Color`] = `rgba(${r}, ${g}, ${b}, ${a})`;
+            iframeSrcObj[
+              `${audioElement}Color`
+            ] = `rgba(${r}, ${g}, ${b}, ${a})`;
           }
         }
       }

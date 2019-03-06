@@ -155,6 +155,7 @@ class Embed extends Component {
                   <IEEmbedPlayer
                     audio={audio}
                     audioState={audioState}
+                    handleTogglePlay={this.handleTogglePlay}
                     initIEAudioPlayer={this.initIEAudioPlayer}
                     onPosChange={this.handlePosChange}
                     playing={this.state.playing}

@@ -49,14 +49,14 @@ class IEEmbedPlayer extends Component {
 
   updateProgress(e) {
     const { currentTime } = e.currentTarget;
-    this.setState({ progressValue: currentTime });
 
+    this.setState({ progressValue: currentTime });
     this.props.onPosChange({ originalArgs: [currentTime] });
   }
 
   render() {
     const { progressMax, progressValue } = this.state;
-    const { audio, audioState } = this.props;
+    const { audio, audioState, handleTogglePlay } = this.props;
 
     return (
       <div id="ie-embed-player">
@@ -68,8 +68,12 @@ class IEEmbedPlayer extends Component {
           max={progressMax}
           onMouseMove={this.handleSeek.bind(this, "onMouseMove")}
           style={{
-            backgroundColor: audio.waveColor ? audio.waveColor : "rgba(0, 0, 0, 0.1)",
-            color: audio.progressColor ? audio.progressColor : "rgb(41, 213, 239)"
+            backgroundColor: audio.waveColor
+              ? audio.waveColor
+              : "rgba(0, 0, 0, 0.1)",
+            color: audio.progressColor
+              ? audio.progressColor
+              : "rgb(41, 213, 239)"
           }}
           value={progressValue}
         />
@@ -77,6 +81,7 @@ class IEEmbedPlayer extends Component {
           id="ie-audio-player"
           controls
           onCanPlay={this.initProgressBar}
+          onEnded={handleTogglePlay}
           onTimeUpdate={this.updateProgress}
           ref={audio => (this.audio = audio)}
         >
