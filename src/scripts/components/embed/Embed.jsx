@@ -120,7 +120,7 @@ class Embed extends Component {
             <div
               className={`embed__audio-container ${
                 audio.image ? "embed__audio-container--with-image" : ""
-              }`}
+              } ${addFallbackAudioElement ? "embed__audio-container--ie" : ""}`}
             >
               <div className="embed__audio-player-top">
                 <PlayPauseButton
