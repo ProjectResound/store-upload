@@ -21,14 +21,14 @@ import ColorPicker from "../color-picker/ColorPicker";
 
 const initialState = {
   addFallbackAudioElement: false,
-  buttonColor: "rgb(41, 213, 239)",
+  buttonColor: { r: 41, g: 213, b: 239, a: 1 },
   imageUrl: "",
   inEditMode: false,
-  playerColor: "rgb(246, 246, 246)",
-  progressColor: "rgb(41, 213, 239)",
+  playerColor: { r: 246, g: 246, b: 246, a: 1 },
+  progressColor: { r: 41, g: 213, b: 239, a: 1 },
   validTitle: true,
   validContributors: true,
-  waveColor: "rgba(0, 0, 0, 0.1)",
+  waveColor: { r: 0, g: 0, b: 0, a: 0.1 },
   playing: false,
   pos: 0
 };
@@ -61,10 +61,9 @@ export default class Audio extends React.Component {
 
   changeColor(element, color) {
     const { r, g, b, a } = color.rgb;
-    const rgba = `rgba(${r}, ${g}, ${b}, ${a})`;
     const state = {};
 
-    state[`${element}Color`] = rgba;
+    state[`${element}Color`] = { r, g, b, a };
 
     this.setState(state);
   }
@@ -245,9 +244,15 @@ export default class Audio extends React.Component {
 
     audioElements.forEach(audioElement => {
       const color = this.state[`${audioElement}Color`];
+      const { r, g, b, a } = color;
 
       if (color) {
-        iframeSrcObj[`${audioElement}Color`] = color;
+        if (audioElement === "wave" || audioElement === "progress") {
+          iframeSrcObj[`${audioElement}Color`] = `rgb(${r}, ${g}, ${b})`;
+          iframeSrcObj[`${audioElement}Opacity`] = a;
+        } else {
+          iframeSrcObj[`${audioElement}Color`] = `rgba(${r}, ${g}, ${b}, ${a})`;
+        }
       }
     });
 
@@ -284,9 +289,9 @@ export default class Audio extends React.Component {
       normalize: true,
       barWidth: 1,
       cursorWidth: 0,
-      progressColor: "rgb(41, 213, 239)",
+      progressColor: "#0fb3cc",
       scrollParent: true,
-      waveColor: "rgba(0, 0, 0, 0.1)",
+      waveColor: "#a2e0e3",
       height: 75,
       backend: "MediaElement"
     };
@@ -456,11 +461,12 @@ export default class Audio extends React.Component {
         <div id="color-pickers-container">
           {colorElements.map(colorElement => {
             const { color, element } = colorElement;
+            const { r, g, b, a } = color;
 
             return (
               <ColorPicker
                 changeColor={this.changeColor.bind(this, element)}
-                color={color}
+                color={`rgba(${r}, ${g}, ${b}, ${a})`}
                 element={element}
                 key={element}
               />

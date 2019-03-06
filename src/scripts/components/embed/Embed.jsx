@@ -56,6 +56,12 @@ class Embed extends Component {
 
   setDuration(e) {
     const durationInSeconds = e.wavesurfer.backend.media.duration;
+    const { progressOpacity, waveOpacity } = this.state.audio;
+    const { wave } = e.wavesurfer.drawer.canvases[0];
+    const { progress } = e.wavesurfer.drawer.canvases[0];
+
+    wave.style.opacity = waveOpacity;
+    progress.style.opacity = progressOpacity;
 
     this.setState({
       audioState: "ready",
@@ -83,7 +89,7 @@ class Embed extends Component {
         ? audio.progressColor
         : "rgb(41, 213, 239)",
       responsive: true,
-      waveColor: audio.waveColor ? audio.waveColor : "rgba(0, 0, 0, 0.1)"
+      waveColor: audio.waveColor ? audio.waveColor : "rgb(0, 0, 0)"
     };
 
     return (
