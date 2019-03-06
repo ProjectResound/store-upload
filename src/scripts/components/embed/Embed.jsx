@@ -54,7 +54,7 @@ class Embed extends Component {
     this.setState({ playing: !playing });
   }
 
-  setDuration(e) {
+  initAudioPlayer(e) {
     const durationInSeconds = e.wavesurfer.backend.media.duration;
     const { progressOpacity, waveOpacity } = this.state.audio;
     const { wave } = e.wavesurfer.drawer.canvases[0];
@@ -151,7 +151,7 @@ class Embed extends Component {
                     }`}
                     onFinish={this.handleTogglePlay}
                     onPosChange={this.handlePosChange}
-                    onReady={this.setDuration}
+                    onReady={this.initAudioPlayer}
                     options={waveSurferOptions}
                     playing={this.state.playing}
                     pos={pos}
