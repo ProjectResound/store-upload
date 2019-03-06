@@ -62,7 +62,7 @@ class IEEmbedPlayer extends Component {
       <div id="ie-embed-player">
         <progress
           id="embed__progress"
-          className={audioState === "loading" ? "hide" : ""}
+          className={audioState === "loading" ? "embed__progress--hide" : ""}
           onMouseDown={this.handleSeek.bind(this, "onMouseDown")}
           onMouseUp={this.handleSeek.bind(this, "onMouseUp")}
           max={progressMax}
