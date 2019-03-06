@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PlayPauseButton from "./PlayPauseButton";
+import IEEmbedPlayer from "./IEEmbedPlayer";
 import { getDuration } from "../../services/audio-tools";
 import addFallbackIfNecessary from "../../services/audio-context";
 import autoBind from "react-autobind";
@@ -69,8 +70,15 @@ class Embed extends Component {
     });
   }
 
+  initIEAudioPlayer(duration) {
+    this.setState({
+      duration: getDuration({ duration })
+    });
+  }
+
   render() {
     const {
+      addFallbackAudioElement,
       audio,
       audioState,
       currentTime,
@@ -94,54 +102,63 @@ class Embed extends Component {
 
     return (
       <div id="embed">
-        {audio.url &&
-          !this.state.addFallbackAudioElement && (
-            <div
-              className="embed__audio-player"
-              style={{
-                backgroundColor: audio.playerColor
-                  ? audio.playerColor
-                  : "rgb(246, 246, 246)"
-              }}
-            >
-              {audio.image && (
-                <div
-                  className="embed__image"
-                  style={{ backgroundImage: `url(${audio.image})` }}
-                />
-              )}
+        {audio.url && (
+          <div
+            className="embed__audio-player"
+            style={{
+              backgroundColor: audio.playerColor
+                ? audio.playerColor
+                : "rgb(246, 246, 246)"
+            }}
+          >
+            {audio.image && (
               <div
-                className={`embed__audio-container ${
-                  audio.image ? "embed__audio-container--with-image" : ""
-                }`}
-              >
-                <div className="embed__audio-player-top">
-                  <PlayPauseButton
-                    color={audio.buttonColor}
-                    handleTogglePlay={this.handleTogglePlay}
-                    playing={this.state.playing}
-                  />
-                  <div className="embed__audio-info">
-                    <div className="embed__title overflow-ellipsis">
-                      {audio.title}
-                    </div>
-                    <div className="embed__contributors overflow-ellipsis">
-                      {audio.contributors}
-                    </div>
+                className="embed__image"
+                style={{ backgroundImage: `url(${audio.image})` }}
+              />
+            )}
+            <div
+              className={`embed__audio-container ${
+                audio.image ? "embed__audio-container--with-image" : ""
+              }`}
+            >
+              <div className="embed__audio-player-top">
+                <PlayPauseButton
+                  color={audio.buttonColor}
+                  handleTogglePlay={this.handleTogglePlay}
+                  playing={this.state.playing}
+                />
+                <div className="embed__audio-info">
+                  <div className="embed__title overflow-ellipsis">
+                    {audio.title}
+                  </div>
+                  <div className="embed__contributors overflow-ellipsis">
+                    {audio.contributors}
                   </div>
                 </div>
-                <div className="embed__waveform-container">
-                  {audioState === "loading" && (
+              </div>
+              <div className="embed__waveform-container">
+                {audioState === "loading" &&
+                  !addFallbackAudioElement && (
                     <div className="embed__loading-msg pulsate">
                       <span>loading audio...</span>
                     </div>
                   )}
-                  {audioState === "ready" &&
-                    waveState === "loading" && (
-                      <div className="embed__loading-msg pulsate">
-                        <span>loading waveform...</span>
-                      </div>
-                    )}
+                {audioState === "ready" &&
+                  waveState === "loading" &&
+                  !addFallbackAudioElement && (
+                    <div className="embed__loading-msg pulsate">
+                      <span>loading waveform...</span>
+                    </div>
+                  )}
+                {addFallbackAudioElement ? (
+                  <IEEmbedPlayer
+                    audio={audio}
+                    initIEAudioPlayer={this.initIEAudioPlayer}
+                    onPosChange={this.handlePosChange}
+                    playing={this.state.playing}
+                  />
+                ) : (
                   <Wavesurfer
                     audioFile={`http://localhost:3000/${audio.url}`}
                     className={`embed__waveform ${
@@ -156,20 +173,16 @@ class Embed extends Component {
                     playing={this.state.playing}
                     pos={pos}
                   />
-                  {currentTime &&
-                    duration && (
-                      <div className="embed__timestamp">
-                        {this.state.currentTime} / {this.state.duration}
-                      </div>
-                    )}
-                </div>
+                )}
+                {currentTime &&
+                  duration && (
+                    <div className="embed__timestamp">
+                      {this.state.currentTime} / {this.state.duration}
+                    </div>
+                  )}
               </div>
             </div>
-          )}
-        {this.state.addFallbackAudioElement && (
-          <audio controls>
-            <source src={`http://localhost:3000/${audio.url}`} />
-          </audio>
+          </div>
         )}
       </div>
     );
