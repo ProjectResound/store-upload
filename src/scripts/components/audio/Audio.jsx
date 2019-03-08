@@ -10,6 +10,7 @@ import ModifyAudioFile from "./ModifyAudioFile";
 import AudioPlayPause from "./AudioPlayPause";
 import AudioUploadMessages from "./AudioUploadMessages";
 import CopyDownload from "./CopyDownload";
+import EmbedConfig from "../embed/EmbedConfig";
 import autoBind from "react-autobind";
 import { getDuration, isValidLength } from "../../services/audio-tools";
 import addFallbackIfNecessary from "../../services/audio-context";
@@ -442,49 +443,19 @@ export default class Audio extends React.Component {
                 )}
               </div>
             </div>
-            <div id="image-embed-container" className="row">
-              <div className="col s10">
-                <input
-                  id="image-url"
-                  onChange={this.updateImage}
-                  placeholder="Insert Image URL here"
-                  type="text"
-                />
-              </div>
-              {audio && (
-                <div className="col s10">
-                  <input
-                    id="embed-code"
-                    readOnly
-                    type="text"
-                    value={this.updateEmbedCode(audio)}
+            {audio && (
+              <div className="expanded-embed__container row">
+                <div className="col s10 offset-s2">
+                  <EmbedConfig
+                    audio={audio}
+                    updateIframeSrc={this.updateIframeSrc}
+                    updateEmbedCode={this.updateEmbedCode}
+                    updateImage={this.updateImage}
                   />
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
-        )}
-        <div id="color-pickers-container">
-          {colorElements.map(colorElement => {
-            const { color, element } = colorElement;
-            const { r, g, b, a } = color;
-
-            return (
-              <ColorPicker
-                changeColor={this.changeColor.bind(this, element)}
-                color={`rgba(${r}, ${g}, ${b}, ${a})`}
-                element={element}
-                key={element}
-              />
-            );
-          })}
-        </div>
-        {audio && (
-          <iframe
-            id="embeddable-audio-player"
-            scrolling="no"
-            src={this.updateIframeSrc(audio)}
-          />
         )}
       </div>
     );
