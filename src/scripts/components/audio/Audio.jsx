@@ -276,7 +276,8 @@ export default class Audio extends React.Component {
   }
 
   render() {
-    const audio = this.state.audio;
+    const { audio, buttonColor, playerColor, waveColor } = this.state;
+
     const editing = this.state.inEditMode;
     const validForm = this.state.validTitle && this.state.validContributors;
     let replaceButtonClass = "hidden";
@@ -304,10 +305,9 @@ export default class Audio extends React.Component {
     };
 
     const colorElements = [
-      { color: this.state.playerColor, element: "player" },
-      { color: this.state.buttonColor, element: "button" },
-      { color: this.state.waveColor, element: "wave" },
-      { color: this.state.progressColor, element: "progress" }
+      { color: playerColor, title: "Background Color" },
+      { color: buttonColor, title: "Accent Color" },
+      { color: waveColor, title: "Wave Color" }
     ];
 
     return (
@@ -448,6 +448,7 @@ export default class Audio extends React.Component {
                 <div className="col s10 offset-s2">
                   <EmbedConfig
                     audio={audio}
+                    colorElements={colorElements}
                     updateIframeSrc={this.updateIframeSrc}
                     updateEmbedCode={this.updateEmbedCode}
                     updateImage={this.updateImage}
