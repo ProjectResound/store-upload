@@ -17,19 +17,13 @@ import addFallbackIfNecessary from "../../services/audio-context";
 import ContributorStore from "../../components/contributor/contributor-store";
 import SingleAudioDropzone from "./SingleAudioDropzone";
 import DropstripStore from "../dropstrip/dropstrip-store";
-import queryString from "query-string";
-import ColorPicker from "../color-picker/ColorPicker";
 
 const initialState = {
   addFallbackAudioElement: false,
-  buttonColor: { r: 41, g: 213, b: 239, a: 1 },
   imageUrl: "",
   inEditMode: false,
-  playerColor: { r: 246, g: 246, b: 246, a: 1 },
-  progressColor: { r: 41, g: 213, b: 239, a: 1 },
   validTitle: true,
   validContributors: true,
-  waveColor: { r: 0, g: 0, b: 0, a: 0.1 },
   playing: false,
   pos: 0
 };
@@ -58,15 +52,6 @@ export default class Audio extends React.Component {
     AudioStore.removeChangeListener(this.onChange);
     ContributorStore.removeChangeListener(this.populateContributorsSuggestions);
     this.setState(this.baseState);
-  }
-
-  changeColor(element, color) {
-    const { r, g, b, a } = color.rgb;
-    const state = {};
-
-    state[`${element}Color`] = { r, g, b, a };
-
-    this.setState(state);
   }
 
   onChange(changeType) {
@@ -220,63 +205,8 @@ export default class Audio extends React.Component {
     });
   }
 
-  updateEmbedCode(audio) {
-    const embedCode = `<iframe height="210" width="100%" scrolling="no" frameborder="0" src="${this.updateIframeSrc(
-      audio
-    )}"/>`;
-
-    return embedCode;
-  }
-
-  updateIframeSrc(audio) {
-    const { addFallbackAudioElement, imageUrl } = this.state;
-    const { contributors, files, title } = audio;
-    const audioElements = ["button", "player", "progress", "wave"];
-
-    const iframeSrcObj = {
-      contributors,
-      title,
-      url: files["mp3_128"]
-    };
-
-    if (imageUrl) {
-      iframeSrcObj.image = imageUrl;
-    }
-
-    audioElements.forEach(audioElement => {
-      const color = this.state[`${audioElement}Color`];
-      const { r, g, b, a } = color;
-
-      if (color) {
-        if (addFallbackAudioElement) {
-          iframeSrcObj[`${audioElement}Color`] = `rgba(${r}, ${g}, ${b}, ${a})`;
-        } else {
-          if (audioElement === "wave" || audioElement === "progress") {
-            iframeSrcObj[`${audioElement}Color`] = `rgb(${r}, ${g}, ${b})`;
-            iframeSrcObj[`${audioElement}Opacity`] = a;
-          } else {
-            iframeSrcObj[
-              `${audioElement}Color`
-            ] = `rgba(${r}, ${g}, ${b}, ${a})`;
-          }
-        }
-      }
-    });
-
-    const iframeSrc = `http://localhost:8000/embed?${queryString.stringify(
-      iframeSrcObj
-    )}`;
-
-    return iframeSrc;
-  }
-
-  updateImage(e) {
-    const imageUrl = e.target.value;
-    this.setState({ imageUrl });
-  }
-
   render() {
-    const { audio, buttonColor, playerColor, waveColor } = this.state;
+    const { audio } = this.state;
 
     const editing = this.state.inEditMode;
     const validForm = this.state.validTitle && this.state.validContributors;
@@ -303,12 +233,6 @@ export default class Audio extends React.Component {
       height: 75,
       backend: "MediaElement"
     };
-
-    const colorElements = [
-      { color: playerColor, title: "Background Color" },
-      { color: buttonColor, title: "Accent Color" },
-      { color: waveColor, title: "Wave Color" }
-    ];
 
     return (
       <div>
@@ -446,13 +370,7 @@ export default class Audio extends React.Component {
             {audio && (
               <div className="expanded-embed__container row">
                 <div className="col s10 offset-s2">
-                  <EmbedConfig
-                    audio={audio}
-                    colorElements={colorElements}
-                    updateIframeSrc={this.updateIframeSrc}
-                    updateEmbedCode={this.updateEmbedCode}
-                    updateImage={this.updateImage}
-                  />
+                  <EmbedConfig audio={audio} />
                 </div>
               </div>
             )}

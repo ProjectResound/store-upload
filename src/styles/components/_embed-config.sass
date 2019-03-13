@@ -34,6 +34,53 @@
     font-weight: 600
     line-height: 32px
 
+  .expanded-embed__input
+    border: 2px solid rgb(229, 229, 229)
+    box-sizing: border-box
+    font-size: 18px
+    line-height: 32px
+    padding-left: 24px
+    margin-top: 14px
+
+  .expanded-embed__input:focus
+    background-color: white
+    outline: none
+
+  .expanded-embed__input:-webkit-autofill,
+  .expanded-embed__input:-webkit-autofill:hover,
+  .expanded-embed__input:-webkit-autofill:focus,
+  .expanded-embed__input:-webkit-autofill:active
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+
+  .expanded-embed__album-art
+    display: flex
+    flex-direction: column
+    margin-top: 52.5px
+
+    input
+      color: rgb(153, 153, 153)
+      height: 55px
+
+  .expanded-embed__embed-code
+    display: flex
+    flex-direction: column
+    margin-top: 35.5px
+    position: relative
+
+    textarea
+      height: 95px
+      overflow: hidden
+      padding: 20px 179px 19px 24px
+      resize: none
+
+    .expanded-embed__copy
+      position: absolute
+      right: 13px
+      top: 61px
+
+    .expanded-embed__copy:hover
+      cursor: pointer
+
   .expanded-embed__color
     margin-top: 35px
     width: 80%
