@@ -89,7 +89,7 @@ class EmbedConfig extends Component {
   }
 
   render() {
-    const { audio } = this.props;
+    const { audio, toggleEmbedConfig } = this.props;
     const { buttonColor, playerColor, waveColor } = this.state;
 
     const colorElements = [
@@ -100,7 +100,7 @@ class EmbedConfig extends Component {
 
     return (
       <div className="expanded-embed">
-        <div className="expanded-embed__close">
+        <div className="expanded-embed__close" onClick={toggleEmbedConfig}>
           <IconClose />
           <span>Close</span>
         </div>

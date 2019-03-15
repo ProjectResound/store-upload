@@ -22,6 +22,7 @@ const initialState = {
   addFallbackAudioElement: false,
   imageUrl: "",
   inEditMode: false,
+  showEmbedConfig: false,
   validTitle: true,
   validContributors: true,
   playing: false,
@@ -205,8 +206,12 @@ export default class Audio extends React.Component {
     });
   }
 
+  toggleEmbedConfig() {
+    this.setState({ showEmbedConfig: !this.state.showEmbedConfig });
+  }
+
   render() {
-    const { audio } = this.state;
+    const { audio, showEmbedConfig } = this.state;
 
     const editing = this.state.inEditMode;
     const validForm = this.state.validTitle && this.state.validContributors;
@@ -370,7 +375,19 @@ export default class Audio extends React.Component {
             {audio && (
               <div className="expanded-embed__container row">
                 <div className="col s10 offset-s2">
-                  <EmbedConfig audio={audio} />
+                  {showEmbedConfig ? (
+                    <EmbedConfig
+                      audio={audio}
+                      toggleEmbedConfig={this.toggleEmbedConfig}
+                    />
+                  ) : (
+                    <div
+                      className="expanded-embed__embed-button"
+                      onClick={this.toggleEmbedConfig}
+                    >
+                      <span>{"</> Embed"}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
