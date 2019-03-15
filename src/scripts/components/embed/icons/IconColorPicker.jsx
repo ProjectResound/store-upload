@@ -12,7 +12,7 @@ const IconColorPicker = () => {
       xmlnslink="http://www.w3.org/1999/xlink"
     >
       <defs>
-        <polygon id="path-1" points="0 0 6 0 6 6 0 6" />
+        <polygon id="icon-color-picker__path-1" points="0 0 6 0 6 6 0 6" />
         <polygon id="path-3" points="0 0 6 0 6 6 0 6" />
         <polygon id="path-5" points="0 0 6 0 6 6 0 6" />
         <polygon id="path-7" points="0 0 6 0 6 6 0 6" />
@@ -47,14 +47,14 @@ const IconColorPicker = () => {
       >
         <g id="colorPickerIcon-(1)">
           <g id="Group-3">
-            <mask id="mask-2" fill="white">
-              <use xlinkHref="#path-1" />
+            <mask id="icon-color-picker__mask-2" fill="white">
+              <use xlinkHref="#icon-color-picker__path-1" />
             </mask>
             <g id="Clip-2" />
             <polygon
               id="Fill-1"
               fill="#FD415F"
-              mask="url(#mask-2)"
+              mask="url(#icon-color-picker__mask-2)"
               points="-5 -5 11 -5 11 11 -5 11"
             />
           </g>
