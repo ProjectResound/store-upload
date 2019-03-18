@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import autoBind from "react-autobind";
+import CopyToClipboard from "react-copy-to-clipboard";
 import queryString from "query-string";
 import IconClose from "./icons/IconClose";
 import IconColorPicker from "./icons/IconColorPicker";
@@ -11,6 +12,7 @@ class EmbedConfig extends Component {
 
     this.state = {
       buttonColor: { r: 41, g: 213, b: 239, a: 1 },
+      embedCopied: false,
       playerColor: { r: 246, g: 246, b: 246, a: 1 },
       progressColor: { r: 41, g: 213, b: 239, a: 1 },
       waveColor: { r: 0, g: 0, b: 0, a: 0.1 }
@@ -26,11 +28,6 @@ class EmbedConfig extends Component {
     state[`${element}Color`] = { r, g, b, a };
 
     this.setState(state);
-  }
-
-  copyEmbedToClipboard() {
-    this.embedCodeTextarea.select();
-    document.execCommand("copy");
   }
 
   updateEmbedCode(audio) {
@@ -90,7 +87,7 @@ class EmbedConfig extends Component {
 
   render() {
     const { audio, toggleEmbedConfig } = this.props;
-    const { buttonColor, playerColor, waveColor } = this.state;
+    const { buttonColor, embedCopied, playerColor, waveColor } = this.state;
 
     const colorElements = [
       { color: playerColor, title: "Background Color" },
@@ -159,16 +156,26 @@ class EmbedConfig extends Component {
         </div>
         <div className="expanded-embed__embed-code">
           <span className="expanded-embed__config-titles">Embed Code</span>
-          <textarea
-            className="expanded-embed__input"
-            readOnly
-            ref={embedCodeTextarea =>
-              (this.embedCodeTextarea = embedCodeTextarea)
-            }
-            type="text"
-            value={this.updateEmbedCode(audio)}
-          />
-          <IconCopy copyEmbedToClipboard={this.copyEmbedToClipboard} />
+          <div className="expanded-embed__input expanded-embed__embed-code-textarea">
+            <span className={embedCopied ? "expanded-embed__copied" : ""}>
+              {this.updateEmbedCode(audio)}
+            </span>
+          </div>
+          <CopyToClipboard
+            onCopy={(text, result) => {
+              this.setState({ embedCopied: false });
+              if (result) {
+                setTimeout(() => {
+                  this.setState({ embedCopied: result });
+                }, 50);
+              }
+            }}
+            text={this.updateEmbedCode(audio)}
+          >
+            <div className="expanded-embed__copy">
+              <IconCopy />
+            </div>
+          </CopyToClipboard>
         </div>
         {/* <div id="color-pickers-container">
           {colorElements.map(colorElement => {

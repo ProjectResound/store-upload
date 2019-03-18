@@ -1,10 +1,8 @@
 import React from "react";
 
-const IconCopy = ({ copyEmbedToClipboard, embedCodeTextArea }) => (
+const IconCopy = () => (
   <svg
-    className="expanded-embed__copy"
     height="34px"
-    onClick={copyEmbedToClipboard.bind(this, embedCodeTextArea)}
     width="34px"
     viewBox="0 0 34 34"
     version="1.1"

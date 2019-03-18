@@ -71,11 +71,9 @@
     margin-top: 35.5px
     position: relative
 
-    textarea
-      height: 95px
-      overflow: hidden
+    .expanded-embed__embed-code-textarea
       padding: 20px 179px 19px 24px
-      resize: none
+      word-wrap: break-word
 
     .expanded-embed__copy
       position: absolute
@@ -84,6 +82,14 @@
 
     .expanded-embed__copy:hover
       cursor: pointer
+
+    @keyframes copied
+      from { background-color: lightblue }
+      to { background-color: white }
+
+    .expanded-embed__copied
+      animation-name: copied
+      animation-duration: 3s
 
   .expanded-embed__color
     margin-top: 35px
