@@ -180,21 +180,6 @@ class EmbedConfig extends Component {
             </div>
           </CopyToClipboard>
         </div>
-        {/* <div id="color-pickers-container">
-          {colorElements.map(colorElement => {
-            const { color, element } = colorElement;
-            const { r, g, b, a } = color;
-
-            return (
-              <ColorPicker
-                changeColor={this.changeColor.bind(this, element)}
-                color={`rgba(${r}, ${g}, ${b}, ${a})`}
-                element={element}
-                key={element}
-              />
-            );
-          })}
-        </div> */}
       </div>
     );
   }
