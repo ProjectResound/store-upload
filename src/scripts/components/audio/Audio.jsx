@@ -211,7 +211,7 @@ export default class Audio extends React.Component {
   }
 
   render() {
-    const { audio, showEmbedConfig } = this.state;
+    const { addFallbackAudioElement, audio, showEmbedConfig } = this.state;
 
     const editing = this.state.inEditMode;
     const validForm = this.state.validTitle && this.state.validContributors;
@@ -300,7 +300,7 @@ export default class Audio extends React.Component {
                 )}
                 {!this.state.replacing &&
                   audio.files &&
-                  !this.state.addFallbackAudioElement && (
+                  !addFallbackAudioElement && (
                     <div className="row playwave__container">
                       <AudioPlayPause
                         editing={editing}
@@ -346,7 +346,7 @@ export default class Audio extends React.Component {
                       </div>
                     </div>
                   )}
-                {this.state.addFallbackAudioElement && (
+                {addFallbackAudioElement && (
                   <audio controls>
                     <source
                       src={`http://localhost:3000${audio.files["mp3_128"]}`}
@@ -377,6 +377,7 @@ export default class Audio extends React.Component {
                 <div className="col s10 offset-s2">
                   {showEmbedConfig ? (
                     <EmbedConfig
+                      addFallbackAudioElement={addFallbackAudioElement}
                       audio={audio}
                       toggleEmbedConfig={this.toggleEmbedConfig}
                     />

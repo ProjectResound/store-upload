@@ -39,7 +39,8 @@ class EmbedConfig extends Component {
   }
 
   updateIframeSrc(audio) {
-    const { addFallbackAudioElement, imageUrl } = this.state;
+    const { imageUrl } = this.state;
+    const { addFallbackAudioElement } = this.props;
     const { contributors, files, title } = audio;
     const audioElements = ["button", "player", "progress", "wave"];
 
