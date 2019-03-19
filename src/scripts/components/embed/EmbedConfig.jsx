@@ -98,9 +98,11 @@ class EmbedConfig extends Component {
 
     return (
       <div className="expanded-embed">
-        <div className="expanded-embed__close" onClick={toggleEmbedConfig}>
-          <IconClose />
-          <span>Close</span>
+        <div className="expanded-embed__close-container">
+          <div className="expanded-embed__close" onClick={toggleEmbedConfig}>
+            <IconClose />
+            <span>Close</span>
+          </div>
         </div>
         <div className="expanded-embed__header">
           <span className="expanded-embed__title">Embeddable Player</span>
