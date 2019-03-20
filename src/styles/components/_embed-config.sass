@@ -65,7 +65,6 @@
     margin-top: 52.5px
 
     input
-      color: rgb(153, 153, 153)
       height: 55px
 
   .expanded-embed__embed-code
@@ -114,6 +113,7 @@
       .expanded-embed__color-picker-container
         display: flex
         margin-top: 5px
+        position: relative
 
         .expanded-embed__color-box
           height: 35px
@@ -121,3 +121,55 @@
 
         .expanded-embed__color-picker-icon
           margin-left: 10.4px
+
+        .expanded-embed__color-picker-icon:hover
+          cursor: pointer
+
+    .color-picker
+      background-color: white
+      bottom: 0
+      box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5)
+      -moz-box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5)
+      -webkit-box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5)
+      position: absolute
+      right: -125px
+      width: 110px
+      z-index: 2
+
+    .color-picker:before
+      background-color: white
+      box-shadow: -3px 4px 4px -3px rgba(0, 0, 0, 0.5)
+      content: ""
+      left: -6px
+      height: 12px
+      position: absolute
+      top: 80%
+      transform: rotate(45deg)
+      -moz-transform: rotate(45deg)
+      -ms-transform: rotate(45deg)
+      -o-transform: rotate(45deg)
+      -webkit-transform: rotate(45deg)
+      width: 15px
+
+    .color-picker__saturation
+      height: 72.5px
+      position: relative
+
+    .color-picker__hue
+      height: 10px
+      margin-bottom: 16px
+      margin-left: 10px
+      margin-top: 16px
+      position: relative
+      width: 91px
+
+    .color-picker__pointer
+      background-color: white
+      border-radius: 100px
+      box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.5)
+      -webkit-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.5)
+      -moz-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.5)
+      height: 11px
+      margin-left: -5px
+      margin-top: -1px
+      width: 11px

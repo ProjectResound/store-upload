@@ -3,6 +3,7 @@ import autoBind from "react-autobind";
 import CopyToClipboard from "react-copy-to-clipboard";
 import queryString from "query-string";
 import { EditableInput } from "react-color/lib/components/common";
+import ColorPicker from "../color-picker/ColorPicker";
 import IconClose from "./icons/IconClose";
 import IconColorPicker from "./icons/IconColorPicker";
 import IconCopy from "./icons/IconCopy";
@@ -15,6 +16,9 @@ class EmbedConfig extends Component {
       accentColor: "#29D5EF",
       embedCopied: false,
       playerColor: "#F6F6F6",
+      showAccentColorPicker: false,
+      showPlayerColorPicker: false,
+      showWaveColorPicker: false,
       waveColor: "#CDCDCD"
     };
 
@@ -27,6 +31,14 @@ class EmbedConfig extends Component {
 
     state[`${element}Color`] = hex;
 
+    this.setState(state);
+  }
+
+  toggleColorPicker(element) {
+    const showColorPicker = !this.state[`show${element}ColorPicker`];
+    const state = {};
+
+    state[`show${element}ColorPicker`] = showColorPicker;
     this.setState(state);
   }
 
@@ -82,12 +94,35 @@ class EmbedConfig extends Component {
 
   render() {
     const { audio, toggleEmbedConfig } = this.props;
-    const { accentColor, embedCopied, playerColor, waveColor } = this.state;
+    const {
+      accentColor,
+      embedCopied,
+      playerColor,
+      showAccentColorPicker,
+      showPlayerColorPicker,
+      showWaveColorPicker,
+      waveColor
+    } = this.state;
 
     const colorElements = [
-      { color: playerColor, element: "player", title: "Background Color" },
-      { color: accentColor, element: "accent", title: "Accent Color" },
-      { color: waveColor, element: "wave", title: "Wave Color" }
+      {
+        color: playerColor,
+        element: "player",
+        showColorPicker: showPlayerColorPicker,
+        title: "Background Color"
+      },
+      {
+        color: accentColor,
+        element: "accent",
+        showColorPicker: showAccentColorPicker,
+        title: "Accent Color"
+      },
+      {
+        color: waveColor,
+        element: "wave",
+        showColorPicker: showWaveColorPicker,
+        title: "Wave Color"
+      }
     ];
 
     return (
@@ -115,23 +150,20 @@ class EmbedConfig extends Component {
           </span>
           <div className="expanded-embed__color-pickers">
             {colorElements.map(colorElement => {
+              const { color, element, showColorPicker, title } = colorElement;
+
               return (
-                <div key={colorElement.title}>
-                  <span className="expanded-embed__color-type">
-                    {colorElement.title}
-                  </span>
+                <div key={title}>
+                  <span className="expanded-embed__color-type">{title}</span>
                   <div className="expanded-embed__color-picker-container">
                     <div
                       className="expanded-embed__color-box"
                       style={{
-                        backgroundColor: colorElement.color
+                        backgroundColor: color
                       }}
                     />
                     <EditableInput
-                      onChange={this.validateColor.bind(
-                        this,
-                        colorElement.element
-                      )}
+                      onChange={this.validateColor.bind(this, element)}
                       style={{
                         input: {
                           boxSizing: "border-box",
@@ -140,9 +172,20 @@ class EmbedConfig extends Component {
                           width: "80px"
                         }
                       }}
-                      value={colorElement.color}
+                      value={color}
                     />
-                    <IconColorPicker />
+                    <IconColorPicker
+                      toggleColorPicker={this.toggleColorPicker.bind(
+                        this,
+                        element.charAt(0).toUpperCase() + element.slice(1)
+                      )}
+                    />
+                    {showColorPicker && (
+                      <ColorPicker
+                        color={color}
+                        onChange={this.changeColor.bind(this, element)}
+                      />
+                    )}
                   </div>
                 </div>
               );

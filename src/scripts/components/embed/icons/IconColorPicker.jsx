@@ -1,11 +1,12 @@
 import React from "react";
 
-const IconColorPicker = () => {
+const IconColorPicker = ({ toggleColorPicker }) => {
   return (
     <svg
       className="expanded-embed__color-picker-icon"
       width="34px"
       height="34px"
+      onClick={toggleColorPicker}
       viewBox="0 0 34 34"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
