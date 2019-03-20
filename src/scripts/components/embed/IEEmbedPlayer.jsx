@@ -71,9 +71,7 @@ class IEEmbedPlayer extends Component {
             backgroundColor: audio.waveColor
               ? audio.waveColor
               : "rgba(0, 0, 0, 0.1)",
-            color: audio.progressColor
-              ? audio.progressColor
-              : "rgb(41, 213, 239)"
+            color: audio.accentColor ? audio.accentColor : "rgb(41, 213, 239)"
           }}
           value={progressValue}
         />

@@ -377,7 +377,6 @@ export default class Audio extends React.Component {
                 <div className="col s10 offset-s2">
                   {showEmbedConfig ? (
                     <EmbedConfig
-                      addFallbackAudioElement={addFallbackAudioElement}
                       audio={audio}
                       toggleEmbedConfig={this.toggleEmbedConfig}
                     />

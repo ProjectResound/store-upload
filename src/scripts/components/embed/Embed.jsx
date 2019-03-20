@@ -13,7 +13,6 @@ class Embed extends Component {
     super(props);
 
     this.state = {
-      addFallbackAudioElement: false,
       audio: {},
       audioState: "loading",
       currentTime: "00:00",
@@ -57,12 +56,6 @@ class Embed extends Component {
 
   initAudioPlayer(e) {
     const durationInSeconds = e.wavesurfer.backend.media.duration;
-    const { progressOpacity, waveOpacity } = this.state.audio;
-    const { wave } = e.wavesurfer.drawer.canvases[0];
-    const { progress } = e.wavesurfer.drawer.canvases[0];
-
-    wave.style.opacity = waveOpacity;
-    progress.style.opacity = progressOpacity;
 
     this.setState({
       audioState: "ready",
@@ -94,11 +87,9 @@ class Embed extends Component {
       cursorWidth: 0,
       height: 75,
       normalize: true,
-      progressColor: audio.progressColor
-        ? audio.progressColor
-        : "rgb(41, 213, 239)",
+      progressColor: audio.accentColor ? audio.accentColor : "#29D5EF",
       responsive: true,
-      waveColor: audio.waveColor ? audio.waveColor : "rgb(0, 0, 0)"
+      waveColor: audio.waveColor ? audio.waveColor : "#CDCDCD"
     };
 
     return (
@@ -107,9 +98,7 @@ class Embed extends Component {
           <div
             className="embed__audio-player"
             style={{
-              backgroundColor: audio.playerColor
-                ? audio.playerColor
-                : "rgb(246, 246, 246)"
+              backgroundColor: audio.playerColor ? audio.playerColor : "#F6F6F6"
             }}
           >
             {audio.image && (
@@ -125,7 +114,7 @@ class Embed extends Component {
             >
               <div className="embed__audio-player-top">
                 <PlayPauseButton
-                  color={audio.buttonColor}
+                  color={audio.accentColor}
                   handleTogglePlay={this.handleTogglePlay}
                   playing={this.state.playing}
                 />
@@ -143,9 +132,7 @@ class Embed extends Component {
                   <div
                     className="embed__loading-msg pulsate"
                     style={{
-                      color: audio.buttonColor
-                        ? audio.buttonColor
-                        : "rgb(41, 213, 239)"
+                      color: audio.accentColor ? audio.accentColor : "#29D5EF"
                     }}
                   >
                     <span>loading audio...</span>
@@ -157,9 +144,7 @@ class Embed extends Component {
                     <div
                       className="embed__loading-msg pulsate"
                       style={{
-                        color: audio.buttonColor
-                          ? audio.buttonColor
-                          : "rgb(41, 213, 239)"
+                        color: audio.accentColor ? audio.accentColor : "#29D5EF"
                       }}
                     >
                       <span>loading waveform...</span>

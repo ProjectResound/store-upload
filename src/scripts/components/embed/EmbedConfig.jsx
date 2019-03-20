@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import autoBind from "react-autobind";
 import CopyToClipboard from "react-copy-to-clipboard";
 import queryString from "query-string";
+import { EditableInput } from "react-color/lib/components/common";
 import IconClose from "./icons/IconClose";
 import IconColorPicker from "./icons/IconColorPicker";
 import IconCopy from "./icons/IconCopy";
@@ -11,21 +12,20 @@ class EmbedConfig extends Component {
     super(props);
 
     this.state = {
-      buttonColor: { r: 41, g: 213, b: 239, a: 1 },
+      accentColor: "#29D5EF",
       embedCopied: false,
-      playerColor: { r: 246, g: 246, b: 246, a: 1 },
-      progressColor: { r: 41, g: 213, b: 239, a: 1 },
-      waveColor: { r: 0, g: 0, b: 0, a: 0.1 }
+      playerColor: "#F6F6F6",
+      waveColor: "#CDCDCD"
     };
 
     autoBind(this);
   }
 
   changeColor(element, color) {
-    const { r, g, b, a } = color.rgb;
+    const { hex } = color;
     const state = {};
 
-    state[`${element}Color`] = { r, g, b, a };
+    state[`${element}Color`] = hex;
 
     this.setState(state);
   }
@@ -40,9 +40,8 @@ class EmbedConfig extends Component {
 
   updateIframeSrc(audio) {
     const { imageUrl } = this.state;
-    const { addFallbackAudioElement } = this.props;
     const { contributors, files, title } = audio;
-    const audioElements = ["button", "player", "progress", "wave"];
+    const audioElements = ["accent", "player", "wave"];
 
     const iframeSrcObj = {
       contributors,
@@ -56,22 +55,7 @@ class EmbedConfig extends Component {
 
     audioElements.forEach(audioElement => {
       const color = this.state[`${audioElement}Color`];
-      const { r, g, b, a } = color;
-
-      if (color) {
-        if (addFallbackAudioElement) {
-          iframeSrcObj[`${audioElement}Color`] = `rgba(${r}, ${g}, ${b}, ${a})`;
-        } else {
-          if (audioElement === "wave" || audioElement === "progress") {
-            iframeSrcObj[`${audioElement}Color`] = `rgb(${r}, ${g}, ${b})`;
-            iframeSrcObj[`${audioElement}Opacity`] = a;
-          } else {
-            iframeSrcObj[
-              `${audioElement}Color`
-            ] = `rgba(${r}, ${g}, ${b}, ${a})`;
-          }
-        }
-      }
+      iframeSrcObj[`${audioElement}Color`] = color;
     });
 
     const iframeSrc = `http://localhost:8000/embed?${queryString.stringify(
@@ -86,14 +70,24 @@ class EmbedConfig extends Component {
     this.setState({ imageUrl });
   }
 
+  validateColor(element, hex) {
+    // Check if hex code is valid
+    const regExp = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i;
+    const validHexCode = regExp.test(hex);
+
+    if (validHexCode) {
+      this.changeColor(element, { hex });
+    }
+  }
+
   render() {
     const { audio, toggleEmbedConfig } = this.props;
-    const { buttonColor, embedCopied, playerColor, waveColor } = this.state;
+    const { accentColor, embedCopied, playerColor, waveColor } = this.state;
 
     const colorElements = [
-      { color: playerColor, title: "Background Color" },
-      { color: buttonColor, title: "Accent Color" },
-      { color: waveColor, title: "Wave Color" }
+      { color: playerColor, element: "player", title: "Background Color" },
+      { color: accentColor, element: "accent", title: "Accent Color" },
+      { color: waveColor, element: "wave", title: "Wave Color" }
     ];
 
     return (
@@ -121,8 +115,6 @@ class EmbedConfig extends Component {
           </span>
           <div className="expanded-embed__color-pickers">
             {colorElements.map(colorElement => {
-              const { r, g, b, a } = colorElement.color;
-
               return (
                 <div key={colorElement.title}>
                   <span className="expanded-embed__color-type">
@@ -132,14 +124,23 @@ class EmbedConfig extends Component {
                     <div
                       className="expanded-embed__color-box"
                       style={{
-                        backgroundColor: `rgba(${r}, ${g}, ${b}, ${a})`
+                        backgroundColor: colorElement.color
                       }}
                     />
-                    <input
-                      className="expanded-embed__color-code"
-                      onChange={() => {}}
-                      type="text"
-                      value={`rgba(${r}, ${g}, ${b}, ${a})`}
+                    <EditableInput
+                      onChange={this.validateColor.bind(
+                        this,
+                        colorElement.element
+                      )}
+                      style={{
+                        input: {
+                          boxSizing: "border-box",
+                          height: "35px",
+                          paddingLeft: "11px",
+                          width: "80px"
+                        }
+                      }}
+                      value={colorElement.color}
                     />
                     <IconColorPicker />
                   </div>
