@@ -19,6 +19,7 @@ class EmbedConfig extends Component {
       showAccentColorPicker: false,
       showPlayerColorPicker: false,
       showWaveColorPicker: false,
+      textColor: "black",
       waveColor: "#CDCDCD"
     };
 
@@ -26,8 +27,23 @@ class EmbedConfig extends Component {
   }
 
   changeColor(element, color) {
-    const { hex } = color;
+    const { hex, rgb } = color;
+    const { r, g, b } = rgb;
     const state = {};
+
+    if (element === "player") {
+      const o = Math.round(
+        (parseInt(r) * 299 + parseInt(g) * 587 + parseInt(b) * 114) / 1000
+      );
+
+      // If the background color is bright change the text color to black
+      if (o > 125) {
+        state.textColor = "black";
+      } else {
+        // If background color is dark change the text color to white
+        state.textColor = "white";
+      }
+    }
 
     state[`${element}Color`] = hex;
 
@@ -53,7 +69,7 @@ class EmbedConfig extends Component {
   updateIframeSrc(audio) {
     const { imageUrl } = this.state;
     const { contributors, files, title } = audio;
-    const audioElements = ["accent", "player", "wave"];
+    const audioElements = ["accent", "player", , "text", "wave"];
 
     const iframeSrcObj = {
       contributors,

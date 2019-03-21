@@ -119,10 +119,16 @@ class Embed extends Component {
                   playing={this.state.playing}
                 />
                 <div className="embed__audio-info">
-                  <div className="embed__title overflow-ellipsis">
+                  <div
+                    className="embed__title overflow-ellipsis"
+                    style={{ color: audio.textColor }}
+                  >
                     {audio.title}
                   </div>
-                  <div className="embed__contributors overflow-ellipsis">
+                  <div
+                    className="embed__contributors overflow-ellipsis"
+                    style={{ color: audio.textColor }}
+                  >
                     {audio.contributors}
                   </div>
                 </div>
@@ -173,7 +179,10 @@ class Embed extends Component {
                 )}
                 {currentTime &&
                   duration && (
-                    <div className="embed__timestamp">
+                    <div
+                      className="embed__timestamp"
+                      style={{ color: audio.textColor }}
+                    >
                       {this.state.currentTime} / {this.state.duration}
                     </div>
                   )}
