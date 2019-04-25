@@ -86,7 +86,7 @@ class EmbedConfig extends Component {
       iframeSrcObj[`${audioElement}Color`] = color;
     });
 
-    const iframeSrc = `http://localhost:8000/embed?${queryString.stringify(
+    const iframeSrc = `${window.location.origin}/embed?${queryString.stringify(
       iframeSrcObj
     )}`;
 
