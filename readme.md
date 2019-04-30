@@ -23,6 +23,19 @@ You'll need a custom rule for this. Check out the [auth0-scripts repo](https://g
 * run `yarn build` to build with production configs
 * `docker build -f docker/Dockerfile . -t scprdev/resound-store-manage`
 
+## S3 deployment
+It's possible to run this client, which is a collection of static files, out of an S3 bucket.
+
+Requirements:
+* AWS CLI v1.16 or greater
+* an S3 bucket with a public read policy
+* the correct credentials set up for the AWS CLI to write to that bucket
+
+Steps:
+1. copy or rename `.env.example` into its own .env file
+2. fill out the above .env file with the appropriate variables
+3. assuming you already have the AWS CLI set up with the correct access keys, run: `./deploy-to-s3.sh`
+
 ## Heroku
 1. Copy all the variables from `.env.example` to `Config Vars` under `settings` tab and add the proper values
 2. The value for `API_URL`, should be the url for `resound-api` heroku app, following by `/api/v1`.
