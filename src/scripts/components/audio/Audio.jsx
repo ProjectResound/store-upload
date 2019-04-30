@@ -346,9 +346,7 @@ export default class Audio extends React.Component {
                   )}
                 {addFallbackAudioElement && (
                   <audio controls>
-                    <source
-                      src={audio.files["mp3_128"]}
-                    />
+                    <source src={audio.files["mp3_128"]} />
                   </audio>
                 )}
                 <div className="row waveform__timestamp">
