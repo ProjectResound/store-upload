@@ -318,9 +318,7 @@ export default class Audio extends React.Component {
                           )}
                           {this.state.waveState && (
                             <Wavesurfer
-                              audioFile={`http://localhost:3000${
-                                audio.files["mp3_128"]
-                              }`}
+                              audioFile={audio.files["mp3_128"]}
                               pos={this.state.pos}
                               onPosChange={this.handlePosChange}
                               onFinish={this.handleTogglePlay}
@@ -349,7 +347,7 @@ export default class Audio extends React.Component {
                 {addFallbackAudioElement && (
                   <audio controls>
                     <source
-                      src={`http://localhost:3000${audio.files["mp3_128"]}`}
+                      src={audio.files["mp3_128"]}
                     />
                   </audio>
                 )}

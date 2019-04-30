@@ -167,7 +167,7 @@ class Embed extends Component {
                   />
                 ) : (
                   <Wavesurfer
-                    audioFile={`http://localhost:3000/${audio.url}`}
+                    audioFile={audio.url}
                     className={"embed__waveform"}
                     onFinish={this.handleTogglePlay}
                     onPosChange={this.handlePosChange}

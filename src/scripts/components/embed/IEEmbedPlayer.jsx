@@ -83,7 +83,7 @@ class IEEmbedPlayer extends Component {
           onTimeUpdate={this.updateProgress}
           ref={audio => (this.audio = audio)}
         >
-          <source src={`http://localhost:3000/${audio.url}`} />
+          <source src={audio.url} />
         </audio>
       </div>
     );
