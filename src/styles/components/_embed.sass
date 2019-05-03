@@ -1,5 +1,6 @@
 .embed__audio-player
 	display: flex
+	display: -webkit-flex
 	height: 211px
 	overflow: hidden
 
@@ -28,17 +29,22 @@
 	.embed__loading-msg
 		align-items: center
 		display: flex
+		display: -webkit-flex
 		height: 100%
 		justify-content: center
 		left: 0
 		position: absolute
 		top: 0
 		width: 100%
+		-webkit-align-items: center
+		-webkit-justify-content: center
 
 	.embed__audio-player-top
 		align-items: center
 		display: flex
+		display: -webkit-flex
 		margin-bottom: 13px
+		-webkit-align-items: center
 
 	.embed__play-pause
 		min-height: 65px
@@ -49,9 +55,11 @@
 
 	.embed__audio-info
 		display: flex
+		display: -webkit-flex
 		flex-direction: column
 		margin-left: 26px
 		width: 80%
+		-webkit-flex-direction: column
 
 		.embed__title
 			font-size: 22px
