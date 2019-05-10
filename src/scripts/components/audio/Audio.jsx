@@ -13,7 +13,6 @@ import CopyDownload from "./CopyDownload";
 import EmbedConfig from "../embed/EmbedConfig";
 import autoBind from "react-autobind";
 import { getDuration, isValidLength } from "../../services/audio-tools";
-import addFallbackIfNecessary from "../../services/audio-context";
 import ContributorStore from "../../components/contributor/contributor-store";
 import SingleAudioDropzone from "./SingleAudioDropzone";
 import DropstripStore from "../dropstrip/dropstrip-store";
@@ -44,9 +43,6 @@ export default class Audio extends React.Component {
     AudioStore.fetch(this.audioId);
     ContributorStore.addChangeListener(this.populateContributorsSuggestions);
     ContributorStore.get();
-
-    // Checks if browser has AudioContext and if not add HTML5 audio element as fallback
-    addFallbackIfNecessary(this);
   }
 
   componentWillUnmount() {
@@ -299,8 +295,7 @@ export default class Audio extends React.Component {
                   </div>
                 )}
                 {!this.state.replacing &&
-                  audio.files &&
-                  !addFallbackAudioElement && (
+                  audio.files && (
                     <div className="row playwave__container">
                       <AudioPlayPause
                         editing={editing}
@@ -344,11 +339,6 @@ export default class Audio extends React.Component {
                       </div>
                     </div>
                   )}
-                {addFallbackAudioElement && (
-                  <audio controls>
-                    <source src={audio.files["mp3_128"]} />
-                  </audio>
-                )}
                 <div className="row waveform__timestamp">
                   {this.state.timestamp}
                 </div>
