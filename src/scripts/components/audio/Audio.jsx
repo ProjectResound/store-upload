@@ -18,7 +18,6 @@ import SingleAudioDropzone from "./SingleAudioDropzone";
 import DropstripStore from "../dropstrip/dropstrip-store";
 
 const initialState = {
-  addFallbackAudioElement: false,
   imageUrl: "",
   inEditMode: false,
   showEmbedConfig: false,
@@ -207,7 +206,7 @@ export default class Audio extends React.Component {
   }
 
   render() {
-    const { addFallbackAudioElement, audio, showEmbedConfig } = this.state;
+    const { audio, showEmbedConfig } = this.state;
 
     const editing = this.state.inEditMode;
     const validForm = this.state.validTitle && this.state.validContributors;
