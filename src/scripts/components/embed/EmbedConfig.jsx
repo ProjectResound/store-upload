@@ -88,14 +88,9 @@ class EmbedConfig extends Component {
 
   updateIframeSrc(audio) {
     const { imageUrl } = this.state;
-    const { contributors, files, title } = audio;
-    const audioElements = ["accent", "player", , "text", "wave"];
+    const audioElements = ["accent", "player", "text", "wave"];
 
-    const iframeSrcObj = {
-      contributors,
-      title,
-      url: files["mp3_128"]
-    };
+    const iframeSrcObj = { id: audio.id };
 
     if (imageUrl) {
       iframeSrcObj.image = imageUrl;

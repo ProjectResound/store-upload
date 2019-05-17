@@ -7,6 +7,7 @@ import autoBind from "react-autobind";
 import Wavesurfer from "react-wavesurfer";
 import wavesurfer from "wavesurfer.js";
 import qs from "qs";
+import AudioStore from "../audio/audio-store";
 
 class Embed extends Component {
   constructor(props) {
@@ -27,11 +28,19 @@ class Embed extends Component {
   componentDidMount() {
     const search = this.props.location.search.slice(1);
     const audio = qs.parse(search);
+
+    AudioStore.addChangeListener(this.onChange);
+    AudioStore.fetch(audio.id);
+
     this.setState({ audio });
 
     // Checks if browser has AudioContext and if not add HTML5 audio element as fallback
     addFallbackIfNecessary(this);
     this.checkWaveformState();
+  }
+
+  componentWillUnmount() {
+    AudioStore.removeChangeListener(this.onChange);
   }
 
   checkWaveformState() {
@@ -68,6 +77,22 @@ class Embed extends Component {
       audioState: "ready",
       duration: getDuration({ duration })
     });
+  }
+
+  onChange() {
+    const retrievedAudio = AudioStore.get();
+
+    if (retrievedAudio && !retrievedAudio.errors) {
+      const { audio } = this.state;
+      const { contributors, files, title } = retrievedAudio;
+      const url = files["mp3_128"];
+
+      audio.contributors = contributors;
+      audio.title = title;
+      audio.url = url;
+
+      this.setState({ audio });
+    }
   }
 
   render() {
