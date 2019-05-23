@@ -5,8 +5,8 @@ import { getDuration } from "../../services/audio-tools";
 import addFallbackIfNecessary from "../../services/audio-context";
 import autoBind from "react-autobind";
 import Wavesurfer from "react-wavesurfer";
-import wavesurfer from "wavesurfer.js";
 import qs from "qs";
+import AudioActions from "../audio/audio-actions";
 import AudioStore from "../audio/audio-store";
 
 class Embed extends Component {
@@ -36,17 +36,10 @@ class Embed extends Component {
 
     // Checks if browser has AudioContext and if not add HTML5 audio element as fallback
     addFallbackIfNecessary(this);
-    this.checkWaveformState();
   }
 
   componentWillUnmount() {
     AudioStore.removeChangeListener(this.onChange);
-  }
-
-  checkWaveformState() {
-    wavesurfer.on("waveform-ready", () => {
-      this.setState({ waveState: "ready" });
-    });
   }
 
   handlePosChange(e) {
@@ -64,7 +57,24 @@ class Embed extends Component {
   }
 
   initAudioPlayer(e) {
-    const durationInSeconds = e.wavesurfer.backend.media.duration;
+    const { audio } = this.state;
+    const { wavesurfer } = e;
+    const durationInSeconds = wavesurfer.backend.media.duration;
+
+    if (!audio.peaks || audio.peaks.length === 0) {
+      wavesurfer.on("waveform-ready", () => {
+        const peaks = wavesurfer.backend.mergedPeaks;
+
+        if (peaks) {
+          AudioActions.save({
+            id: audio.id,
+            peaks
+          });
+        }
+
+        this.setState({ waveState: "ready" });
+      });
+    }
 
     this.setState({
       audioState: "ready",
@@ -83,15 +93,22 @@ class Embed extends Component {
     const retrievedAudio = AudioStore.get();
 
     if (retrievedAudio && !retrievedAudio.errors) {
-      const { audio } = this.state;
-      const { contributors, files, title } = retrievedAudio;
+      const { audio, waveState } = this.state;
+      const { contributors, files, peaks, title } = retrievedAudio;
       const url = files["mp3_128"];
 
       audio.contributors = contributors;
       audio.title = title;
       audio.url = url;
 
-      this.setState({ audio });
+      if (peaks) {
+        audio.peaks = JSON.parse(peaks);
+      }
+
+      this.setState({
+        audio,
+        waveState: peaks ? "ready" : waveState
+      });
     }
   }
 
@@ -116,6 +133,12 @@ class Embed extends Component {
       responsive: true,
       waveColor: audio.waveColor ? audio.waveColor : "#CDCDCD"
     };
+
+    const wavesurferProps = {};
+
+    if (audio.peaks && audio.peaks.length > 0) {
+      wavesurferProps.audioPeaks = audio.peaks;
+    }
 
     return (
       <div id="embed">
@@ -200,6 +223,7 @@ class Embed extends Component {
                     options={waveSurferOptions}
                     playing={this.state.playing}
                     pos={pos}
+                    {...wavesurferProps}
                   />
                 )}
                 {currentTime &&

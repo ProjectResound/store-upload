@@ -63,7 +63,8 @@ export default {
       body: JSON.stringify({
         title: audio.title,
         contributors: audio.contributors,
-        tags: audio.tags
+        tags: audio.tags,
+        peaks: audio.peaks
       })
     }).then(response => response.json());
   },
