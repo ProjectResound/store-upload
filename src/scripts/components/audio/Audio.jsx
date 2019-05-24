@@ -115,10 +115,16 @@ export default class Audio extends React.Component {
       completed: true,
       replacing: false
     });
+
     if (this.waveNode) {
       const mp3Url = this.state.audio.files["mp3_128"];
       this.waveNode._loadAudio(mp3Url);
     }
+
+    AudioActions.save({
+      id: this.audioId,
+      peaks: ""
+    });
   }
 
   onUploadError() {
@@ -206,7 +212,7 @@ export default class Audio extends React.Component {
   }
 
   render() {
-    const { audio, showEmbedConfig } = this.state;
+    const { audio, replacing, showEmbedConfig } = this.state;
 
     const editing = this.state.inEditMode;
     const validForm = this.state.validTitle && this.state.validContributors;
@@ -363,6 +369,7 @@ export default class Audio extends React.Component {
                   {showEmbedConfig ? (
                     <EmbedConfig
                       audio={audio}
+                      replacing={replacing}
                       toggleEmbedConfig={this.toggleEmbedConfig}
                     />
                   ) : (

@@ -125,7 +125,7 @@ class EmbedConfig extends Component {
   }
 
   render() {
-    const { audio, toggleEmbedConfig } = this.props;
+    const { audio, replacing, toggleEmbedConfig } = this.props;
     const {
       accentColor,
       embedCopied,
@@ -171,11 +171,14 @@ class EmbedConfig extends Component {
             Configure the player using the options below.
           </span>
         </div>
-        <iframe
-          id="embeddable-audio-player"
-          scrolling="no"
-          src={this.updateIframeSrc(audio)}
-        />
+        {!replacing &&
+          audio.files && (
+            <iframe
+              id="embeddable-audio-player"
+              scrolling="no"
+              src={this.updateIframeSrc(audio)}
+            />
+          )}
         <div className="expanded-embed__color">
           <span className="expanded-embed__color-title expanded-embed__config-titles">
             Color
