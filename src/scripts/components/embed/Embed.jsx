@@ -63,7 +63,7 @@ class Embed extends Component {
 
     if (!audio.peaks || audio.peaks.length === 0) {
       wavesurfer.on("waveform-ready", () => {
-        const peaks = wavesurfer.backend.mergedPeaks;
+        const peaks = wavesurfer.backend.getPeaks(300, 0, 300);
 
         if (peaks) {
           AudioActions.save({
