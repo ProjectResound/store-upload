@@ -81,7 +81,7 @@ class EmbedConfig extends Component {
   updateEmbedCode(audio) {
     const embedCode = `<iframe height="210" width="100%" scrolling="no" frameborder="0" src="${this.updateIframeSrc(
       audio
-    )}"/>`;
+    )}"></iframe>`;
 
     return embedCode;
   }
